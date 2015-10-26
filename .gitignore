@@ -1,0 +1,8 @@
+/build/
+/bin/
+.gradle
+.settings
+.project
+.classpath
+src/main/webapp/node_modules
+.tern-project
