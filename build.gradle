@@ -46,7 +46,7 @@ ext{
 		core : 'org.hamcrest:hamcrest-core:1.3',
 		library : 'org.hamcrest:hamcrest-library:1.3'
 	]
-	
+	cors = 'com.thetransactioncompany:cors-filter:1.3.2'
 	
 }
 
@@ -60,7 +60,7 @@ repositories {
 }
 
 dependencies {
-	compile json
+	compile json,cors
     compile spring.web,spring.core,spring.test,jersey.server,jackson,jersey.inmemorytest
     compile jersey.spring,spring.mongo,spring.webmvc,hamcrest.core,hamcrest.library,jmock
     testCompile testng,jmock,hamcrest.core,hamcrest.library

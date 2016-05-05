@@ -13,6 +13,16 @@ public class ProductBean {
 	private String name;
 	private MeasurementUnit measurementUnit;
 
+	public ProductBean() {
+	}
+
+	public ProductBean(String id, String name, MeasurementUnit measurementUnit) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.measurementUnit = measurementUnit;
+	}
+
 	public String getId() {
 		return id;
 	}

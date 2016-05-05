@@ -1,5 +1,8 @@
 package com.grocero.resources;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import com.grocero.beans.ProductBean;
 import com.grocero.services.ProductService;
+import com.grocero.utils.MeasurementUnit;
 
 @Component
 @Path("product")
@@ -35,7 +39,11 @@ public class ProductResource {
 	@Path("list")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listAll() {
-		return Response.ok(productService.getAll()).build();
+		List<ProductBean> productBeans = new ArrayList<ProductBean>();
+		productBeans.add(new ProductBean("101", "Oil", MeasurementUnit.Litre));
+		productBeans.add(new ProductBean("102", "Sugar",
+				MeasurementUnit.Kilograms));
+		return Response.ok(productBeans).build();
 	}
 
 	@GET
