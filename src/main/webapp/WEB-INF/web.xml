@@ -24,9 +24,6 @@
 		<servlet-name>grocero</servlet-name>
 		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
-	<welcome-file-list>
-		<welcome-file>Grocero.html</welcome-file>
-	</welcome-file-list>
 	<filter>
 		<filter-name>CORS</filter-name>
 		<filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>

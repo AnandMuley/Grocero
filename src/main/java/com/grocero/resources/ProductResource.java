@@ -20,7 +20,7 @@ import com.grocero.services.ProductService;
 import com.grocero.utils.MeasurementUnit;
 
 @Component
-@Path("product")
+@Path("products")
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProductResource {
 
