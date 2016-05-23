@@ -1,0 +1,46 @@
+@CHARSET "UTF-8";
+
+body {
+	font-family: "Roboto", sans-serif;
+}
+
+.navbar-custom {
+	background-image: none;
+	border-radius: 0px;
+	background-color: rgba(255, 111, 27, 0.83) !important;
+	height: 150px;
+	padding-left: 20px;
+}
+
+.custom-nav {
+	margin-top: 15px;
+}
+
+.site-title {
+	font-family: 'Roboto', sans-serif;
+	font-size: 38px;
+	margin-top: 20px;
+	margin-left: 10px;
+	font-weight: 500;
+	color: white;
+}
+
+.nav>li>a {
+	color: black !important;
+}
+
+.custom-nav>li:HOVER {
+	color: white !important;
+	background-color: none !important;
+	border-bottom: solid 2px white;
+}
+
+.thumbnail {
+	padding-top: 15px;
+	background-color: #f3f3f3 !important;
+}
+
+.thumbnail:HOVER {
+	background-color: #5e9aff !important;
+	cursor: pointer;
+}
