@@ -16,8 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.grocero.beans.ProductBean;
+import com.grocero.dtos.ProductDto;
 import com.grocero.services.ProductService;
-import com.grocero.utils.MeasurementUnit;
 
 @Component
 @Path("products")
@@ -29,19 +29,18 @@ public class ProductResource {
 	private ProductService productService;
 
 	@POST
-	public Response add(ProductBean productBean) {
-		productService.add(productBean);
-		return Response.ok(productBean).build();
+	public Response add(ProductDto productDto) {
+		productService.add(productDto);
+		return Response.ok(productDto).build();
 	}
 
 	@GET
 	@Path("list")
 	public Response getAll() {
-		List<ProductBean> productBeans = new ArrayList<ProductBean>();
-		productBeans.add(new ProductBean("101", "Oil", MeasurementUnit.Litre));
-		productBeans.add(new ProductBean("102", "Sugar",
-				MeasurementUnit.Kilograms));
-		return Response.ok(productBeans).build();
+		List<ProductDto> productDtos = new ArrayList<ProductDto>();
+		productDtos.add(new ProductDto("101", "Oil", "Litre"));
+		productDtos.add(new ProductDto("102", "Sugar", "Kilograms"));
+		return Response.ok(productDtos).build();
 	}
 
 	@GET

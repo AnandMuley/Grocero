@@ -1,20 +1,15 @@
-package com.grocero.beans;
+package com.grocero.dtos;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+public class ProductDto {
 
-@Document(collection = "products")
-public class ProductBean {
-
-	@Id
 	private String id;
 	private String name;
 	private String measuredIn;
 
-	public ProductBean() {
+	public ProductDto() {
 	}
 
-	public ProductBean(String id, String name, String measuredIn) {
+	public ProductDto(String id, String name, String measuredIn) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -47,7 +42,7 @@ public class ProductBean {
 
 	@Override
 	public String toString() {
-		return "ProductBean [id=" + id + ", name=" + name + ", measuredIn="
+		return "ProductDto [id=" + id + ", name=" + name + ", measuredIn="
 				+ measuredIn + "]";
 	}
 
