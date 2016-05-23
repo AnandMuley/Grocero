@@ -23,6 +23,7 @@
 <script type="text/javascript" src="js/controllers/TabsController.js"></script>
 <script type="text/javascript" src="js/controllers/HomeController.js"></script>
 <script type="text/javascript" src="js/controllers/ProductsController.js"></script>
+<script type="text/javascript" src="js/controllers/ListController.js"></script>
 <!-- REST Resources -->
 <script type="text/javascript" src="js/resources/ProductResource.js"></script>
 
@@ -32,14 +33,16 @@
 			<nav class="nav navbar-default navbar-custom" ng-controller="TabsController">
 				<div class="container-fluid">
 					<div class="row">
-						<div class="navbar-header site-title">Grocero</div>
+						<div align="center" class="col-sm-12 navbar-header site-title">Grocero</div>
 					</div>
 					<div class="row">
-						<ul class="nav navbar-nav custom-nav">
-							<li ng-repeat="tab in tabs">
-								<a ng-click="loadView(tab)" href="#/{{tab}}">{{tab|uppercase}}</a>
-							</li>
-						</ul>
+						<div class="col-sm-12">
+							<ul style="width: 100%" class="nav navbar-nav custom-nav">
+								<li style="width: 25%;text-align: center;" ng-repeat="tab in tabs">
+									<a ng-click="loadView(tab)" href="#/{{tab}}">{{tab|uppercase}}</a>
+								</li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</nav>

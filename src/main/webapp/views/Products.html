@@ -1,11 +1,27 @@
-<h5>Existing Products</h5>
+<br/>
+<div class="row page-header">
+	<div class="col-sm-3 page-title">
+		Manage Products
+	</div>
+	<div class="col-sm-3">
+		<input class="form-control input-lg" ng-model="product.name" placeholder="Product Name"/>
+	</div>
+	<div class="col-sm-3">
+		<input class="form-control input-lg" ng-model="product.measuredIn" placeholder="Measured In"/>
+	</div>
+	<div class="col-sm-3">
+		<button ng-if="mode=='add'" ng-click="add()" type="button" class="btn btn-primary btn-lg">Add</button>
+		<button ng-if="mode=='edit'" ng-click="update()" type="button" class="btn btn-primary btn-lg">Update</button>
+	</div>
+</div>
+<br/>
 <div class="row">
 	<div class="col-sm-2" ng-repeat="product in products">
-		<div class="thumbnail" style="text-align: center;">
-			<img class="img-circle" src="images/NoImageFound.jpg" alt="" width="120">
+		<div ng-click="edit(product)" class="thumbnail" style="text-align: center;">
+			<img class="img-circle" src="images/{{product.name|lowercase}}.jpg" alt="" width="120">
 			<div class="caption">
 				<h3>{{product.name}}</h3>
-				<p>{{product.measurementUnit}}</p>
+				<p>{{product.measuredIn}}</p>
 			</div>
 		</div>
 	</div>

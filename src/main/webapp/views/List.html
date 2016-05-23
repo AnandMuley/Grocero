@@ -1,0 +1,31 @@
+<div class="row page-header">
+	<div class="col-sm-11 page-title">Grocery List</div>
+	<div class="col-sm-1">
+		<span class="glyphicon glyphicon-plus-sign add-product" ng-click="addProduct()"></span>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-3"></div>
+	<div class="col-sm-6">
+		<table class="table table-bordered">
+			<tr>
+				<th>Sr.No</th>
+				<th>Product</th>
+				<th>Quantity</th>
+				<th>MeasuredIn</th>
+			</tr>
+			<tr ng-repeat="item in list">
+				<td>{{$index+1}}</td>
+				<td>
+					<select ng-model="item.product" class="form-control">
+						<option ng-value="{{product}}" ng-repeat="product in products">{{product.name}}</option>
+					</select>
+				</td>
+				<td>
+					<input class="form-control input-sm" ng-model="item.quantity" placeholder="Quantity"/>
+				</td>
+				<td>{{item.product.measuredIn}}</td>
+			</tr>
+		</table>
+	</div>
+</div>

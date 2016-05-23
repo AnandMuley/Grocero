@@ -1,5 +1,15 @@
 @CHARSET "UTF-8";
 
+.add-product{
+	font-size:20px;
+	cursor: pointer;
+}
+
+.page-title{
+	font-size: 30px !important;
+}
+
+
 body {
 	font-family: "Roboto", sans-serif;
 }

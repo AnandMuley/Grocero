@@ -1,11 +1,11 @@
 package com.grocero.resources;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -37,10 +37,17 @@ public class ProductResource {
 	@GET
 	@Path("list")
 	public Response getAll() {
-		List<ProductDto> productDtos = new ArrayList<ProductDto>();
-		productDtos.add(new ProductDto("101", "Oil", "Litre"));
-		productDtos.add(new ProductDto("102", "Sugar", "Kilograms"));
+		List<ProductDto> productDtos = productService.getAll();
 		return Response.ok(productDtos).build();
+	}
+
+	@PUT
+	@Path("{productId}")
+	public Response updateProduct(@PathParam("productId") String productId,
+			ProductDto productDto) {
+		productDto.setId(productId);
+		productService.update(productDto);
+		return Response.ok().build();
 	}
 
 	@GET

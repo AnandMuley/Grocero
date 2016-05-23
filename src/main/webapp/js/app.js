@@ -13,8 +13,11 @@ app.config(['$routeProvider',function($routeProvider){
 	}).when('/products',{
 		templateUrl : 'views/Products.html',
 		controller : 'ProductsController'
+	}).when('/list',{
+		templateUrl : 'views/List.html',
+		controller : 'ListController'
 	});
 	
 }]);
 
-app.value('RestPrefix','http://localhost:8080/Grocero/rest/');
+app.value('RestPrefix','rest/');

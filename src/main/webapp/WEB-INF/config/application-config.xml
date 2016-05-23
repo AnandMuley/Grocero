@@ -17,8 +17,7 @@
 		<import resource="spring-mongo-config.xml"/>
 		
 		<!-- Auto scan the components  -->
-		<context:component-scan base-package="com.merobo"/> 
-	<!-- 	<context:component-scan base-package="com.merobo.services"/>  -->
+		<context:component-scan base-package="com.grocero"/> 
 		
 		<!-- Annotation Based Binding -->
 		<mvc:annotation-driven/>
