@@ -1,5 +1,10 @@
 @CHARSET "UTF-8";
 
+.delete-row{
+	color: red;
+	cursor: pointer;
+}
+
 .add-product{
 	font-size:20px;
 	cursor: pointer;

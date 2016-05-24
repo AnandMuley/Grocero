@@ -10,22 +10,31 @@
 		<table class="table table-bordered">
 			<tr>
 				<th>Sr.No</th>
-				<th>Product</th>
+				<th width="60%">Product</th>
 				<th>Quantity</th>
 				<th>MeasuredIn</th>
+				<th>Actions</th>
 			</tr>
 			<tr ng-repeat="item in list">
 				<td>{{$index+1}}</td>
-				<td>
+				<td width="60%">
 					<select ng-model="item.product" class="form-control">
-						<option ng-value="{{product}}" ng-repeat="product in products">{{product.name}}</option>
+						<option value="{{product}}" ng-repeat="product in products">{{product.name}}</option>
 					</select>
 				</td>
 				<td>
 					<input class="form-control input-sm" ng-model="item.quantity" placeholder="Quantity"/>
 				</td>
-				<td>{{item.product.measuredIn}}</td>
+				<td>{{getMeasuredIn(item.product)}}</td>
+				<td align="center"><span ng-click="deleteRow(item)" class="glyphicon glyphicon-minus-sign delete-row"></span></td>
 			</tr>
+			<tfoot>
+				<tr>
+					<td colspan="5" align="right">
+						<button type="button" class="btn btn-primary">Save</button>
+					</td>	
+				</tr>
+			</tfoot>
 		</table>
 	</div>
 </div>

@@ -33,12 +33,12 @@
 			<nav class="nav navbar-default navbar-custom" ng-controller="TabsController">
 				<div class="container-fluid">
 					<div class="row">
-						<div align="center" class="col-sm-12 navbar-header site-title">Grocero</div>
+						<div class="col-sm-12 navbar-header site-title">Grocero</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
-							<ul style="width: 100%" class="nav navbar-nav custom-nav">
-								<li style="width: 25%;text-align: center;" ng-repeat="tab in tabs">
+							<ul class="nav navbar-nav custom-nav">
+								<li style="text-align: center;" ng-repeat="tab in tabs">
 									<a ng-click="loadView(tab)" href="#/{{tab}}">{{tab|uppercase}}</a>
 								</li>
 							</ul>
