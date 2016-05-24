@@ -16,6 +16,9 @@ app.config(['$routeProvider',function($routeProvider){
 	}).when('/list',{
 		templateUrl : 'views/List.html',
 		controller : 'ListController'
+	}).when('/viewlists',{
+		templateUrl : 'views/GroceryLists.html',
+		controller : 'GroceryListsController'
 	});
 	
 }]);

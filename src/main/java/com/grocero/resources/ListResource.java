@@ -1,6 +1,7 @@
 package com.grocero.resources;
 
 import java.net.URI;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -38,6 +39,13 @@ public class ListResource {
 		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
 		URI uri = builder.path(groceryListDto.getId()).build();
 		return Response.created(uri).build();
+	}
+
+	@GET
+	@Path("list")
+	public Response fetchAll() {
+		List<GroceryListDto> groceryLists = groceryListService.fetchAll();
+		return Response.ok(groceryLists).build();
 	}
 
 	@GET

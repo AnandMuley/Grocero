@@ -24,6 +24,7 @@
 <script type="text/javascript" src="js/controllers/HomeController.js"></script>
 <script type="text/javascript" src="js/controllers/ProductsController.js"></script>
 <script type="text/javascript" src="js/controllers/ListController.js"></script>
+<script type="text/javascript" src="js/controllers/GroceryListsController.js"></script>
 <!-- REST Resources -->
 <script type="text/javascript" src="js/resources/ProductResource.js"></script>
 <script type="text/javascript" src="js/resources/GroceryListResource.js"></script>
@@ -40,7 +41,7 @@
 						<div class="col-sm-12">
 							<ul class="nav navbar-nav custom-nav">
 								<li style="text-align: center;" ng-repeat="tab in tabs">
-									<a ng-click="loadView(tab)" href="#/{{tab}}">{{tab|uppercase}}</a>
+									<a ng-click="loadView(tab)" href="#/{{tab.path}}">{{tab.name|uppercase}}</a>
 								</li>
 							</ul>
 						</div>

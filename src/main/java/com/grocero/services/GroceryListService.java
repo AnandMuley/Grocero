@@ -1,5 +1,8 @@
 package com.grocero.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +36,18 @@ public class GroceryListService {
 				.createGroceryListBean(groceryListDto);
 		groceryListRepository.save(groceryListBean);
 		groceryListDto.setId(groceryListBean.getId());
+	}
+
+	public List<GroceryListDto> fetchAll() {
+		List<GroceryListBean> groceryListBeans = groceryListRepository
+				.findAll();
+		List<GroceryListDto> groceryListDtos = new ArrayList<GroceryListDto>();
+		for (GroceryListBean groceryListBean : groceryListBeans) {
+			GroceryListDto groceryListDto = dtoCreatorUtil
+					.createGroceryListDto(groceryListBean);
+			groceryListDtos.add(groceryListDto);
+		}
+		return groceryListDtos;
 	}
 
 }
