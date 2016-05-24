@@ -8,6 +8,7 @@ version = '1.0'
 
 def SpringVersion = '4.0.0.RELEASE'
 def SpringDataMongoVersion = '1.6.0.RELEASE'
+def jerseyVersion='1.8'
 
 jar {
     manifest {
@@ -36,9 +37,10 @@ ext{
     ]
     
     jersey = [
-		server : 'com.sun.jersey:jersey-server:1.8',
-		inmemorytest : 'com.sun.jersey.jersey-test-framework:jersey-test-framework-inmemory:1.8',
-		spring : 'com.sun.jersey.contribs:jersey-spring:1.8'
+		server : "com.sun.jersey:jersey-server:${jerseyVersion}",
+		inmemorytest : "com.sun.jersey.jersey-test-framework:jersey-test-framework-inmemory:${jerseyVersion}",
+		spring : "com.sun.jersey.contribs:jersey-spring:${jerseyVersion}",
+		linking : "com.sun.jersey:jersey-server-linking:${jerseyVersion}"
 		
 	]
 	

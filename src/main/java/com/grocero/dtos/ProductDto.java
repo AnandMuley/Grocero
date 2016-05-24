@@ -5,6 +5,7 @@ public class ProductDto {
 	private String id;
 	private String name;
 	private String measuredIn;
+	private Integer quantity;
 
 	public ProductDto() {
 	}
@@ -40,10 +41,18 @@ public class ProductDto {
 		this.measuredIn = measuredIn;
 	}
 
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductDto [id=" + id + ", name=" + name + ", measuredIn="
-				+ measuredIn + "]";
+				+ measuredIn + ", quantity=" + quantity + "]";
 	}
 
 }

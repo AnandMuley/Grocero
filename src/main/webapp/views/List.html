@@ -7,7 +7,8 @@
 <div class="row">
 	<div class="col-sm-3"></div>
 	<div class="col-sm-6">
-		<table class="table table-bordered">
+		<!-- Create MODE Table -->
+		<table ng-if="mode=='create'" class="table table-bordered">
 			<tr>
 				<th>Sr.No</th>
 				<th width="60%">Product</th>
@@ -15,7 +16,7 @@
 				<th>MeasuredIn</th>
 				<th>Actions</th>
 			</tr>
-			<tr ng-repeat="item in list">
+			<tr ng-repeat="item in list.items">
 				<td>{{$index+1}}</td>
 				<td width="60%">
 					<select ng-model="item.product" class="form-control">
@@ -31,7 +32,27 @@
 			<tfoot>
 				<tr>
 					<td colspan="5" align="right">
-						<button type="button" class="btn btn-primary">Save</button>
+						<button type="button" ng-click="saveList()" class="btn btn-primary">Save</button>
+					</td>	
+				</tr>
+			</tfoot>
+		</table>
+		<!-- View MODE Table -->
+		<table ng-if="mode=='view'" class="table table-bordered">
+			<tr>
+				<th>Sr.No</th>
+				<th width="60%">Product</th>
+				<th>Quantity</th>
+			</tr>
+			<tr ng-repeat="item in list.items">
+				<td>{{$index+1}}</td>
+				<td width="60%">{{item.name}}</td>
+				<td>{{item.quantity}} &nbsp; {{item.measuredIn}}</td>
+			</tr>
+			<tfoot>
+				<tr>
+					<td colspan="5" align="right">
+						<button type="button" ng-click="backToCreateList()" class="btn btn-link">Back</button>
 					</td>	
 				</tr>
 			</tfoot>

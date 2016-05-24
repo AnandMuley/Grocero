@@ -10,6 +10,7 @@ public class ProductBean {
 	private String id;
 	private String name;
 	private String measuredIn;
+	private Integer quantity;
 
 	public ProductBean() {
 	}
@@ -45,10 +46,18 @@ public class ProductBean {
 		this.measuredIn = measuredIn;
 	}
 
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductBean [id=" + id + ", name=" + name + ", measuredIn="
-				+ measuredIn + "]";
+				+ measuredIn + ", quantity=" + quantity + "]";
 	}
 
 }
