@@ -50,4 +50,8 @@ public class GroceryListService {
 		return groceryListDtos;
 	}
 
+	public void delete(String listId) {
+		groceryListRepository.delete(listId);
+	}
+
 }

@@ -3,4 +3,11 @@ controllers.controller('GroceryListsController',
 	
 	$scope.groceryLists = GroceryList.query();
 	
+	$scope.deleteList = function(list){
+		$id=list.id;
+		list.$delete({listId:$id},function(){
+			$scope.groceryLists = GroceryList.query();
+		});
+	}
+	
 }]);

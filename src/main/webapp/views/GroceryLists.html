@@ -2,18 +2,23 @@
 	<div class="col-sm-12 page-title">Grocery Lists</div>
 </div>
 <div class="row">
-	<div class="col-sm-4"></div>
-	<div class="col-sm-4">
-		<div class="list-group">
-			<a href="#" class="list-group-item active">
-				<h4>Grocery Lists</h4>
-			</a>
-			<a ng-repeat="item in groceryLists" href="#" class="list-group-item">
-				<span class="badge">{{item.items.length}}</span>
-				<div class="row">
-					<div ng-repeat="product in item.items" class="col-sm-3">{{product.name}}</div>
-				</div>
-			</a>
+	<!-- Grocery List Container -->
+	<div class="col-sm-2 product-list-panel" ng-repeat="list in groceryLists">
+		<div class="row list-name">{{list.name}}</div>
+		<div ng-repeat="product in list.items" class="row">
+			<div class="col-sm-9 content-pane">
+				<div class="row product-name">{{product.name}}</div>
+				<div class="row product-details">{{product.quantity}} {{product.measuredIn}}</div>
+			</div>
+			<div class="col-sm-1">
+				<input class="checkbox-product" type="checkbox"/>
+			</div>
+		</div>
+		<div class="row footer">
+			<div class="col-sm-9"></div>
+			<div class="col-sm-1">
+				<div ng-click="deleteList(list)" class="glyphicon glyphicon-trash"></div>
+			</div>
 		</div>
 	</div>
 </div>

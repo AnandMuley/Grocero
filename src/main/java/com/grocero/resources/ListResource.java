@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -53,6 +54,13 @@ public class ListResource {
 	public Response getById(@PathParam("listId") String listId) {
 		GroceryListDto groceryListDto = groceryListService.findById(listId);
 		return Response.ok(groceryListDto).build();
+	}
+	
+	@DELETE
+	@Path("{listId}")
+	public Response deleteList(@PathParam("listId")String listId){
+		groceryListService.delete(listId);
+		return Response.ok().build();
 	}
 
 }

@@ -11,7 +11,8 @@ import com.grocero.dtos.ProductDto;
 public class BeanCreatorUtil {
 
 	public GroceryListBean createGroceryListBean(GroceryListDto groceryListDto) {
-		GroceryListBean groceryListBean = new GroceryListBean();
+		GroceryListBean groceryListBean = new GroceryListBean(
+				groceryListDto.getName());
 		for (ProductDto productDto : groceryListDto.getItems()) {
 			ProductBean productBean = createProductBean(productDto);
 			productBean.setId(productDto.getId());

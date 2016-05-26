@@ -11,7 +11,16 @@ public class GroceryListBean {
 
 	@Id
 	private String id;
+	private String name;
 	private List<ProductBean> items = new ArrayList<ProductBean>();
+
+	public GroceryListBean() {
+	}
+
+	public GroceryListBean(String name) {
+		super();
+		this.name = name;
+	}
 
 	public String getId() {
 		return id;
@@ -25,9 +34,18 @@ public class GroceryListBean {
 		return items;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public String toString() {
-		return "GroceryListBean [id=" + id + ", items=" + items + "]";
+		return "GroceryListBean [id=" + id + ", name=" + name + ", items="
+				+ items + "]";
 	}
 
 }
