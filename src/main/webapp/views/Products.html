@@ -4,18 +4,17 @@
 		Manage Products
 	</div>
 	<div class="col-sm-3">
-		<input class="form-control input-lg" ng-model="product.name" placeholder="Product Name"/>
+		<input class="form-control" ng-model="product.name" placeholder="Product Name"/>
 	</div>
 	<div class="col-sm-3">
-		<input class="form-control input-lg" ng-model="product.measuredIn" placeholder="Measured In"/>
+		<input class="form-control" ng-model="product.measuredIn" placeholder="Measured In"/>
 	</div>
 	<div class="col-sm-3">
-		<button ng-if="mode=='add'" ng-click="add()" type="button" class="btn btn-primary btn-lg">Add</button>
-		<button ng-if="mode=='edit'" ng-click="update()" type="button" class="btn btn-primary btn-lg">Update</button>
+		<button ng-if="mode=='add'" ng-click="add()" type="button" class="btn btn-primary">Add</button>
+		<button ng-if="mode=='edit'" ng-click="update()" type="button" class="btn btn-primary">Update</button>
 	</div>
 </div>
-<br/>
-<div class="row">
+<div class="row products-display-panel">
 	<div class="col-sm-2" ng-repeat="product in products">
 		<div ng-click="edit(product)" class="thumbnail" style="text-align: center;">
 			<img class="img-circle" src="images/{{product.name|lowercase}}.jpg" alt="" width="120">

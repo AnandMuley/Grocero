@@ -1,10 +1,12 @@
 <div class="row page-header">
-	<div class="col-sm-12 page-title">Grocery Lists</div>
+	<div class="col-sm-12 page-title">My Lists</div>
 </div>
 <div class="row">
 	<!-- Grocery List Container -->
 	<div class="col-sm-2 product-list-panel" ng-repeat="list in groceryLists">
-		<div class="row list-name">{{list.name}}</div>
+		<div class="row list-name">
+			<div class="col-sm-12">{{list.name}}</div>
+		</div>
 		<div ng-repeat="product in list.items" class="row">
 			<div class="col-sm-9 content-pane">
 				<div class="row product-name">{{product.name}}</div>

@@ -1,0 +1,70 @@
+<div class="row page-header">
+	<div class="col-sm-6 page-title">Veggies</div>
+</div>
+<div class="row">
+	<div id="add-veggie-panel" class="col-sm-3">
+		<div class="row create-listname">
+			<div class="col-sm-12">Add Item</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<select ng-model="item.product" class="form-control input-lg">
+					<option value="{{product}}" ng-repeat="product in products">{{product.name}}</option>
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<input class="form-control input-lg" ng-model="item.quantity" placeholder="Quantity"/>
+			</div>
+			<div class="col-sm-5 measuredIn">{{getMeasuredIn(item.product)}}</div>
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-sm-12">
+				<button ng-click="addItem()" type="button" class="btn btn-lg btn-success btn-block">Add</button>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-3">
+		<!-- Create MODE Table -->
+		<!-- Grocery List Container -->
+		<div class="row product-list-panel">
+			<div class="row list-name">
+				<div ng-if="!nameswitch" ng-click="toggleNameSwitch()" class="col-sm-12">{{list.name}}</div>
+				<div ng-if="nameswitch" class="col-sm-12">
+					<input ng-blur="toggleNameSwitch()" maxlength="39" class="form-control input-lg" placeholder="Enter List Name" ng-model="list.name"/>
+				</div>
+			</div>
+			<div ng-repeat="listitem in list.items" class="row">
+				<div class="col-sm-9 content-pane">
+					<div class="row product-name">{{listitem.product.name}}</div>
+					<div class="row product-details">{{listitem.quantity}} {{listitem.product.measuredIn}}</div>
+				</div>
+			</div>
+			<div ng-if="list.items.length>0" class="row footer">
+				<div ng-click="saveList()" class="glyphicon glyphicon-floppy-disk"></div>
+			</div>
+		</div>
+		<!-- View MODE Table -->
+		<table ng-if="mode=='view'" class="table table-bordered">
+			<tr>
+				<th>Sr.No</th>
+				<th width="60%">Product</th>
+				<th>Quantity</th>
+			</tr>
+			<tr ng-repeat="item in list.items">
+				<td>{{$index+1}}</td>
+				<td width="60%">{{item.name}}</td>
+				<td>{{item.quantity}} &nbsp; {{item.measuredIn}}</td>
+			</tr>
+			<tfoot>
+				<tr>
+					<td colspan="5" align="right">
+						<button type="button" ng-click="backToCreateList()" class="btn btn-link">Back</button>
+					</td>	
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</div>

@@ -7,11 +7,11 @@ controllers.controller('TabsController',['$scope','$location',function($scope,$l
 	            	   path:"products",
 	            	   name:"products"
 	               },{
-	            	   path:"list",
-	            	   name:"list"
+	            	   path:"vegetables",
+	            	   name:"vegetables"
 	               },{
-	            	   path:"viewlists",
-	            	   name:"view lists"
+	            	   path:"groceries",
+	            	   name:"groceries"
 	               }];
 	
 	$scope.loadView = function(tab){

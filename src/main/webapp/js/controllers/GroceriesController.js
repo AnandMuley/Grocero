@@ -1,10 +1,21 @@
-controllers.controller('ListController',['$scope','ProductResource','GroceryListResource',function($scope,Product,GroceryList){
+controllers.controller('GroceriesController',
+		['$scope','ProductResource','GroceryListResource','$location',
+		 function($scope,Product,GroceryList,$location){
 	
 	$scope.products = Product.query();
-	$scope.list = new GroceryList({items:[]});
+	$scope.list = new GroceryList({name:"Enter List Name",items:[]});
 	$scope.itemIndex = 0;
 	$scope.mode="create";
+	$scope.nameswitch = false;
 	
+	$scope.toggleNameSwitch = function(){
+		$scope.nameswitch=!$scope.nameswitch;	
+		if($scope.list.name=='Enter List Name'){
+			$scope.list.name = "";
+		}else if($scope.list.name==""){
+			$scope.list.name = "Enter List Name";
+		}
+	}
 	
 	$scope.enlist = function(product){
 		$scope.list.items.push(product);
@@ -15,6 +26,12 @@ controllers.controller('ListController',['$scope','ProductResource','GroceryList
 		if(index!=-1){
 			$scope.list.items.splice(index,1);
 		}
+	}
+
+	$scope.addItem = function(){
+		$scope.item.product = $scope.getProductFromJSON($scope.item.product);
+		$scope.list.items.push($scope.item);
+		$scope.item = {};
 	}
 	
 	$scope.addProduct = function(){
@@ -33,8 +50,6 @@ controllers.controller('ListController',['$scope','ProductResource','GroceryList
 		}
 		return prod;
 	}
-	
-	$scope.addProduct();
 	
 	$scope.getMeasuredIn = function(product){
 		var measuredIn = '';
@@ -62,12 +77,13 @@ controllers.controller('ListController',['$scope','ProductResource','GroceryList
 	
 	$scope.saveList = function(){
 		for(var index=0;index<$scope.list.items.length;index++){
-			var product = $scope.getProductFromJSON($scope.list.items[index].product);
+			var product = $scope.list.items[index].product;
 			product.quantity = $scope.list.items[index].quantity;
 			$scope.list.items[index] = product;
 		}
 		$scope.list.$save(function(value,getResponseHeaders){
-			$scope.viewGroceryList(getResponseHeaders);
+//			$scope.viewGroceryList(getResponseHeaders);
+			$location.path('home');
 		});
 	}
 	

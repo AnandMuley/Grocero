@@ -5,20 +5,21 @@ var services = angular.module('guiServices',['ngResource']);
 app.config(['$routeProvider',function($routeProvider){
 	
 	$routeProvider.when('/',{
-		templateUrl:'views/Home.html',
-		controller : 'HomeController'
+		redirectTo:'/mylists'
 	}).when('/home',{
-		templateUrl : 'views/Home.html',
-		controller : 'HomeController'
+		redirectTo : '/mylists'
 	}).when('/products',{
 		templateUrl : 'views/Products.html',
 		controller : 'ProductsController'
-	}).when('/list',{
-		templateUrl : 'views/List.html',
-		controller : 'ListController'
-	}).when('/viewlists',{
-		templateUrl : 'views/GroceryLists.html',
-		controller : 'GroceryListsController'
+	}).when('/vegetables',{
+		templateUrl : 'views/Vegetables.html',
+		controller : 'VegetablesController'
+	}).when('/mylists',{
+		templateUrl : 'views/MyLists.html',
+		controller : 'MyListsController'
+	}).when('/groceries',{
+		templateUrl: 'views/Groceries.html',
+		controller : 'GroceriesController'
 	});
 	
 }]);

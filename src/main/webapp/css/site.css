@@ -4,23 +4,83 @@
 	--site-navbar-color:#ff6f1b;
 	--color-blue:#0064ff;
 	--color-gray: rgba(166, 166, 166, 0.22);
+	--color-faintorange:#ffae7f;
 	--size5:17px;
 	--size6:12px;
 	--size4:22px;
+	--size3:25px;
 	--color-faintgray:rgba(250, 250, 250, 1);
 	--color-darkgray:gray;
+	--color-green:#419641;
+}
+
+.footer{
+	text-align: center;
+	color: var(--color-green);
+}
+
+.glyphicon-floppy-disk{
+	font-size: 40px;
+	padding: 8px 5px 5px 8px;
+}
+
+.glyphicon-floppy-disk:HOVER{
+	border-radius:3px;
+	border: solid 1px;
+	cursor: pointer;
+	background-color: var(--color-green);
+	color: white;
+}
+
+.measuredIn{
+	font-size: var(--size4);
+	font-weight: 300;
+	padding-top: 8px;
+}
+
+#add-veggie-panel{
+	padding: 0px 25px 35px 25px;
+	border: solid 1px var(--color-gray);
+	border-radius:3px !important;
+	background-color: var(--color-faintgray);
+}
+
+#add-veggie-panel .row{
+	margin-top: 10px;
 }
 
 .content-pane{
 	padding-left: 30px;
 }
 
+.create-listname{
+	background-color: var(--color-green);
+	padding: 33px 10px 20px 10px;
+	margin: 0px -26px 35px -26px !important;
+	border-top-right-radius:3px;
+	border-top-left-radius:3px;
+	min-height: 100px;
+    font-size: 30px;
+    font-weight: 300;
+    text-align: center;
+    color: white;
+}
+
+.products-display-panel{
+	max-height: 350px;
+    overflow-y: scroll;
+    border: solid 1px var(--color-gray);
+    margin-top: 0px;
+    padding: 20px;
+}
+
 .list-name {
+	font-weight:300;
 	font-size: var(--size4);
 	border-bottom: solid 1px var(--color-gray);
-	min-height: 40px;
+	min-height: 50px;
 	margin-bottom: 15px;
-	padding-left: 18px;
+	padding-bottom: 20px;
 }
 
 .glyphicon-trash:HOVER{
@@ -39,6 +99,7 @@
 
 .form-control{
 	border-radius:3px !important;
+	font-weight: 300;
 }
 
 .view-listname{
@@ -52,16 +113,19 @@
     border-radius: 2px;
     background-color: var(--color-faintgray);
     margin-left: 10px;
+    margin-bottom: 10px;
 }
 
 .product-name{
 	color: var(--color-blue);
-	font-size: var(--size5);
+	font-size: var(--size3);
+	font-weight: 300;
 }
 
 .product-details{
 	color: var(--color-darkgray);
-	font-size: var(--size6);
+	font-size: var(--size5);
+	font-weight: 300;
 }
 
 .checkbox-product {
@@ -81,6 +145,7 @@
 
 .page-title {
 	font-size: 30px !important;
+	font-weight: 300;
 }
 
 body {
@@ -97,6 +162,8 @@ body {
 
 .custom-nav {
 	margin-top: 15px;
+	font-weight: 400;
+	letter-spacing: 1px;
 }
 
 .site-title {
