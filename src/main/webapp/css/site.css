@@ -14,6 +14,28 @@
 	--color-green:#419641;
 }
 
+.total-cost{
+	font-size: var(--size4);
+}
+
+.listitem-row{
+	padding: 10px 0px 10px 0px;
+}
+
+.list-display{
+	border: solid 1px var(--color-gray);	
+	padding: 20px !important;
+}
+
+.listname{
+	font-size: var(--size3);
+}
+
+.listitem{
+	font-size: var(--size5);
+	font-weight: 300;
+}
+
 .footer{
 	text-align: center;
 	color: var(--color-green);

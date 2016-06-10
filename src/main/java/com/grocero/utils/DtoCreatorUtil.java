@@ -17,6 +17,7 @@ public class DtoCreatorUtil {
 		for (ProductBean productBean : groceryListBean.getItems()) {
 			ProductDto productDto = createProductDto(productBean);
 			productDto.setQuantity(productBean.getQuantity());
+			productDto.setCost(productBean.getCost());
 			groceryListDto.getItems().add(productDto);
 		}
 		return groceryListDto;

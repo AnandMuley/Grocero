@@ -1,0 +1,43 @@
+<div class="row page-header">
+	<div class="col-sm-4 page-title">Purchases</div>
+</div>
+<div id="selectListRow" class="row">
+	<div class="col-sm-4"></div>
+	<div class="col-sm-4">
+		<select ng-change="showList()" ng-model="selected" class="form-control input-lg">
+			<option value="default">Select List</option>
+			<option value="{{item}}" ng-repeat="item in list">{{item.name}}</option>
+		</select>
+	</div>
+</div>
+<br>
+<div ng-if="message!=null" class="row">
+	<div class="col-sm-4"></div>
+	<div class="col-sm-4">
+		<div class="col-sm-12 alert alert-success">{{message}}</div>	
+	</div>
+</div>
+<br/>
+<div class="row" ng-if="selected!='default'">
+	<div class="col-sm-4"></div>
+	<div class="col-sm-4 list-display">
+		<div class="row">
+			<div class="col-sm-12 listname">{{selected.name}}</div>
+		</div>
+		<hr>
+		<div ng-repeat="item in selected.items" class="row listitem-row">
+			<div class="col-sm-9 listitem">{{item.name}}</div>
+			<div class="col-sm-3">
+				<input class="form-control" ng-model="item.cost" placeholder="Cost"/>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-sm-4">
+				<button ng-click="updateCosts()" type="button" class="btn btn-success">UPDATE</button>
+			</div>
+			<div align="right" class="col-sm-5 total-cost">Total</div>
+			<div align="right" class="col-sm-3 total-cost">&#8377; {{totalCost}}</div>
+		</div>
+	</div>
+</div>
