@@ -20,6 +20,9 @@ app.config(['$routeProvider',function($routeProvider){
 	}).when('/groceries',{
 		templateUrl: 'views/Groceries.html',
 		controller : 'GroceriesController'
+	}).when('/purchases',{
+		templateUrl: 'views/Purchases.html',
+		controller: 'PurchasesController'
 	});
 	
 }]);

@@ -12,6 +12,9 @@ controllers.controller('TabsController',['$scope','$location',function($scope,$l
 	               },{
 	            	   path:"groceries",
 	            	   name:"groceries"
+	               },{
+	            	   path:"purchases",
+	            	   name:"purchases"
 	               }];
 	
 	$scope.loadView = function(tab){

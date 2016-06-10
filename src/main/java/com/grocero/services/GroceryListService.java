@@ -54,4 +54,11 @@ public class GroceryListService {
 		groceryListRepository.delete(listId);
 	}
 
+	public void update(GroceryListDto groceryListDto) {
+		GroceryListBean groceryListBean = beanCreatorUtil
+				.createGroceryListBean(groceryListDto);
+		groceryListBean.setId(groceryListDto.getId());
+		groceryListRepository.save(groceryListBean);
+	}
+
 }

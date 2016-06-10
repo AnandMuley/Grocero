@@ -11,6 +11,7 @@ public class ProductBean {
 	private String name;
 	private String measuredIn;
 	private Integer quantity;
+	private Double cost;
 
 	public ProductBean() {
 	}
@@ -54,10 +55,19 @@ public class ProductBean {
 		this.quantity = quantity;
 	}
 
+	public Double getCost() {
+		return cost;
+	}
+
+	public void setCost(Double cost) {
+		this.cost = cost;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductBean [id=" + id + ", name=" + name + ", measuredIn="
-				+ measuredIn + ", quantity=" + quantity + "]";
+				+ measuredIn + ", quantity=" + quantity + ", cost=" + cost
+				+ "]";
 	}
 
 }

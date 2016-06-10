@@ -7,6 +7,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -42,6 +43,15 @@ public class ListResource {
 		return Response.created(uri).build();
 	}
 
+	@PUT
+	@Path("{listId}")
+	public Response update(@PathParam("listId") String listId,
+			GroceryListDto groceryListDto) {
+		groceryListDto.setId(listId);
+		groceryListService.update(groceryListDto);
+		return Response.ok().build();
+	}
+
 	@GET
 	@Path("list")
 	public Response fetchAll() {
@@ -55,10 +65,10 @@ public class ListResource {
 		GroceryListDto groceryListDto = groceryListService.findById(listId);
 		return Response.ok(groceryListDto).build();
 	}
-	
+
 	@DELETE
 	@Path("{listId}")
-	public Response deleteList(@PathParam("listId")String listId){
+	public Response deleteList(@PathParam("listId") String listId) {
 		groceryListService.delete(listId);
 		return Response.ok().build();
 	}

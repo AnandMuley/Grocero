@@ -17,6 +17,7 @@ public class BeanCreatorUtil {
 			ProductBean productBean = createProductBean(productDto);
 			productBean.setId(productDto.getId());
 			productBean.setQuantity(productDto.getQuantity());
+			productBean.setCost(productDto.getCost());
 			groceryListBean.getItems().add(productBean);
 		}
 		return groceryListBean;
