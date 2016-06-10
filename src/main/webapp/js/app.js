@@ -1,4 +1,4 @@
-var app = angular.module('GroceroUI',['ngRoute','guiControllers','guiServices']);
+var app = angular.module('GroceroUI',['ngMaterial','ngRoute','guiControllers','guiServices']);
 var controllers = angular.module('guiControllers',[]);
 var services = angular.module('guiServices',['ngResource']);
 

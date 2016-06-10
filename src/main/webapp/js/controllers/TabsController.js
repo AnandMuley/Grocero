@@ -15,7 +15,9 @@ controllers.controller('TabsController',['$scope','$location',function($scope,$l
 	               }];
 	
 	$scope.loadView = function(tab){
-		$location.path(tab);
+		$location.path(tab.name);
 	}
+	
+	$scope.currentNavItem = 'page1';
 	
 }]);

@@ -1,24 +1,25 @@
 <!DOCTYPE html>
-<html ng-app="GroceroUI" lang="en">
+<html ng-app="GroceroUI" lang="en" ng-cloak>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Grocero</title>
+
+<link rel="stylesheet" type="text/css" href="bower_components/angular-material/angular-material.min.css">
+
 <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-animate/angular-animate.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-aria/angular-aria.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-messages/angular-messages.min.js"></script>
 <script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
 <script type="text/javascript" src="bower_components/angular-resource/angular-resource.min.js"></script>
+<!-- Angular Material -->
+<script type="text/javascript" src="bower_components/angular-material/angular-material.min.js"></script>
 
 <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 
-<!-- Bootstrap -->
-<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
-
-<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
 <!-- GroceroUI -->
-<link rel="stylesheet" type="text/css" href="css/site.css">
+<!-- <link rel="stylesheet" type="text/css" href="css/site.css"> -->
 <script type="text/javascript" src="js/app.js"></script>
 <script type="text/javascript" src="js/controllers/TabsController.js"></script>
 <script type="text/javascript" src="js/controllers/HomeController.js"></script>
@@ -31,8 +32,13 @@
 <script type="text/javascript" src="js/resources/GroceryListResource.js"></script>
 
 </head>
-<body class="container-fluid">
-		<div class="header">
+<body ng-controller="TabsController">
+	<md-content class="md-padding">
+		<md-tabs md-dynamic-height md-border-bottom>
+			<md-tab ng-click="loadView(tab)" ng-repeat="tab in tabs" label="{{tab.name}}"></md-tab>
+		</md-tabs>
+    </md-content>
+	<!-- 	<div class="header">
 			<nav class="nav navbar-default navbar-custom" ng-controller="TabsController">
 				<div class="container-fluid">
 					<div class="row">
@@ -49,7 +55,7 @@
 					</div>
 				</div>
 			</nav>
-		</div>
+		</div> -->
 		<div class="container-fluid" ng-view></div>
 </body>
 </html>

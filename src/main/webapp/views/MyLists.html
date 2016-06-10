@@ -1,9 +1,37 @@
-<div class="row page-header">
+<!-- <div class="row page-header">
 	<div class="col-sm-12 page-title">My Lists</div>
-</div>
+</div> -->
 <div class="row">
 	<!-- Grocery List Container -->
-	<div class="col-sm-2 product-list-panel" ng-repeat="list in groceryLists">
+	<div layout="row" layout-xs="column">
+		<div flex="20" ng-repeat="list in groceryLists">
+				<md-card md-theme="default" md-theme-watch>
+					<md-card-title>
+						<md-card-title-text>
+							<span class="md-headline">{{list.name}}</span>
+						</md-card-title-text>
+					</md-card-title>	
+					<md-card-content md-padding>
+						<div layout="row" ng-repeat="product in list.items">
+							<div flex="20">
+								<md-checkbox ng-model="product.checked"></md-checkbox>
+							</div>
+							<div flex="80">
+								<span class="md-subhead">{{product.name}}<br/>
+								{{product.quantity}} {{product.measuredIn}}</span>
+							</div>
+						</div>
+					</md-card-content>
+					<md-card-actions layout="row" layout-align="center">
+						<md-button ng-click="deleteList(list)">Delete</md-button>
+						<md-button>Save</md-button>
+					</md-card-actions>
+				</md-card>
+		</div>
+	</div>
+
+	
+<!-- 	<div class="col-sm-2 product-list-panel" ng-repeat="list in groceryLists">
 		<div class="row list-name">
 			<div class="col-sm-12">{{list.name}}</div>
 		</div>
@@ -22,5 +50,5 @@
 				<div ng-click="deleteList(list)" class="glyphicon glyphicon-trash"></div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </div>
