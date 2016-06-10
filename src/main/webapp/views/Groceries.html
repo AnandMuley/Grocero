@@ -1,70 +1,50 @@
-<div class="row page-header">
-	<div class="col-sm-6 page-title">Groceries</div>
-</div>
-<div class="row">
-	<div id="add-veggie-panel" class="col-sm-3">
-		<div class="row create-listname">
-			<div class="col-sm-12">Add Item</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-12">
-				<select ng-model="item.product" class="form-control input-lg">
-					<option value="{{product}}" ng-repeat="product in products">{{product.name}}</option>
-				</select>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-6">
-				<input class="form-control input-lg" ng-model="item.quantity" placeholder="Quantity"/>
-			</div>
-			<div class="col-sm-5 measuredIn">{{getMeasuredIn(item.product)}}</div>
-		</div>
-		<br/>
-		<div class="row">
-			<div class="col-sm-12">
-				<button ng-click="addItem()" type="button" class="btn btn-lg btn-success btn-block">Add</button>
-			</div>
-		</div>
+<div layout="row">
+	<div flex="25">
+		<md-card class="manage-prod-card">
+			<md-card-title>
+				<md-card-title-text>
+					<span class="md-headline">Add Item</span>
+				</md-card-title-text>
+			</md-card-title>
+			<md-card-content>
+				<md-input-container class="md-block">
+					<label>Product</label>
+					<md-select ng-model="item.product">
+						<md-option value="{{product}}" ng-repeat="product in products">{{product.name}}</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container class="md-block" layout="row">
+					<label>Quantity</label>
+					<input flex="50" ng-model="item.quantity"/>&nbsp;&nbsp;<span flex="50">{{getMeasuredIn(item.product)}}</span>
+				</md-input-container>
+			</md-card-content>
+			<md-card-actions layout="row" layout-align="center">
+				<md-button ng-click="addItem()" class="md-raised md-primary">Add</md-button>
+			</md-card-actions>
+		</md-card>
 	</div>
-	<div class="col-sm-3">
-		<!-- Create MODE Table -->
-		<!-- Grocery List Container -->
-		<div class="row product-list-panel">
-			<div class="row list-name">
-				<div ng-if="!nameswitch" ng-click="toggleNameSwitch()" class="col-sm-12">{{list.name}}</div>
-				<div ng-if="nameswitch" class="col-sm-12">
-					<input ng-blur="toggleNameSwitch()" maxlength="39" class="form-control input-lg" placeholder="Enter List Name" ng-model="list.name"/>
-				</div>
-			</div>
-			<div ng-repeat="listitem in list.items" class="row">
-				<div class="col-sm-9 content-pane">
-					<div class="row product-name">{{listitem.product.name}}</div>
-					<div class="row product-details">{{listitem.quantity}} {{listitem.product.measuredIn}}</div>
-				</div>
-			</div>
-			<div ng-if="list.items.length>0" class="row footer">
-				<div ng-click="saveList()" class="glyphicon glyphicon-floppy-disk"></div>
-			</div>
+	<div flex="30">
+				<md-card class="veggie-card-custom" md-theme-watch>
+					<md-card-title class="veggie-card-title">
+						<md-input-container class="md-default md-block">
+							<label>Enter List Name</label>
+							<input maxlength="39" ng-model="list.name"/>
+						</md-input-container>
+					</md-card-title>	
+					<md-card-content class="veggie-card-content" md-padding>
+						<div class="item-row" layout="row" ng-repeat="listitem in list.items">
+							<div flex="20">
+								<md-checkbox ng-model="product.checked"></md-checkbox>
+							</div>
+							<div flex="80">
+								<span class="md-subhead prod-name">{{listitem.product.name}}</span><br/>
+								<span class="prod-subhead">{{listitem.quantity}} {{listitem.product.measuredIn}}</span>
+							</div>
+						</div>
+					</md-card-content>
+					<md-card-actions layout="row" layout-align="center">
+						<md-button ng-click="saveList()">save</md-button>
+					</md-card-actions>
+				</md-card>
 		</div>
-		<!-- View MODE Table -->
-		<table ng-if="mode=='view'" class="table table-bordered">
-			<tr>
-				<th>Sr.No</th>
-				<th width="60%">Product</th>
-				<th>Quantity</th>
-			</tr>
-			<tr ng-repeat="item in list.items">
-				<td>{{$index+1}}</td>
-				<td width="60%">{{item.name}}</td>
-				<td>{{item.quantity}} &nbsp; {{item.measuredIn}}</td>
-			</tr>
-			<tfoot>
-				<tr>
-					<td colspan="5" align="right">
-						<button type="button" ng-click="backToCreateList()" class="btn btn-link">Back</button>
-					</td>	
-				</tr>
-			</tfoot>
-		</table>
-	</div>
 </div>

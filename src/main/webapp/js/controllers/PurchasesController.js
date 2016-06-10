@@ -18,7 +18,9 @@ controllers.controller('PurchasesController',
 		var items = $scope.selected.items; 
 		var len = items.length;
 		for(var i=0;i<len;i++){
-			$scope.totalCost = $scope.totalCost+items[i].cost;
+			if(items[i].cost!=null){
+				$scope.totalCost = $scope.totalCost+parseInt(items[i].cost);
+			}
 		}
 	}
 	

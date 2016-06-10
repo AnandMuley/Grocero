@@ -3,7 +3,7 @@ controllers.controller('VegetablesController',
 		 function($scope,Product,GroceryList,$location){
 	
 	$scope.products = Product.query();
-	$scope.list = new GroceryList({name:"Enter List Name",items:[]});
+	$scope.list = new GroceryList({name:"",items:[]});
 	$scope.itemIndex = 0;
 	$scope.mode="create";
 	$scope.nameswitch = false;

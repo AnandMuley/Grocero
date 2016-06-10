@@ -19,7 +19,7 @@
 <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 
 <!-- GroceroUI -->
-<!-- <link rel="stylesheet" type="text/css" href="css/site.css"> -->
+<link rel="stylesheet" type="text/css" href="css/site.css">
 <script type="text/javascript" src="js/app.js"></script>
 <script type="text/javascript" src="js/controllers/TabsController.js"></script>
 <script type="text/javascript" src="js/controllers/HomeController.js"></script>
@@ -34,29 +34,14 @@
 
 </head>
 <body ng-controller="TabsController">
-	<md-content class="md-padding">
-		<md-tabs md-dynamic-height md-border-bottom>
-			<md-tab ng-click="loadView(tab)" ng-repeat="tab in tabs" label="{{tab.name}}"></md-tab>
-		</md-tabs>
-    </md-content>
-	<!-- 	<div class="header">
-			<nav class="nav navbar-default navbar-custom" ng-controller="TabsController">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-sm-12 navbar-header site-title">Grocero</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-12">
-							<ul class="nav navbar-nav custom-nav">
-								<li style="text-align: center;" ng-repeat="tab in tabs">
-									<a ng-click="loadView(tab)" href="#/{{tab.path}}">{{tab.name|uppercase}}</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</nav>
-		</div> -->
-		<div class="container-fluid" ng-view></div>
+	<div class="header">
+		<div class="site-title">Grocero</div>
+		<md-content class="md-padding navbar">
+			<md-tabs md-dynamic-height md-border-bottom>
+				<md-tab ng-click="loadView(tab)" ng-repeat="tab in tabs" label="{{tab.name}}"></md-tab>
+			</md-tabs>
+	    </md-content>
+    </div>
+	<div class="container-fluid" ng-view></div>
 </body>
 </html>

@@ -1,24 +1,21 @@
-<!-- <div class="row page-header">
-	<div class="col-sm-12 page-title">My Lists</div>
-</div> -->
 <div class="row">
 	<!-- Grocery List Container -->
 	<div layout="row" layout-xs="column">
 		<div flex="20" ng-repeat="list in groceryLists">
-				<md-card md-theme="default" md-theme-watch>
-					<md-card-title>
+				<md-card class="card-custom" md-theme-watch>
+					<md-card-title class="card-title">
 						<md-card-title-text>
-							<span class="md-headline">{{list.name}}</span>
+							<span class="md-headline list-title">{{list.name}}</span>
 						</md-card-title-text>
 					</md-card-title>	
 					<md-card-content md-padding>
-						<div layout="row" ng-repeat="product in list.items">
+						<div class="item-row" layout="row" ng-repeat="product in list.items">
 							<div flex="20">
 								<md-checkbox ng-model="product.checked"></md-checkbox>
 							</div>
 							<div flex="80">
-								<span class="md-subhead">{{product.name}}<br/>
-								{{product.quantity}} {{product.measuredIn}}</span>
+								<span class="md-subhead prod-name">{{product.name}}</span><br/>
+								<span class="prod-subhead">{{product.quantity}} {{product.measuredIn}}</span>
 							</div>
 						</div>
 					</md-card-content>

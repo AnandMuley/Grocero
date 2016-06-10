@@ -1,27 +1,38 @@
 <br/>
-<div class="row page-header">
-	<div class="col-sm-3 page-title">
-		Manage Products
+<div layout="row">
+	<div flex="25">
+		<md-card class="manage-prod-card">
+			<md-card-title>
+				<md-card-title-text>
+					<span class="md-headline">Manage Products</span>
+				</md-card-title-text>
+			</md-card-title>
+			<md-card-content>
+				<md-input-container class="md-block">
+					<label>Product Name</label>
+					<input ng-model="product.name"/>
+				</md-input-container>
+				<md-input-container class="md-block">
+					<label>Measured In</label>
+					<input ng-model="product.measuredIn"/>
+				</md-input-container>
+			</md-card-content>
+			<md-card-actions layout="row" layout-align="center">
+				<md-button ng-if="mode=='add'" ng-click="add()" class="md-raised md-primary">Add</md-button>
+				<md-button ng-if="mode=='edit'" ng-click="update()" class="md-raised md-accent">Update</md-button>
+			</md-card-actions>
+		</md-card>
 	</div>
-	<div class="col-sm-3">
-		<input class="form-control" ng-model="product.name" placeholder="Product Name"/>
-	</div>
-	<div class="col-sm-3">
-		<input class="form-control" ng-model="product.measuredIn" placeholder="Measured In"/>
-	</div>
-	<div class="col-sm-3">
-		<button ng-if="mode=='add'" ng-click="add()" type="button" class="btn btn-primary">Add</button>
-		<button ng-if="mode=='edit'" ng-click="update()" type="button" class="btn btn-primary">Update</button>
-	</div>
-</div>
-<div class="row products-display-panel">
-	<div class="col-sm-2" ng-repeat="product in products">
-		<div ng-click="edit(product)" class="thumbnail" style="text-align: center;">
-			<img class="img-circle" src="images/{{product.name|lowercase}}.jpg" alt="" width="120">
-			<div class="caption">
-				<h3>{{product.name}}</h3>
-				<p>{{product.measuredIn}}</p>
-			</div>
-		</div>
+	<div flex="75">
+		<md-grid-list class="product-list"
+			md-col-xs="1" md-col-sm="2" md-col-md="4" md-cols-gt-md="6" 
+			md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px">
+				<md-grid-tile ng-click="edit(product)" ng-repeat="product in products" class="gray" md-rowspan="1" md-colspan="1" md-colspan-sm="1" md-colspan-xs="1">
+					<img class="img-circle" src="images/{{product.name|lowercase}}.jpg" alt="" width="120">
+			      	<md-grid-tile-footer>
+			        	<h3>{{product.name}}</h3>
+			      	</md-grid-tile-footer>
+			    </md-grid-tile>
+		</md-grid-list>
 	</div>
 </div>
