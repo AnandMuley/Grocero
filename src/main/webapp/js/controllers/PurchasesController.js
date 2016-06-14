@@ -28,7 +28,8 @@ controllers.controller('PurchasesController',
 		$id = $scope.selected.id;
 		$scope.selected.$update({listId:$id},function(){
 			$scope.message = "Details saved successfully !";
-			$scope.selected = 'default';
+//			$scope.selected = 'default';
+			$scope.list = GroceryList.query();
 		});
 	}
 	

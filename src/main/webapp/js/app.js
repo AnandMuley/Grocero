@@ -6,21 +6,19 @@ app.config(['$routeProvider',function($routeProvider){
 	
 	$routeProvider.when('/',{
 		redirectTo:'/mylists'
-	}).when('/home',{
-		redirectTo : '/mylists'
 	}).when('/products',{
 		templateUrl : 'views/Products.html',
 		controller : 'ProductsController'
 	}).when('/vegetables',{
 		templateUrl : 'views/Vegetables.html',
 		controller : 'VegetablesController'
-	}).when('/mylists',{
-		templateUrl : 'views/MyLists.html',
-		controller : 'MyListsController'
+	}).when('/home',{
+		templateUrl : 'views/Home.html',
+		controller : 'HomeController'
 	}).when('/groceries',{
 		templateUrl: 'views/Groceries.html',
 		controller : 'GroceriesController'
-	}).when('/purchases',{
+	}).when('/purchase',{
 		templateUrl: 'views/Purchases.html',
 		controller: 'PurchasesController'
 	});

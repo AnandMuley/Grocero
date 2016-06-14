@@ -12,6 +12,7 @@ public class ProductBean {
 	private String measuredIn;
 	private Integer quantity;
 	private Double cost;
+	private boolean checked;
 
 	public ProductBean() {
 	}
@@ -63,11 +64,19 @@ public class ProductBean {
 		this.cost = cost;
 	}
 
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductBean [id=" + id + ", name=" + name + ", measuredIn="
 				+ measuredIn + ", quantity=" + quantity + ", cost=" + cost
-				+ "]";
+				+ ", checked=" + checked + "]";
 	}
 
 }

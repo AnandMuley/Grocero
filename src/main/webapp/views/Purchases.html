@@ -6,6 +6,7 @@
 		</md-select>
 	</md-input-container>
 </div>
+<div class="message-success" ng-if="message!=null" layout="row" layout-align="center">{{message}}</div>
 <div layout="row" layout-align="center">
 	<md-card ng-if="selected!='default'" class="veggie-card-custom" md-theme-watch>
 		<md-card-title class="purchase-card-title">
@@ -35,5 +36,4 @@
 			<md-button ng-click="updateCosts()">update</md-button>
 		</md-card-actions>
 	</md-card>
-	<div ng-if="message!=null" layout="row" layout-align="center">{{message}}</div>
 </div>

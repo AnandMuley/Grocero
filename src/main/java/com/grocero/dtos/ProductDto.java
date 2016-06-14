@@ -7,6 +7,7 @@ public class ProductDto {
 	private String measuredIn;
 	private Integer quantity;
 	private Double cost;
+	private boolean checked;
 
 	public ProductDto() {
 	}
@@ -58,11 +59,19 @@ public class ProductDto {
 		this.cost = cost;
 	}
 
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductDto [id=" + id + ", name=" + name + ", measuredIn="
 				+ measuredIn + ", quantity=" + quantity + ", cost=" + cost
-				+ "]";
+				+ ", checked=" + checked + "]";
 	}
 
 }

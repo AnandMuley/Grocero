@@ -7,6 +7,7 @@ controllers.controller('GroceriesController',
 	$scope.itemIndex = 0;
 	$scope.mode="create";
 	$scope.nameswitch = false;
+	$scope.item = {};
 	
 	$scope.toggleNameSwitch = function(){
 		$scope.nameswitch=!$scope.nameswitch;	

@@ -5,8 +5,8 @@ controllers.controller('VegetablesController',
 	$scope.products = Product.query();
 	$scope.list = new GroceryList({name:"",items:[]});
 	$scope.itemIndex = 0;
-	$scope.mode="create";
 	$scope.nameswitch = false;
+	$scope.item = {};
 	
 	$scope.toggleNameSwitch = function(){
 		$scope.nameswitch=!$scope.nameswitch;	
@@ -29,7 +29,8 @@ controllers.controller('VegetablesController',
 	}
 
 	$scope.addItem = function(){
-		$scope.item.product = $scope.getProductFromJSON($scope.item.product);
+//		$scope.item.product = $scope.getProductFromJSON($scope.item.product);
+		$scope.item.product = $scope.item.product;
 		$scope.list.items.push($scope.item);
 		$scope.item = {};
 	}
@@ -54,7 +55,8 @@ controllers.controller('VegetablesController',
 	$scope.getMeasuredIn = function(product){
 		var measuredIn = '';
 		if(product!=null){
-			var prod = JSON.parse(product);
+//			var prod = JSON.parse(product);
+			var prod = product;
 			measuredIn = prod.measuredIn;	
 		}
 		return measuredIn;
@@ -81,7 +83,7 @@ controllers.controller('VegetablesController',
 			product.quantity = $scope.list.items[index].quantity;
 			$scope.list.items[index] = product;
 		}
-		$scope.list.$save(function(value,getResponseHeaders){
+		$scope.list.$save({},function(value,getResponseHeaders){
 			$location.path('home');
 		});
 	}

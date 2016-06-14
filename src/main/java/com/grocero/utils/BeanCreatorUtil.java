@@ -18,6 +18,7 @@ public class BeanCreatorUtil {
 			productBean.setId(productDto.getId());
 			productBean.setQuantity(productDto.getQuantity());
 			productBean.setCost(productDto.getCost());
+			productBean.setChecked(productDto.isChecked());
 			groceryListBean.getItems().add(productBean);
 		}
 		return groceryListBean;

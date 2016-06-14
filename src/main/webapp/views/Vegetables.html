@@ -9,8 +9,8 @@
 			<md-card-content>
 				<md-input-container class="md-block">
 					<label>Product</label>
-					<md-select ng-model="item.product">
-						<md-option value="{{product}}" ng-repeat="product in products">{{product.name}}</md-option>
+					<md-select ng-model="item.product" ng-model-options="{trackBy:'$value.id'}">
+						<md-option ng-value="product" ng-repeat="product in products">{{product.name}}</md-option>
 					</md-select>
 				</md-input-container>
 				<md-input-container class="md-block" layout="row">
@@ -26,7 +26,7 @@
 	<div flex="30">
 				<md-card class="veggie-card-custom" md-theme-watch>
 					<md-card-title class="veggie-card-title">
-						<md-input-container class="md-default md-block">
+						<md-input-container class="md-default md-block list-name-input">
 							<label>Enter List Name</label>
 							<input maxlength="39" ng-model="list.name"/>
 						</md-input-container>

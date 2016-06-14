@@ -18,6 +18,7 @@ public class DtoCreatorUtil {
 			ProductDto productDto = createProductDto(productBean);
 			productDto.setQuantity(productBean.getQuantity());
 			productDto.setCost(productBean.getCost());
+			productDto.setChecked(productBean.isChecked());
 			groceryListDto.getItems().add(productDto);
 		}
 		return groceryListDto;
