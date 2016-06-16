@@ -14,6 +14,27 @@
 	--color-green:#419641;
 	--color-deeppurple:#673AB7;
 	--color-tealgreen:#009688;
+	--color-red:#F44336;
+	--color-purple:#3F51B5;
+}
+
+.link-purple{
+	color:var(--color-purple);
+	text-decoration: none;
+}
+
+.login-panel{
+	padding-left: 30%;
+	padding-top: 10%;
+}
+
+.input-full-length{
+	width: 100% !important;
+	margin: 0px !important;
+}
+
+.login-panel{
+	width: 35%;
 }
 
 .list-name-input{
@@ -141,5 +162,5 @@ body {
 	margin-top: 20px;
 	margin-left: 10px;
 	font-weight: 500;
-	color: #F44336;
+	color: var(--color-red);
 }

@@ -5,7 +5,8 @@ var services = angular.module('guiServices',['ngResource']);
 app.config(['$routeProvider',function($routeProvider){
 	
 	$routeProvider.when('/',{
-		redirectTo:'/mylists'
+		templateUrl : 'views/Login.html',
+		controller : 'UserController'
 	}).when('/products',{
 		templateUrl : 'views/Products.html',
 		controller : 'ProductsController'
@@ -21,6 +22,8 @@ app.config(['$routeProvider',function($routeProvider){
 	}).when('/purchase',{
 		templateUrl: 'views/Purchases.html',
 		controller: 'PurchasesController'
+	}).when('/registration',{
+		templateUrl : 'views/Registration.html'
 	});
 	
 }]);
