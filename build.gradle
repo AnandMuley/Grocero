@@ -2,8 +2,9 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'war'
+apply from: 'deployment.gradle'
 
-sourceCompatibility = 1.7
+sourceCompatibility = 1.8
 version = '1.0'
 
 def SpringVersion = '4.0.0.RELEASE'
@@ -15,6 +16,17 @@ jar {
         attributes 'Implementation-Title': 'Grocero',
                    'Implementation-Version': version
     }
+}
+
+buildscript {
+	repositories {
+		maven {
+			url "https://jcenter.bintray.com"
+		}
+	}
+	dependencies {
+		classpath 'com.bmuschko:gradle-cargo-plugin:2.2.3'
+	}
 }
 
 ext{

@@ -21,4 +21,5 @@
 		
 		<!-- Annotation Based Binding -->
 		<mvc:annotation-driven/>
+		
 </beans>
