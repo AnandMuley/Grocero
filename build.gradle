@@ -1,69 +1,53 @@
 apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'eclipse-wtp'
 apply plugin: 'war'
+apply plugin: 'idea'
+apply plugin: 'groovy'
+apply plugin: 'jacoco'
+apply plugin: 'jetty'
 
-sourceCompatibility = 1.7
-version = '1.0'
+apply from: 'deployment.gradle'
+apply from: 'external-dependencies.gradle'
 
-def SpringVersion = '4.0.0.RELEASE'
-def SpringDataMongoVersion = '1.6.0.RELEASE'
-def jerseyVersion='1.8'
+sourceCompatibility = 1.8
+httpPort = 8090
 
 jar {
     manifest {
-        attributes 'Implementation-Title': 'Grocero',
-                   'Implementation-Version': version
+        attributes 'Implementation-Title': 'Grocero'
     }
 }
 
-ext{
-	testng = "org.testng:testng:6.9.4"
-	jackson = 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.0.1'
-	jmock='org.jmock:jmock:2.8.1'
-	json = 'org.json:json:20140107'
-	
-	spring = [
-            web           : "org.springframework:spring-web:${SpringVersion}",
-            webmvc        : "org.springframework:spring-webmvc:${SpringVersion}",
-            core          : "org.springframework:spring-core:${SpringVersion}",
-            beans         : "org.springframework:spring-beans:${SpringVersion}",
-            expression    : "org.springframework:spring-expression:${SpringVersion}",
-            contextSupport: "org.springframework:spring-context-support:${SpringVersion}",
-            jdbc          : "org.springframework:spring-jdbc:${SpringVersion}",
-            mongo         : "org.springframework.data:spring-data-mongodb:${SpringDataMongoVersion}",
-            test          : "org.springframework:spring-test:${SpringVersion}",
-            jpa			  :'org.springframework.data:spring-data-jpa:1.8.1.RELEASE'
-    ]
-    
-    jersey = [
-		server : "com.sun.jersey:jersey-server:${jerseyVersion}",
-		inmemorytest : "com.sun.jersey.jersey-test-framework:jersey-test-framework-inmemory:${jerseyVersion}",
-		spring : "com.sun.jersey.contribs:jersey-spring:${jerseyVersion}",
-		linking : "com.sun.jersey:jersey-server-linking:${jerseyVersion}"
-		
-	]
-	
-	hamcrest = [
-		core : 'org.hamcrest:hamcrest-core:1.3',
-		library : 'org.hamcrest:hamcrest-library:1.3'
-	]
-	cors = 'com.thetransactioncompany:cors-filter:1.3.2'
-	
+jacoco {
+	toolVersion = "0.7.6.201602180812"
+	reportsDir = file("$buildDir/coverageReport")
 }
 
-test{
-	useTestNG(){
+jacocoTestReport {
+	reports {
+		xml.enabled false
+		csv.enabled false
+		html.destination "${buildDir}/jacocoHtml"
+	}
+}
+
+buildscript {
+	repositories {
+		maven {
+			url "https://jcenter.bintray.com"
+		}
+	}
+	dependencies {
+		classpath 'com.bmuschko:gradle-cargo-plugin:2.2.3'
 	}
 }
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
 dependencies {
-	compile json,cors
-    compile spring.web,spring.core,spring.test,jersey.server,jackson,jersey.inmemorytest
-    compile jersey.spring,spring.mongo,spring.webmvc,hamcrest.core,hamcrest.library,jmock
-    testCompile testng,jmock,hamcrest.core,hamcrest.library
+	compile json
+	compile spring.web, spring.core, spring.test, jersey.server, jackson, jersey.inmemorytest
+	compile jersey.spring, spring.mongo, spring.webmvc
+	testCompile spock.core,spock.cglib,spock.objenesis, groovy
 }
