@@ -6,6 +6,7 @@ import com.grocero.exceptions.NoDataFoundException;
 import com.grocero.repositories.ProductRepository;
 import com.grocero.utils.DtoCreatorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -21,8 +22,11 @@ public class ProductService {
     @Autowired
     private DtoCreatorUtil dtoCreatorUtil;
 
+    @Autowired
+    private ApplicationContext context;
+
     public void add(ProductDto productDto) {
-        ProductBean productBean = new ProductBean();
+        ProductBean productBean = context.getBean(ProductBean.class);
         productBean.setMeasuredIn(productDto.getMeasuredIn());
         productBean.setName(productDto.getName());
         productBean.setQuantity(productDto.getQuantity());
@@ -39,12 +43,13 @@ public class ProductService {
         return productBeans.stream().map(dtoCreatorUtil::createProductDto).collect(Collectors.toList());
     }
 
-    public ProductBean findByName(String name) {
-        return productRepository.findByName(name);
+    public ProductDto findByName(String name) {
+        ProductBean productBean = productRepository.findByName(name);
+        return dtoCreatorUtil.createProductDto(productBean);
     }
 
     public void update(ProductDto productDto) {
-        ProductBean productBean = new ProductBean(productDto.getId(),
+        ProductBean productBean = context.getBean(ProductBean.class, productDto.getId(),
                 productDto.getName(), productDto.getMeasuredIn());
         productRepository.save(productBean);
     }

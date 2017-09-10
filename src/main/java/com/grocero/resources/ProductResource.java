@@ -28,7 +28,6 @@ public class ProductResource {
     }
 
     @GET
-    @Path("list")
     public Response getAll() {
         Response response = null;
         try {
@@ -52,7 +51,7 @@ public class ProductResource {
     @GET
     @Path("{name}")
     public Response getByName(@PathParam("name") String name) {
-        ProductBean productBean = productService.findByName(name);
-        return Response.ok(productBean).build();
+        ProductDto productDto = productService.findByName(name);
+        return Response.ok(productDto).build();
     }
 }
