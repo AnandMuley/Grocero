@@ -1,6 +1,6 @@
 services.factory('GroceryListResource',['$resource','RestPrefix',function($resource,RestPrefix){
 	return $resource(RestPrefix+'grocerylists/:listId',{},{
-		query : {method:'GET',params:{listId:'list'},isArray:true},
+		query : {method:'GET',isArray:true},
 		update : {method:'PUT'}
 	});
 }]);
