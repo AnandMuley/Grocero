@@ -35,7 +35,7 @@
 }
 
 .veggie-card-custom{
-	min-height: 400px;
+	/*min-height: 400px;*/
 }
 
 .product-list md-grid-list {
@@ -88,8 +88,11 @@
 .veggie-card-title{
 	background-color: #009688;
 	color: white;
-	max-height:70px;
+	/*max-height:70px;*/
 	margin-bottom: 20px;
+	text-align: center;
+	font-size: xx-large;
+
 }
 
 .purchase-card-title{
