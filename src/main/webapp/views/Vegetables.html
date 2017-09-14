@@ -1,60 +1,36 @@
 <div layout="row">
-	<!-- <div flex="25">
-		<md-card class="manage-prod-card">
-			<md-card-title>
-				<md-card-title-text>
-					<span class="md-headline">Add Item</span>
-				</md-card-title-text>
-			</md-card-title>
-			<md-card-content>
-				<md-input-container class="md-block">
-					<label>Product</label>
-					<md-select ng-model="item.product">
-						<md-option value="{{product}}" ng-repeat="product in products">{{product.name}}</md-option>
-					</md-select>
-				</md-input-container>
-				<md-input-container class="md-block" layout="row">
-					<label>Quantity</label>
-					<input flex="50" ng-model="item.quantity"/>&nbsp;&nbsp;<span flex="50">{{getMeasuredIn(item.product)}}</span>
-				</md-input-container>
-			</md-card-content>
-			<md-card-actions layout="row" layout-align="center">
-				<md-button ng-click="addItem()" class="md-raised md-primary">Add</md-button>
-			</md-card-actions>
-		</md-card>
-	</div> -->
-	<div flex="40">
+	<div flex="40" flex-offset="40">
+		<div  class="item-row" layout="row" flex="100" ng-controller="ProductAutocompleteController as ctrl">
+			<md-autocomplete
+					md-no-cache="ctrl.noCache"
+					md-selected-item="ctrl.selectedItem"
+					md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+					md-search-text="ctrl.searchText"
+					md-selected-item-change="ctrl.selectedItemChange(item)"
+					md-items="item in ctrl.productSearch(ctrl.searchText)"
+					md-item-text="item.name"
+					md-min-length="0"
+					placeholder="Select a product">
+				<md-item-template>
+					<span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.name}}</span>
+				</md-item-template>
+				<md-not-found>
+					No products matching "{{ctrl.searchText}}" were found.
+					<a ng-click="ctrl.newProduct(ctrl.searchText)">Create a new one!</a>
+				</md-not-found>
+			</md-autocomplete>
+		</div>
+	</div>
+</div>
+<div layout="row">
+	<div flex="40" flex-offset="30">
 				<md-card class="veggie-card-custom" md-theme-watch>
 					<md-card-title class="veggie-card-title">
-						<!-- <md-input-container class="md-default md-block">
-							<label>Enter List Name</label>
-							<input maxlength="39" ng-model="list.name"/>
-						</md-input-container> -->
-						<div>12-Sept-2017</div>
+						<div>{{groceryList.name}}</div>
 					</md-card-title>
 					<md-card-content class="veggie-card-content" md-padding>
-						<div  class="item-row" layout="row" flex="100" ng-controller="ProductAutocompleteController as ctrl">
-							<md-autocomplete
-									md-no-cache="ctrl.noCache"
-									md-selected-item="ctrl.selectedItem"
-									md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
-									md-search-text="ctrl.searchText"
-									md-selected-item-change="ctrl.selectedItemChange(item)"
-									md-items="item in ctrl.productSearch(ctrl.searchText)"
-									md-item-text="item.name"
-									md-min-length="0"
-									placeholder="Select a product">
-								<md-item-template>
-									<span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.name}}</span>
-								</md-item-template>
-								<md-not-found>
-									No products matching "{{ctrl.searchText}}" were found.
-									<a ng-click="ctrl.newProduct(ctrl.searchText)">Create a new one!</a>
-								</md-not-found>
-							</md-autocomplete>
-						</div>
-						<div class="item-row" layout="row" ng-repeat="item in list">
-							{{item.name}}
+						<div class="item-row" layout="row" ng-repeat="item in groceryList.items">
+							{{item}}
 						</div>
 					</md-card-content>
 					<md-card-actions layout="row" layout-align="center">
@@ -62,9 +38,5 @@
 					</md-card-actions>
 				</md-card>
 		</div>
-		<div flex="50">
-				<div layout="col" ng-repeat="item in list">
-					{{item.name}}
-				</div>
-		</div>
 </div>
+<div layout="row" flex-offset="45" ng-if="message">{{message}}</div>

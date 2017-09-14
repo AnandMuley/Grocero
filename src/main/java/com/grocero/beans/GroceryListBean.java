@@ -6,13 +6,13 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document(collection = "grocerylists")
 public class GroceryListBean {
 
 	@Id
 	private String id;
 	private String name;
-	private List<ProductBean> items = new ArrayList<ProductBean>();
+	private List<String> items = new ArrayList<>();
 
 	public GroceryListBean() {
 	}
@@ -30,7 +30,7 @@ public class GroceryListBean {
 		this.id = id;
 	}
 
-	public List<ProductBean> getItems() {
+	public List<String> getItems() {
 		return items;
 	}
 

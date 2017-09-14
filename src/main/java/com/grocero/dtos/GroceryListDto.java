@@ -12,7 +12,7 @@ public class GroceryListDto {
 
     private String id;
     private String name;
-    private List<ProductDto> items = new ArrayList<ProductDto>();
+    private List<String> items = new ArrayList<>();
 
     public GroceryListDto() {
     }
@@ -33,7 +33,7 @@ public class GroceryListDto {
         this.name = name;
     }
 
-    public List<ProductDto> getItems() {
+    public List<String> getItems() {
         return items;
     }
 

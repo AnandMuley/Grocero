@@ -25,10 +25,14 @@ app.controller('ProductAutocompleteController',['$scope','ProductResource',
     //  $scope.$$childHead.$mdAutocompleteCtrl.clear();
    }
 
+   function isValidItem(item){
+    return item != "" && item != undefined
+   }
+
    function selectedItemChange(item) {
      // TODO Create a new entry in the row
-     if(item != "" && item != undefined && $scope.list.indexOf(item) == -1){
-       $scope.list.push(item);
+     if(isValidItem(item) && $scope.isNotEnlisted(item)){
+       $scope.addItemToList(item);
        resetAutocomplete();
        self.products.splice(self.products.indexOf(item),1);
      }
