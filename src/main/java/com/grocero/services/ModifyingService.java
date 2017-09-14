@@ -28,17 +28,4 @@ public class ModifyingService {
 
     }
 
-    public static void main(String[] args) {
-        CustomerBeanBuilder builder = new CustomerBeanBuilder();
-        builder.setName("John");
-        builder.setId("UID1010");
-        CustomerBeanBuilder.CustomerBeanInner customerBeanInner = builder.build();
-        System.out.println(customerBeanInner.getName());
-        System.out.println(customerBeanInner.getId());
-        builder.setId("UID1012");
-        System.out.println(customerBeanInner.getName());
-        System.out.println(customerBeanInner.getId());
-
-    }
-
 }

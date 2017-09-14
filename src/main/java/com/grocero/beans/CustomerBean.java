@@ -26,12 +26,21 @@ public class CustomerBean {
 
     public static class Builder {
 
-        Builder withId(String idVal) {
+        private String id;
+        private String name;
+
+        public Builder withId(String id) {
+            this.id = id;
             return this;
         }
 
-        public void build() {
+        public Builder withName(String name) {
+            this.name = name;
+            return this;
+        }
 
+        public CustomerBean build() {
+            return null;
         }
 
     }
