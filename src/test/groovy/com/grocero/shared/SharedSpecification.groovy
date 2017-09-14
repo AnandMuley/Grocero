@@ -4,6 +4,8 @@ import spock.lang.Specification
 
 class SharedSpecification extends Specification{
 
+    protected String randomId = UUID.randomUUID().toString()
+
     def setup(){
         enableStrictMock()
     }

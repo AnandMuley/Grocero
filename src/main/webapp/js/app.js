@@ -3,7 +3,7 @@ var controllers = angular.module('guiControllers',[]);
 var services = angular.module('guiServices',['ngResource']);
 
 app.config(['$routeProvider',function($routeProvider){
-	
+
 	$routeProvider.when('/',{
 		redirectTo:'/mylists'
 	}).when('/home',{
@@ -11,6 +11,9 @@ app.config(['$routeProvider',function($routeProvider){
 	}).when('/products',{
 		templateUrl : 'views/Products.html',
 		controller : 'ProductsController'
+	}).when('/masterlist',{
+		templateUrl : 'views/MasterList.html',
+		controller : 'MasterListController'
 	}).when('/vegetables',{
 		templateUrl : 'views/Vegetables.html',
 		controller : 'VegetablesController'
@@ -24,7 +27,7 @@ app.config(['$routeProvider',function($routeProvider){
 		templateUrl: 'views/Purchases.html',
 		controller: 'PurchasesController'
 	});
-	
+
 }]);
 
 app.value('RestPrefix','rest/');

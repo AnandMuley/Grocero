@@ -15,12 +15,15 @@ controllers.controller('TabsController',['$scope','$location',function($scope,$l
 	               },{
 	            	   path:"purchases",
 	            	   name:"purchases"
+	               },{
+	            	   path:"masterlist",
+	            	   name:"masterlist"
 	               }];
-	
+
 	$scope.loadView = function(tab){
 		$location.path(tab.name);
 	}
-	
+
 	$scope.currentNavItem = 'page1';
-	
+
 }]);
