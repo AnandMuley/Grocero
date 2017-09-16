@@ -4,6 +4,7 @@ import com.grocero.beans.ProductBean
 import com.grocero.dtos.ProductDto
 import com.grocero.exceptions.NoDataFoundException
 import com.grocero.repositories.ProductRepository
+import com.grocero.services.impl.ProductService
 import com.grocero.shared.SharedSpecification
 import com.grocero.utils.DtoCreatorUtil
 import org.springframework.context.ApplicationContext

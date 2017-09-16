@@ -1,9 +1,8 @@
 package com.grocero.resources;
 
-import com.grocero.beans.ProductBean;
 import com.grocero.dtos.ProductDto;
 import com.grocero.exceptions.NoDataFoundException;
-import com.grocero.services.ProductService;
+import com.grocero.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +17,12 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class ProductResource {
 
+    private IProductService productService;
+
     @Autowired
-    private ProductService productService;
+    public ProductResource(IProductService productService) {
+        this.productService = productService;
+    }
 
     @POST
     public Response add(ProductDto productDto) {

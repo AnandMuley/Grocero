@@ -1,0 +1,151 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Grocero",
+		"_postman_id": "0151a43b-5484-5576-10fe-6ad98aa2a3b0",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Customer",
+			"description": "",
+			"item": [
+				{
+					"name": "Create Customer",
+					"request": {
+						"url": "{{grocero}}/customers",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"John Doe\"\n}"
+						},
+						"description": ""
+					},
+					"response": [
+						{
+							"id": "1c0ff8d2-bb94-4b12-a4aa-780912e2c537",
+							"name": "Create Customer",
+							"originalRequest": {
+								"url": "{{grocero}}/customers",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\":\"John Doe\"\n}"
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"_postman_previewtype": "text",
+							"header": [
+								{
+									"name": "content-length",
+									"key": "content-length",
+									"value": "51",
+									"description": "The length of the response body in octets (8-bit bytes)"
+								},
+								{
+									"name": "content-type",
+									"key": "content-type",
+									"value": "application/json",
+									"description": "The mime type of this content"
+								},
+								{
+									"name": "server",
+									"key": "server",
+									"value": "Jetty(6.1.26)",
+									"description": "A name for the server"
+								}
+							],
+							"cookie": [],
+							"responseTime": 38,
+							"body": "{\"id\":\"59bd437b44aec30a3d82cdcb\",\"name\":\"John Doe\"}"
+						}
+					]
+				},
+				{
+					"name": "Get All Customers",
+					"request": {
+						"url": "{{grocero}}/customers",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"John Doe\"\n}"
+						},
+						"description": ""
+					},
+					"response": [
+						{
+							"id": "13f0ddea-7958-40e4-9513-92c24936b24f",
+							"name": "Get All Customers",
+							"originalRequest": {
+								"url": "{{grocero}}/customers",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\":\"John Doe\"\n}"
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"_postman_previewtype": "text",
+							"header": [
+								{
+									"name": "content-length",
+									"key": "content-length",
+									"value": "209",
+									"description": "The length of the response body in octets (8-bit bytes)"
+								},
+								{
+									"name": "content-type",
+									"key": "content-type",
+									"value": "application/json",
+									"description": "The mime type of this content"
+								},
+								{
+									"name": "server",
+									"key": "server",
+									"value": "Jetty(6.1.26)",
+									"description": "A name for the server"
+								}
+							],
+							"cookie": [],
+							"responseTime": 292,
+							"body": "[{\"id\":\"59bd434f44aec30a3d82cdca\",\"name\":\"John Doe\"},{\"id\":\"59bd421044ae847c1c01d9b1\",\"name\":\"John Doe\"},{\"id\":\"59bd426444aeb44267d5d000\",\"name\":\"John Doe\"},{\"id\":\"59bd437b44aec30a3d82cdcb\",\"name\":\"John Doe\"}]"
+						}
+					]
+				}
+			]
+		}
+	]
+}

@@ -46,9 +46,8 @@ repositories {
 }
 
 dependencies {
-	compile json
+	compile json,jersey.jackson
 	compile spring.web, spring.core, spring.test, jersey.server, jackson
 	compile jersey.spring, spring.mongo, spring.webmvc
 	testCompile spock.core,spock.cglib,spock.objenesis, groovy,jersey.testcore,jersey.provider
-	testCompile mockito
 }

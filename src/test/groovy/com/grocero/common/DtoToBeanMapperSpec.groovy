@@ -10,8 +10,6 @@ import spock.lang.Subject
 
 class DtoToBeanMapperSpec extends SharedSpecification {
 
-    public static final String JOHN = "John"
-
     @Subject
     DtoToBeanMapper dtoToBeanMapper
 

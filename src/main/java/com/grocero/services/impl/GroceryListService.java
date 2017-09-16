@@ -1,9 +1,10 @@
-package com.grocero.services;
+package com.grocero.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.grocero.services.IGroceryListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import com.grocero.utils.BeanCreatorUtil;
 import com.grocero.utils.DtoCreatorUtil;
 
 @Service
-public class GroceryListService {
+public class GroceryListService implements IGroceryListService {
 
     @Autowired
     private GroceryListRepository groceryListRepository;
@@ -25,6 +26,7 @@ public class GroceryListService {
     @Autowired
     private BeanCreatorUtil beanCreatorUtil;
 
+    @Override
     public GroceryListDto findById(String listId) {
         GroceryListBean groceryListBean = groceryListRepository.findOne(listId);
         GroceryListDto groceryListDto = null;
@@ -34,6 +36,7 @@ public class GroceryListService {
         return groceryListDto;
     }
 
+    @Override
     public void create(GroceryListDto groceryListDto) {
         GroceryListBean groceryListBean = beanCreatorUtil
                 .createGroceryListBean(groceryListDto);
@@ -41,6 +44,7 @@ public class GroceryListService {
         groceryListDto.setId(groceryListBean.getId());
     }
 
+    @Override
     public List<GroceryListDto> fetchAll() {
         List<GroceryListBean> groceryListBeans = groceryListRepository
                 .findAll();
@@ -53,10 +57,12 @@ public class GroceryListService {
         return groceryListDtos;
     }
 
+    @Override
     public void delete(String listId) {
         groceryListRepository.delete(listId);
     }
 
+    @Override
     public void update(GroceryListDto groceryListDto) {
         GroceryListBean groceryListBean = beanCreatorUtil
                 .createGroceryListBean(groceryListDto);

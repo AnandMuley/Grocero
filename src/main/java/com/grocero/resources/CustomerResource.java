@@ -3,8 +3,8 @@ package com.grocero.resources;
 
 import com.grocero.dtos.CustomerDto;
 import com.grocero.dtos.MasterListDto;
-import com.grocero.services.CustomerService;
-import com.grocero.services.ModifyingService;
+import com.grocero.exceptions.NoDataFoundException;
+import com.grocero.services.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,14 +14,14 @@ import javax.ws.rs.core.Response;
 
 @Component
 @Path("customers")
-@Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class CustomerResource {
 
-    private CustomerService customerService;
+    private ICustomerService customerService;
 
     @Autowired
-    public CustomerResource(CustomerService customerService) {
+    public CustomerResource(ICustomerService customerService) {
         this.customerService = customerService;
     }
 
@@ -29,6 +29,7 @@ public class CustomerResource {
     @Path("{id}/masterlist")
     public Response getMasterList(@PathParam("id") String customerId, MasterListDto masterList) {
         masterList.setCustomerId(customerId);
+        customerService.save(masterList);
         return Response.ok(masterList).build();
     }
 
@@ -40,6 +41,13 @@ public class CustomerResource {
 
     @GET
     public Response getAll() {
-        return Response.ok("All customers").build();
+        Response response;
+        try {
+            response = Response.ok(customerService.getAll()).build();
+        } catch (NoDataFoundException e) {
+            response = Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return response;
     }
+
 }
