@@ -12,6 +12,9 @@ public class CustomerBean {
     private String id;
     private String name;
 
+    public CustomerBean() {
+    }
+
     public CustomerBean(String name) {
         this.name = name;
     }
@@ -22,27 +25,6 @@ public class CustomerBean {
 
     public String getName() {
         return name;
-    }
-
-    public static class Builder {
-
-        private String id;
-        private String name;
-
-        public Builder withId(String id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public CustomerBean build() {
-            return null;
-        }
-
     }
 
     @Override

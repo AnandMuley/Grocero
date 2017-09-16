@@ -1,6 +1,7 @@
 def SpringVersion = '4.3.4.RELEASE'
 def SpringDataMongoVersion = '1.9.5.RELEASE'
 def SpockVersion = '1.1-groovy-2.4-rc-3'
+def jerseyVersion = '2.26'
 
 ext {
     testng = "org.testng:testng:6.9.4"
@@ -31,10 +32,13 @@ ext {
             ]
     ]
 
+    mockito = "org.mockito:mockito-core:2.+"
+
     jersey = [
-            server      : 'com.sun.jersey:jersey-server:1.8',
-            inmemorytest: 'com.sun.jersey.jersey-test-framework:jersey-test-framework-inmemory:1.8',
-            spring      : 'com.sun.jersey.contribs:jersey-spring:1.8'
+            server      : "org.glassfish.jersey.core:jersey-server:$jerseyVersion",
+            testcore: "org.glassfish.jersey.test-framework:jersey-test-framework-core:$jerseyVersion",
+            spring      : "org.glassfish.jersey.ext:jersey-spring4:$jerseyVersion",
+            provider : "org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-grizzly2:$jerseyVersion"
 
     ]
 

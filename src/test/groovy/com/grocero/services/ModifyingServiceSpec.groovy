@@ -5,6 +5,7 @@ import com.grocero.beans.MasterListBean
 import com.grocero.common.DtoToBeanMapper
 import com.grocero.dtos.CustomerDto
 import com.grocero.dtos.MasterListDto
+import com.grocero.repositories.CustomerRepository
 import com.grocero.repositories.MasterListRepository
 import com.grocero.shared.SharedSpecification
 import spock.lang.Subject
@@ -16,13 +17,16 @@ class ModifyingServiceSpec extends SharedSpecification {
 
     MasterListRepository mockMasterListRepository
     DtoToBeanMapper mockDtoToBeanMapper
+    CustomerRepository mockCustomerRepository
 
     def setup() {
+        mockCustomerRepository = Mock(CustomerRepository)
         mockMasterListRepository = Mock(MasterListRepository)
         mockDtoToBeanMapper = Mock(DtoToBeanMapper)
         modifyingService = new ModifyingService(
                 masterListRepository: mockMasterListRepository,
-                dtoToBeanMapper: mockDtoToBeanMapper
+                dtoToBeanMapper: mockDtoToBeanMapper,
+                customerRepository: mockCustomerRepository
         )
     }
 
@@ -45,21 +49,5 @@ class ModifyingServiceSpec extends SharedSpecification {
         assert masterListDto.id == randomId
     }
 
-    def "save - should save the customer in the database"() {
-        given: "details to be saved"
-        CustomerDto customerDto = new CustomerDto(name: "John")
-        CustomerBean customerBean = new CustomerBean(id: randomId)
-        1 * mockDtoToBeanMapper.map(customerDto) >> customerBean
-        1 * mockMasterListRepository.save({ CustomerBean it ->
-            assert it.id == randomId
-            assert it.name == null
-            true
-        }) >> customerBean
 
-        when: "save operation is performed"
-        modifyingService.save(customerDto)
-
-        then: "details should be saved and the id property should be populated"
-        assert customerDto.id == randomId
-    }
 }

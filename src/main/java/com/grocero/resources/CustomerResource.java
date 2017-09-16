@@ -3,20 +3,27 @@ package com.grocero.resources;
 
 import com.grocero.dtos.CustomerDto;
 import com.grocero.dtos.MasterListDto;
+import com.grocero.services.CustomerService;
 import com.grocero.services.ModifyingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+@Component
 @Path("customers")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CustomerResource {
 
+    private CustomerService customerService;
+
     @Autowired
-    private ModifyingService modifyingService;
+    public CustomerResource(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     @POST
     @Path("{id}/masterlist")
@@ -27,7 +34,12 @@ public class CustomerResource {
 
     @POST
     public Response create(CustomerDto customerDto) {
-        modifyingService.save(customerDto);
+        customerService.save(customerDto);
         return Response.ok(customerDto).build();
+    }
+
+    @GET
+    public Response getAll() {
+        return Response.ok("All customers").build();
     }
 }
