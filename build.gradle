@@ -2,7 +2,6 @@ apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'idea'
 apply plugin: 'groovy'
-apply plugin: 'jacoco'
 apply plugin: 'org.akhikhl.gretty'
 
 apply from: 'deployment.gradle'
@@ -10,25 +9,10 @@ apply from: 'external-dependencies.gradle'
 
 sourceCompatibility = 1.8
 
-
-
 jar {
     manifest {
         attributes 'Implementation-Title': 'Grocero'
     }
-}
-
-jacoco {
-	toolVersion = "0.7.6.201602180812"
-	reportsDir = file("$buildDir/coverageReport")
-}
-
-jacocoTestReport {
-	reports {
-		xml.enabled false
-		csv.enabled false
-		html.destination "${buildDir}/jacocoHtml"
-	}
 }
 
 buildscript {
@@ -37,15 +21,22 @@ buildscript {
 		maven {
 			url "https://jcenter.bintray.com"
 		}
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
 	}
 	dependencies {
 		classpath 'com.bmuschko:gradle-cargo-plugin:2.2.3'
-		classpath 'org.akhikhl.gretty:gretty:1.4.0'
+		classpath "gradle.plugin.org.akhikhl.gretty:gretty:2.0.0"
 	}
 }
 
 gretty {
-	port = 8091
+	httpPort = 8091
+	scanInterval = 1
+//	host = '127.0.0.1'
+	servletContainer = 'jetty8'
+	managedClassReload = true
 }
 
 repositories {
