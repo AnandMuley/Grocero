@@ -10,7 +10,7 @@ import com.grocero.services.impl.CustomerService
 import com.grocero.shared.SharedSpecification
 import spock.lang.Subject
 
-class CustomerServiceSpec extends SharedSpecification{
+class CustomerServiceSpec extends SharedSpecification {
 
     @Subject
     CustomerService customerService
@@ -19,13 +19,14 @@ class CustomerServiceSpec extends SharedSpecification{
 
     MasterListRepository mockMasterListRepository
 
-    def setup(){
+    def setup() {
         mockMasterListRepository = Mock(MasterListRepository)
         mockCustomerRepository = Mock(CustomerRepository)
         customerService = new CustomerService(
                 customerRepository: mockCustomerRepository,
                 dtoToBeanMapper: mockDtoToBeanMapper,
-                masterListRepository: mockMasterListRepository
+                masterListRepository: mockMasterListRepository,
+                beanToDtoMapper: mockBeanToDtoMapper
         )
     }
 
@@ -49,7 +50,7 @@ class CustomerServiceSpec extends SharedSpecification{
 
     def "save - should save the masterlist in the database"() {
         given: "details to be saved"
-        MasterListDto masterListDto = new MasterListDto(randomId, "John")
+        MasterListDto masterListDto = new MasterListDto(randomId, randomId, MASTER_LIST_NAME)
         MasterListBean masterListBean = new MasterListBean(id: randomId)
         1 * mockDtoToBeanMapper.map(masterListDto) >> masterListBean
         1 * mockMasterListRepository.save({ MasterListBean it ->
@@ -64,6 +65,24 @@ class CustomerServiceSpec extends SharedSpecification{
 
         then: "details should be saved and the id property should be populated"
         assert masterListDto.id == randomId
+    }
+
+    def "getMasterLists - should return the masterlists for a customerid"() {
+        given: "customerid"
+        String customerId = randomId
+        MasterListDto masterListDto = new MasterListDto(randomId, customerId, MASTER_LIST_NAME)
+        MasterListBean masterListBean = new MasterListBean(id: randomId)
+        1 * mockBeanToDtoMapper.map(masterListBean) >> masterListDto
+        1 * mockMasterListRepository.findByCustomerId(customerId) >> [masterListBean]
+
+        when: "save operation is performed"
+        Set<MasterListDto> actual = customerService.getMasterLists(customerId)
+
+        then: "details should be saved and the id property should be populated"
+        assert actual.size() == 1
+        MasterListDto actualDto = actual[0]
+        assert actualDto.customerId == customerId
+        assert actualDto.name == MASTER_LIST_NAME
     }
 
 }

@@ -42,4 +42,13 @@ public class CustomerService extends GroceroService implements ICustomerService 
         MasterListBean masterListBean = masterListRepository.save(dtoToBeanMapper.map(masterListDto));
         masterListDto.setId(masterListBean.getId());
     }
+
+    @Override
+    public Set<MasterListDto> getMasterLists(String customerId) throws NoDataFoundException {
+        List<MasterListBean> masterLists = masterListRepository.findByCustomerId(customerId);
+        if (CollectionUtils.isEmpty(masterLists)) {
+            throw new NoDataFoundException("No master lists found");
+        }
+        return masterLists.stream().map(beanToDtoMapper::map).collect(Collectors.toSet());
+    }
 }

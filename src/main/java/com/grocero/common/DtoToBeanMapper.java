@@ -18,6 +18,7 @@ public class DtoToBeanMapper {
         MasterListBean masterListBean = context.getBean(MasterListBean.class);
         masterListBean.setCustomerId(masterListDto.getCustomerId());
         masterListBean.setName(masterListDto.getName());
+        masterListBean.getItems().addAll(masterListDto.getItems());
         return masterListBean;
     }
 

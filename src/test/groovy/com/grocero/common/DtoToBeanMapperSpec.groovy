@@ -22,8 +22,8 @@ class DtoToBeanMapperSpec extends SharedSpecification {
 
     def "map - should map details from MasterListDTO to MasterListBean"() {
         given: "dto to map"
-        def customerName = JOHN
-        MasterListDto expected = new MasterListDto(randomId, customerName)
+        MasterListDto expected = new MasterListDto(randomId, randomId, MASTER_LIST_NAME)
+        expected.items.addAll(["Apple", "Tomato"])
         1 * mockApplicationContext.getBean(MasterListBean) >> new MasterListBean()
 
         when: "mapping function is called"
@@ -32,6 +32,7 @@ class DtoToBeanMapperSpec extends SharedSpecification {
         then: "required details should be mapped"
         assert actual.name == expected.name
         assert actual.customerId == expected.customerId
+        assert actual.items == expected.items
     }
 
     def "map - should map details from customer dto to bean"() {

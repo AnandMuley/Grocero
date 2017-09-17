@@ -27,10 +27,20 @@ public class CustomerResource {
 
     @POST
     @Path("{id}/masterlist")
-    public Response getMasterList(@PathParam("id") String customerId, MasterListDto masterList) {
+    public Response createMasterList(@PathParam("id") String customerId, MasterListDto masterList) {
         masterList.setCustomerId(customerId);
         customerService.save(masterList);
         return Response.ok(masterList).build();
+    }
+
+    @GET
+    @Path("{id}/masterlist")
+    public Response getMasterList(@PathParam("id") String customerId, MasterListDto masterList) {
+        try {
+            return Response.ok(customerService.getMasterLists(customerId)).build();
+        } catch (NoDataFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
     @POST

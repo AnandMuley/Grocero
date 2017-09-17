@@ -13,4 +13,6 @@ public interface ICustomerService {
     Set<CustomerDto> getAll() throws NoDataFoundException;
 
     void save(MasterListDto masterList);
+
+    Set<MasterListDto> getMasterLists(String customerId) throws NoDataFoundException;
 }
