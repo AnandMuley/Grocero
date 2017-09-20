@@ -3,8 +3,10 @@ package com.grocero.resources;
 
 import com.grocero.dtos.CustomerDto;
 import com.grocero.dtos.MasterListDto;
+import com.grocero.dtos.ResponseDto;
+import com.grocero.exceptions.CustomerDoesNotExistException;
 import com.grocero.exceptions.NoDataFoundException;
-import com.grocero.services.ICustomerService;
+import com.grocero.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,18 +20,22 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class CustomerResource {
 
-    private ICustomerService customerService;
+    private CustomerService customerService;
 
     @Autowired
-    public CustomerResource(ICustomerService customerService) {
+    public CustomerResource(CustomerService customerService) {
         this.customerService = customerService;
     }
 
     @POST
     @Path("{id}/masterlist")
     public Response createMasterList(@PathParam("id") String customerId, MasterListDto masterList) {
-        masterList.setCustomerId(customerId);
-        customerService.save(masterList);
+        try {
+            masterList.setCustomerId(customerId);
+            customerService.save(masterList);
+        } catch (CustomerDoesNotExistException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity(new ResponseDto(e.getMessage())).build();
+        }
         return Response.ok(masterList).build();
     }
 

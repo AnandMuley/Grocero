@@ -2,7 +2,7 @@ package com.grocero.resources;
 
 import com.grocero.dtos.ProductDto;
 import com.grocero.exceptions.NoDataFoundException;
-import com.grocero.services.IProductService;
+import com.grocero.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,10 +17,10 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class ProductResource {
 
-    private IProductService productService;
+    private ProductService productService;
 
     @Autowired
-    public ProductResource(IProductService productService) {
+    public ProductResource(ProductService productService) {
         this.productService = productService;
     }
 

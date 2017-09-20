@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.grocero.services.IGroceryListService;
+import com.grocero.services.GroceryListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import com.grocero.utils.BeanCreatorUtil;
 import com.grocero.utils.DtoCreatorUtil;
 
 @Service
-public class GroceryListService implements IGroceryListService {
+public class GroceryListServiceImpl implements GroceryListService {
 
     @Autowired
     private GroceryListRepository groceryListRepository;

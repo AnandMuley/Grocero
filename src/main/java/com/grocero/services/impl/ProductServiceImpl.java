@@ -4,7 +4,7 @@ import com.grocero.beans.ProductBean;
 import com.grocero.dtos.ProductDto;
 import com.grocero.exceptions.NoDataFoundException;
 import com.grocero.repositories.ProductRepository;
-import com.grocero.services.IProductService;
+import com.grocero.services.ProductService;
 import com.grocero.utils.DtoCreatorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductService implements IProductService {
+public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;

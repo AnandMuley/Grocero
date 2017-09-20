@@ -1,7 +1,7 @@
 package com.grocero.resources;
 
 import com.grocero.dtos.GroceryListDto;
-import com.grocero.services.IGroceryListService;
+import com.grocero.services.GroceryListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,11 +19,11 @@ public class GroceriesListResource {
     @Context
     UriInfo uriInfo;
 
-    private IGroceryListService groceryListService;
+    private GroceryListService groceryListService;
 
     @Autowired
-    public GroceriesListResource(IGroceryListService iGroceryListService) {
-        this.groceryListService = iGroceryListService;
+    public GroceriesListResource(GroceryListService groceryListService) {
+        this.groceryListService = groceryListService;
     }
 
     @POST

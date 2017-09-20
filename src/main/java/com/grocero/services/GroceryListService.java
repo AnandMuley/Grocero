@@ -4,10 +4,8 @@ import com.grocero.dtos.GroceryListDto;
 
 import java.util.List;
 
-/**
- * Created by andriox on 16/9/17.
- */
-public interface IGroceryListService {
+public interface GroceryListService {
+
     GroceryListDto findById(String listId);
 
     void create(GroceryListDto groceryListDto);
@@ -17,4 +15,5 @@ public interface IGroceryListService {
     void delete(String listId);
 
     void update(GroceryListDto groceryListDto);
+
 }

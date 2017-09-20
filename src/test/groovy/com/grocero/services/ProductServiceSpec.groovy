@@ -4,7 +4,7 @@ import com.grocero.beans.ProductBean
 import com.grocero.dtos.ProductDto
 import com.grocero.exceptions.NoDataFoundException
 import com.grocero.repositories.ProductRepository
-import com.grocero.services.impl.ProductService
+import com.grocero.services.impl.ProductServiceImpl
 import com.grocero.shared.SharedSpecification
 import com.grocero.utils.DtoCreatorUtil
 import org.springframework.context.ApplicationContext
@@ -17,7 +17,7 @@ class ProductServiceSpec extends SharedSpecification {
     public static final productId = UUID.randomUUID().toString()
 
     @Shared
-    ProductService productService
+    ProductServiceImpl productService
 
     ProductRepository mockProductRepository
 
@@ -29,7 +29,7 @@ class ProductServiceSpec extends SharedSpecification {
         mockApplicationContext = Mock(ApplicationContext)
         mockProductRepository = Mock(ProductRepository)
         mockDtoCreatorUtil = Mock(DtoCreatorUtil)
-        productService = new ProductService(
+        productService = new ProductServiceImpl(
                 productRepository: mockProductRepository,
                 context: mockApplicationContext,
                 dtoCreatorUtil: mockDtoCreatorUtil

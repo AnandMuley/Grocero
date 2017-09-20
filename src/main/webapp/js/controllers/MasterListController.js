@@ -1,24 +1,28 @@
 controllers.controller('MasterListController',
-		['$scope','ProductResource','GroceryListResource','$location','$filter',
-		 function($scope,Product,GroceryList,$location,$filter){
+		['$scope','ProductResource','MasterListResource','$location','$filter',
+		 function($scope,Product,MasterList,$location,$filter){
 	var self = this;
 	self.listName = $filter('date')(new Date(),"dd-MMM-yyyy");
-	$scope.groceryList = new GroceryList({name:"Master List",items:[]});
+	$scope.masterList = new MasterList({name:"Master List",items:[]});
 	$scope.message = "";
 
 	$scope.saveList = function(){
-		$scope.groceryList.$save(function(data,headers){
-			$scope.groceryList = new GroceryList({name:"12-Sept-2017",items:[]});
-			$scope.message = "Saved successfully !!!";
+		// TODO AUTH - Change the below id to customerId once the authentication is inplace
+		$scope.masterList.$save({id:"59c1f7a0e4b01ba052e3b2d8"},function(data,headers){
+			$scope.masterList = new MasterList({name:"Master List",items:[]});
+			$scope.message = "MasterList Saved successfully !!!";
+		},function(httpResponse){
+			let data = httpResponse.data;
+			$scope.message = data.message;
 		});
 	}
 
 	$scope.addItemToList = function (item){
-		$scope.groceryList.items.push(item.name);
+		$scope.masterList.items.push(item.name);
 	}
 
 	$scope.isNotEnlisted = function(item){
-		return $scope.groceryList.items.indexOf(item) == -1;
+		return $scope.masterList.items.indexOf(item) == -1;
 	}
 
 }]);

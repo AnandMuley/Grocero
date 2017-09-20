@@ -4,20 +4,22 @@ import com.grocero.beans.CustomerBean;
 import com.grocero.beans.MasterListBean;
 import com.grocero.dtos.CustomerDto;
 import com.grocero.dtos.MasterListDto;
+import com.grocero.exceptions.CustomerDoesNotExistException;
 import com.grocero.exceptions.NoDataFoundException;
 import com.grocero.repositories.CustomerRepository;
 import com.grocero.repositories.MasterListRepository;
-import com.grocero.services.ICustomerService;
+import com.grocero.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class CustomerService extends GroceroService implements ICustomerService {
+public class CustomerServiceImpl extends GroceroService implements CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -38,7 +40,8 @@ public class CustomerService extends GroceroService implements ICustomerService 
         return customers.stream().map(beanToDtoMapper::map).collect(Collectors.toSet());
     }
 
-    public void save(MasterListDto masterListDto) {
+    public void save(MasterListDto masterListDto) throws CustomerDoesNotExistException {
+        Optional.ofNullable(customerRepository.findOne(masterListDto.getCustomerId())).orElseThrow(CustomerDoesNotExistException::new);
         MasterListBean masterListBean = masterListRepository.save(dtoToBeanMapper.map(masterListDto));
         masterListDto.setId(masterListBean.getId());
     }

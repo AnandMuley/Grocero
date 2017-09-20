@@ -4,16 +4,17 @@ import com.grocero.beans.CustomerBean
 import com.grocero.beans.MasterListBean
 import com.grocero.dtos.CustomerDto
 import com.grocero.dtos.MasterListDto
+import com.grocero.exceptions.CustomerDoesNotExistException
 import com.grocero.repositories.CustomerRepository
 import com.grocero.repositories.MasterListRepository
-import com.grocero.services.impl.CustomerService
+import com.grocero.services.impl.CustomerServiceImpl
 import com.grocero.shared.SharedSpecification
 import spock.lang.Subject
 
 class CustomerServiceSpec extends SharedSpecification {
 
     @Subject
-    CustomerService customerService
+    CustomerServiceImpl customerService
 
     CustomerRepository mockCustomerRepository
 
@@ -22,7 +23,7 @@ class CustomerServiceSpec extends SharedSpecification {
     def setup() {
         mockMasterListRepository = Mock(MasterListRepository)
         mockCustomerRepository = Mock(CustomerRepository)
-        customerService = new CustomerService(
+        customerService = new CustomerServiceImpl(
                 customerRepository: mockCustomerRepository,
                 dtoToBeanMapper: mockDtoToBeanMapper,
                 masterListRepository: mockMasterListRepository,
@@ -52,6 +53,7 @@ class CustomerServiceSpec extends SharedSpecification {
         given: "details to be saved"
         MasterListDto masterListDto = new MasterListDto(randomId, randomId, MASTER_LIST_NAME)
         MasterListBean masterListBean = new MasterListBean(id: randomId)
+        1 * mockCustomerRepository.findOne(randomId) >> new CustomerBean(randomId)
         1 * mockDtoToBeanMapper.map(masterListDto) >> masterListBean
         1 * mockMasterListRepository.save({ MasterListBean it ->
             assert it.id == randomId
@@ -65,6 +67,19 @@ class CustomerServiceSpec extends SharedSpecification {
 
         then: "details should be saved and the id property should be populated"
         assert masterListDto.id == randomId
+    }
+
+    def "save - should throw exception and not save the master list"() {
+        given: "details to be saved"
+        MasterListDto masterListDto = new MasterListDto(randomId, randomId, MASTER_LIST_NAME)
+        1 * mockCustomerRepository.findOne(randomId) >> null
+
+        when: "save operation is performed"
+        customerService.save(masterListDto)
+
+        then: "details should be saved and the id property should be populated"
+        def ex = thrown(CustomerDoesNotExistException)
+        assert ex.message == "Customer does not exist"
     }
 
     def "getMasterLists - should return the masterlists for a customerid"() {
