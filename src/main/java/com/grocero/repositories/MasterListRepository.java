@@ -10,6 +10,8 @@ import java.util.List;
 @Repository
 public interface MasterListRepository extends MongoRepository<MasterListBean, String> {
 
+    MasterListBean findOneByCustomerId(String customerId);
+
     List<MasterListBean> findByCustomerId(String customerId);
 
 }

@@ -5,6 +5,7 @@ import com.grocero.beans.MasterListBean
 import com.grocero.dtos.CustomerDto
 import com.grocero.dtos.MasterListDto
 import com.grocero.exceptions.CustomerDoesNotExistException
+import com.grocero.exceptions.DuplicateMasterListException
 import com.grocero.repositories.CustomerRepository
 import com.grocero.repositories.MasterListRepository
 import com.grocero.services.impl.CustomerServiceImpl
@@ -14,7 +15,7 @@ import spock.lang.Subject
 class CustomerServiceSpec extends SharedSpecification {
 
     @Subject
-    CustomerServiceImpl customerService
+    CustomerService customerService
 
     CustomerRepository mockCustomerRepository
 
@@ -53,6 +54,7 @@ class CustomerServiceSpec extends SharedSpecification {
         given: "details to be saved"
         MasterListDto masterListDto = new MasterListDto(randomId, randomId, MASTER_LIST_NAME)
         MasterListBean masterListBean = new MasterListBean(id: randomId)
+        1 * mockMasterListRepository.findOneByCustomerId(masterListDto.customerId) >> null
         1 * mockCustomerRepository.findOne(randomId) >> new CustomerBean(randomId)
         1 * mockDtoToBeanMapper.map(masterListDto) >> masterListBean
         1 * mockMasterListRepository.save({ MasterListBean it ->
@@ -80,6 +82,20 @@ class CustomerServiceSpec extends SharedSpecification {
         then: "details should be saved and the id property should be populated"
         def ex = thrown(CustomerDoesNotExistException)
         assert ex.message == "Customer does not exist"
+    }
+
+    def "save - should create only one master list per customer"() {
+        given: "details to be saved"
+        MasterListDto masterListDto = new MasterListDto(randomId, randomId, MASTER_LIST_NAME)
+        1 * mockCustomerRepository.findOne(randomId) >> new CustomerBean(id: masterListDto.customerId)
+        1 * mockMasterListRepository.findOneByCustomerId(masterListDto.customerId) >> new MasterListBean(id: randomId,customerId: masterListDto.customerId,name: "Master List")
+
+        when: "save operation is performed"
+        customerService.save(masterListDto)
+
+        then: "details should be saved and the id property should be populated"
+        def ex = thrown(DuplicateMasterListException)
+        assert ex.message == "Master list already exists"
     }
 
     def "getMasterLists - should return the masterlists for a customerid"() {

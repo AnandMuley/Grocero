@@ -44,6 +44,8 @@ repositories {
 	mavenCentral()
 }
 
+task stage(dependsOn:['build','clean'])
+
 dependencies {
 	compile json,jersey.jackson
 	compile spring.web, spring.core, spring.test, jersey.server, jackson

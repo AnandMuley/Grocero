@@ -5,6 +5,7 @@ import com.grocero.dtos.CustomerDto;
 import com.grocero.dtos.MasterListDto;
 import com.grocero.dtos.ResponseDto;
 import com.grocero.exceptions.CustomerDoesNotExistException;
+import com.grocero.exceptions.CustomerServiceException;
 import com.grocero.exceptions.NoDataFoundException;
 import com.grocero.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class CustomerResource {
         try {
             masterList.setCustomerId(customerId);
             customerService.save(masterList);
-        } catch (CustomerDoesNotExistException e) {
+        } catch (CustomerServiceException e) {
             return Response.status(Response.Status.NOT_FOUND).entity(new ResponseDto(e.getMessage())).build();
         }
         return Response.ok(masterList).build();

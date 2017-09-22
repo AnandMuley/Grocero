@@ -1,8 +1,10 @@
 package com.grocero.exceptions;
 
-public class CustomerDoesNotExistException extends Exception {
+public class CustomerDoesNotExistException extends CustomerServiceException {
+
+    public static final String DEFAULT_MSG = "Customer does not exist";
 
     public CustomerDoesNotExistException() {
-        super("Customer does not exist");
+        super(DEFAULT_MSG);
     }
 }

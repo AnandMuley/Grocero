@@ -5,6 +5,8 @@ import com.grocero.beans.MasterListBean;
 import com.grocero.dtos.CustomerDto;
 import com.grocero.dtos.MasterListDto;
 import com.grocero.exceptions.CustomerDoesNotExistException;
+import com.grocero.exceptions.CustomerServiceException;
+import com.grocero.exceptions.DuplicateMasterListException;
 import com.grocero.exceptions.NoDataFoundException;
 import com.grocero.repositories.CustomerRepository;
 import com.grocero.repositories.MasterListRepository;
@@ -40,8 +42,12 @@ public class CustomerServiceImpl extends GroceroService implements CustomerServi
         return customers.stream().map(beanToDtoMapper::map).collect(Collectors.toSet());
     }
 
-    public void save(MasterListDto masterListDto) throws CustomerDoesNotExistException {
+    public void save(MasterListDto masterListDto) throws CustomerServiceException {
         Optional.ofNullable(customerRepository.findOne(masterListDto.getCustomerId())).orElseThrow(CustomerDoesNotExistException::new);
+        MasterListBean existingMasterList = masterListRepository.findOneByCustomerId(masterListDto.getCustomerId());
+        if (existingMasterList != null) {
+            throw new DuplicateMasterListException();
+        }
         MasterListBean masterListBean = masterListRepository.save(dtoToBeanMapper.map(masterListDto));
         masterListDto.setId(masterListBean.getId());
     }
