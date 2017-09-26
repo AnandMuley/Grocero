@@ -20,6 +20,15 @@
 	padding-top: 30px;
 }
 
+.prod-checkbox{
+	padding-top: 50px;
+}
+
+.measuredIn{
+	padding-top: 25px;
+	margin-left: 10px;
+}
+
 .navbar{
 	background-color: inherit;
 }

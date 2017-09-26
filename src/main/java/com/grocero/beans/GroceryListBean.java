@@ -9,43 +9,43 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "grocerylists")
 public class GroceryListBean {
 
-	@Id
-	private String id;
-	private String name;
-	private List<String> items = new ArrayList<>();
+    @Id
+    private String id;
+    private String name;
+    private List<ProductBean> items = new ArrayList<>();
 
-	public GroceryListBean() {
-	}
+    public GroceryListBean() {
+    }
 
-	public GroceryListBean(String name) {
-		super();
-		this.name = name;
-	}
+    public GroceryListBean(String name) {
+        super();
+        this.name = name;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public List<String> getItems() {
-		return items;
-	}
+    public List<ProductBean> getItems() {
+        return items;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@Override
-	public String toString() {
-		return "GroceryListBean [id=" + id + ", name=" + name + ", items="
-				+ items + "]";
-	}
+    @Override
+    public String toString() {
+        return "GroceryListBean [id=" + id + ", name=" + name + ", items="
+                + items + "]";
+    }
 
 }

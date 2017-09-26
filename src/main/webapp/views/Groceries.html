@@ -1,44 +1,24 @@
 <div layout="row">
-	<div flex="25">
-		<md-card class="manage-prod-card">
-			<md-card-title>
-				<md-card-title-text>
-					<span class="md-headline">Add Item</span>
-				</md-card-title-text>
-			</md-card-title>
-			<md-card-content>
-				<md-input-container class="md-block">
-					<label>Product</label>
-					<md-select ng-model="item.product">
-						<md-option value="{{product}}" ng-repeat="product in products">{{product.name}}</md-option>
-					</md-select>
-				</md-input-container>
-				<md-input-container class="md-block" layout="row">
-					<label>Quantity</label>
-					<input flex="50" ng-model="item.quantity"/>&nbsp;&nbsp;<span flex="50">{{getMeasuredIn(item.product)}}</span>
-				</md-input-container>
-			</md-card-content>
-			<md-card-actions layout="row" layout-align="center">
-				<md-button ng-click="addItem()" class="md-raised md-primary">Add</md-button>
-			</md-card-actions>
-		</md-card>
-	</div>
 	<div flex="30">
 				<md-card class="veggie-card-custom" md-theme-watch>
 					<md-card-title class="veggie-card-title">
 						<md-input-container class="md-default md-block">
-							<label>Enter List Name</label>
+							<!-- <label>List Name</label> -->
 							<input maxlength="39" ng-model="list.name"/>
 						</md-input-container>
 					</md-card-title>
 					<md-card-content class="veggie-card-content" md-padding>
 						<div class="item-row" layout="row" ng-repeat="listitem in list.items">
-							<div flex="20">
-								<md-checkbox ng-model="product.checked"></md-checkbox>
-							</div>
-							<div flex="80">
-								<span class="md-subhead prod-name">{{listitem.product.name}}</span><br/>
-								<span class="prod-subhead">{{listitem.quantity}} {{listitem.product.measuredIn}}</span>
+							<!-- <div flex="20">
+								<md-checkbox class="prod-checkbox" ng-model="product.checked"></md-checkbox>
+							</div> -->
+							<div flex="80" layout="col">
+								<!-- <span flex="60" class="md-subhead prod-name">{{listitem.name}}</span> -->
+								<md-input-container flex="50" class="md-default md-block">
+								  <label>{{listitem.name}}</label>
+								  <input maxlength="10" ng-model="listitem.quantity"/>
+								</md-input-container>
+								<span flex class="md-subhead measuredIn">{{listitem.measuredIn}}</span>
 							</div>
 						</div>
 					</md-card-content>
@@ -46,5 +26,18 @@
 						<md-button ng-click="saveList()">save</md-button>
 					</md-card-actions>
 				</md-card>
+				<div class="">{{message}}</div>
+		</div>
+		<div flex="70">
+			<md-grid-list class="product-list"
+				md-col-xs="1" md-col-sm="2" md-col-md="4" md-cols-gt-md="6"
+				md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px">
+					<md-grid-tile ng-click="enlist(product)" ng-repeat="product in products" class="gray" md-rowspan="1" md-colspan="1" md-colspan-sm="1" md-colspan-xs="1">
+						<img class="img-circle" src="images/{{product.name|lowercase}}.jpg" alt="" width="120">
+				      	<md-grid-tile-footer>
+				        	<h3>{{product.name}}</h3>
+				      	</md-grid-tile-footer>
+				    </md-grid-tile>
+			</md-grid-list>
 		</div>
 </div>

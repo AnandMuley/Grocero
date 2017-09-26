@@ -9,6 +9,9 @@ import com.grocero.beans.ProductBean;
 import com.grocero.dtos.GroceryListDto;
 import com.grocero.dtos.ProductDto;
 
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 @Component
 public class DtoCreatorUtil {
 
@@ -19,7 +22,7 @@ public class DtoCreatorUtil {
         GroceryListDto groceryListDto = context.getBean(GroceryListDto.class);
         groceryListDto.setName(groceryListBean.getName());
         groceryListDto.setId(groceryListBean.getId());
-        groceryListDto.getItems().addAll(groceryListBean.getItems());
+        groceryListDto.getItems().addAll(groceryListBean.getItems().stream().map(this::createProductDto).collect(Collectors.toList()));
         return groceryListDto;
     }
 

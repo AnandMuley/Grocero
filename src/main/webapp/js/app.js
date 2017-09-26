@@ -2,7 +2,7 @@ var app = angular.module('GroceroUI',['ngMaterial','ngRoute','guiControllers','g
 var controllers = angular.module('guiControllers',[]);
 var services = angular.module('guiServices',['ngResource']);
 
-app.config(['$routeProvider',function($routeProvider){
+app.config(['$routeProvider','$mdIconProvider',function($routeProvider,$mdIconProvider){
 
 	$routeProvider.when('/',{
 		redirectTo:'/mylists'
@@ -27,6 +27,9 @@ app.config(['$routeProvider',function($routeProvider){
 		templateUrl: 'views/Purchases.html',
 		controller: 'PurchasesController'
 	});
+
+	$mdIconProvider.iconSet('social','img/icons/sets/social-icons.svg',24)
+								 .defaultIconSet('img/icons/sets/core-icons.svg',24);
 
 }]);
 

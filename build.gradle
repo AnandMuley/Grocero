@@ -13,6 +13,11 @@ jar {
     manifest {
         attributes 'Implementation-Title': 'Grocero'
     }
+	zip64 = true
+}
+
+war{
+	zip64 = true
 }
 
 buildscript {
