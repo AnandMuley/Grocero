@@ -9,7 +9,6 @@ import com.grocero.beans.ProductBean;
 import com.grocero.dtos.GroceryListDto;
 import com.grocero.dtos.ProductDto;
 
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Component
@@ -18,20 +17,19 @@ public class DtoCreatorUtil {
     @Autowired
     private ApplicationContext context;
 
-    public GroceryListDto createGroceryListDto(GroceryListBean groceryListBean) {
+    public GroceryListDto create(GroceryListBean groceryListBean) {
         GroceryListDto groceryListDto = context.getBean(GroceryListDto.class);
         groceryListDto.setName(groceryListBean.getName());
         groceryListDto.setId(groceryListBean.getId());
-        groceryListDto.getItems().addAll(groceryListBean.getItems().stream().map(this::createProductDto).collect(Collectors.toList()));
+        groceryListDto.getItems().addAll(groceryListBean.getItems().stream().map(this::create).collect(Collectors.toList()));
         return groceryListDto;
     }
 
-    public ProductDto createProductDto(ProductBean productBean) {
-        ProductDto productDto = context.getBean(ProductDto.class);
-        productDto.setId(productBean.getId());
-        productDto.setMeasuredIn(productBean.getMeasuredIn());
-        productDto.setName(productBean.getName());
-        return productDto;
+    public ProductDto create(ProductBean productBean) {
+        ProductDto.Builder builder = context.getBean(ProductDto.Builder.class);
+        return builder.setId(productBean.getId()).setName(productBean.getName())
+                .setMeasuredIn(productBean.getMeasuredIn()).setQuantity(productBean.getQuantity())
+                .setCost(productBean.getCost()).build();
     }
 
 }

@@ -4,7 +4,6 @@ package com.grocero.resources;
 import com.grocero.dtos.CustomerDto;
 import com.grocero.dtos.MasterListDto;
 import com.grocero.dtos.ResponseDto;
-import com.grocero.exceptions.CustomerDoesNotExistException;
 import com.grocero.exceptions.CustomerServiceException;
 import com.grocero.exceptions.NoDataFoundException;
 import com.grocero.services.CustomerService;
@@ -44,7 +43,7 @@ public class CustomerResource {
     @Path("{id}/masterlist")
     public Response getMasterList(@PathParam("id") String customerId, MasterListDto masterList) {
         try {
-            return Response.ok(customerService.getMasterLists(customerId)).build();
+            return Response.ok(customerService.getMasterList(customerId)).build();
         } catch (NoDataFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

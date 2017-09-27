@@ -16,6 +16,6 @@ public interface CustomerService {
 
     void save(MasterListDto masterList) throws CustomerServiceException;
 
-    Set<MasterListDto> getMasterLists(String customerId) throws NoDataFoundException;
+    MasterListDto getMasterList(String customerId) throws NoDataFoundException;
 
 }

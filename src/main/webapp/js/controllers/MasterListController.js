@@ -3,7 +3,18 @@ controllers.controller('MasterListController',
 		 function($scope,Product,MasterList,$location,$filter){
 	var self = this;
 	self.listName = $filter('date')(new Date(),"dd-MMM-yyyy");
-	$scope.masterList = new MasterList({name:"Master List",items:[]});
+	// $scope.masterList = new MasterList({name:"Master List",items:[]});
+	MasterList.query({"id":"59c1f7a0e4b01ba052e3b2d8"},function(response){
+		$scope.masterList = response;
+	},function(httpResponse){
+		if(httpResponse.status == undefined){
+			$scope.message = "Something went wrong !";
+		}else{
+			$scope.message = httpResponse.statusText;
+			$scope.masterList = new MasterList({name:"Master List",items:[]});
+		}
+
+	});
 	$scope.message = "";
 
 	$scope.saveList = function(){

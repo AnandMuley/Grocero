@@ -3,9 +3,13 @@ package com.grocero.beans;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.stereotype.Component;
 
+@Scope("prototype")
+@Component
 @Document(collection = "grocerylists")
 public class GroceryListBean {
 
@@ -15,6 +19,12 @@ public class GroceryListBean {
     private List<ProductBean> items = new ArrayList<>();
 
     public GroceryListBean() {
+
+    }
+
+    public GroceryListBean(String id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public GroceryListBean(String name) {
@@ -30,10 +40,6 @@ public class GroceryListBean {
         this.id = id;
     }
 
-    public List<ProductBean> getItems() {
-        return items;
-    }
-
     public String getName() {
         return name;
     }
@@ -42,10 +48,20 @@ public class GroceryListBean {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "GroceryListBean [id=" + id + ", name=" + name + ", items="
-                + items + "]";
+    public List<ProductBean> getItems() {
+        return items;
     }
 
+    public void setItems(List<ProductBean> items) {
+        this.items = items;
+    }
+
+    @Override
+    public String toString() {
+        return "GroceryListBean{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", items=" + items +
+                '}';
+    }
 }

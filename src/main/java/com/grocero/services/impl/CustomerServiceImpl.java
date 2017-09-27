@@ -53,11 +53,11 @@ public class CustomerServiceImpl extends GroceroService implements CustomerServi
     }
 
     @Override
-    public Set<MasterListDto> getMasterLists(String customerId) throws NoDataFoundException {
-        List<MasterListBean> masterLists = masterListRepository.findByCustomerId(customerId);
-        if (CollectionUtils.isEmpty(masterLists)) {
+    public MasterListDto getMasterList(String customerId) throws NoDataFoundException {
+        MasterListBean masterList = masterListRepository.findOneByCustomerId(customerId);
+        if (masterList == null) {
             throw new NoDataFoundException("No master lists found");
         }
-        return masterLists.stream().map(beanToDtoMapper::map).collect(Collectors.toSet());
+        return beanToDtoMapper.map(masterList);
     }
 }

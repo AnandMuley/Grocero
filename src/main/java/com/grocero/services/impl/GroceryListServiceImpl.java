@@ -31,7 +31,7 @@ public class GroceryListServiceImpl implements GroceryListService {
         GroceryListBean groceryListBean = groceryListRepository.findOne(listId);
         GroceryListDto groceryListDto = null;
         Optional.ofNullable(groceryListBean).ifPresent(bean ->
-                dtoCreatorUtil.createGroceryListDto(bean)
+                dtoCreatorUtil.create(bean)
         );
         return groceryListDto;
     }
@@ -39,7 +39,7 @@ public class GroceryListServiceImpl implements GroceryListService {
     @Override
     public void create(GroceryListDto groceryListDto) {
         GroceryListBean groceryListBean = beanCreatorUtil
-                .createGroceryListBean(groceryListDto);
+                .create(groceryListDto, beanCreatorUtil::create);
         groceryListRepository.save(groceryListBean);
         groceryListDto.setId(groceryListBean.getId());
     }
@@ -51,7 +51,7 @@ public class GroceryListServiceImpl implements GroceryListService {
         List<GroceryListDto> groceryListDtos = new ArrayList<GroceryListDto>();
         for (GroceryListBean groceryListBean : groceryListBeans) {
             GroceryListDto groceryListDto = dtoCreatorUtil
-                    .createGroceryListDto(groceryListBean);
+                    .create(groceryListBean);
             groceryListDtos.add(groceryListDto);
         }
         return groceryListDtos;
@@ -65,7 +65,7 @@ public class GroceryListServiceImpl implements GroceryListService {
     @Override
     public void update(GroceryListDto groceryListDto) {
         GroceryListBean groceryListBean = beanCreatorUtil
-                .createGroceryListBean(groceryListDto);
+                .update(groceryListDto);
         groceryListBean.setId(groceryListDto.getId());
         groceryListRepository.save(groceryListBean);
     }

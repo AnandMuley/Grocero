@@ -7,9 +7,6 @@ controllers.controller('TabsController',['$scope','$location',function($scope,$l
 	            	   path:"products",
 	            	   name:"products"
 	               },{
-	            	   path:"vegetables",
-	            	   name:"vegetables"
-	               },{
 	            	   path:"groceries",
 	            	   name:"groceries"
 	               },{

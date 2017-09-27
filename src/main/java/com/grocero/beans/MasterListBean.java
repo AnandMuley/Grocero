@@ -43,6 +43,10 @@ public class MasterListBean {
         this.customerId = customerId;
     }
 
+    public void setItems(List<String> items) {
+        this.items = items;
+    }
+
     public List<String> getItems() {
         return items;
     }

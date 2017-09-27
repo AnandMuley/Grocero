@@ -1,5 +1,6 @@
 package com.grocero.dtos;
 
+import com.grocero.beans.GroceryListBean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +32,10 @@ public class GroceryListDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setItems(List<ProductDto> items) {
+        this.items = items;
     }
 
     public List<ProductDto> getItems() {

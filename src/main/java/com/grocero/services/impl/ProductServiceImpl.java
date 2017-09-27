@@ -43,13 +43,13 @@ public class ProductServiceImpl implements ProductService {
         if (CollectionUtils.isEmpty(productBeans)) {
             throw new NoDataFoundException("No products found");
         }
-        return productBeans.stream().map(dtoCreatorUtil::createProductDto).collect(Collectors.toList());
+        return productBeans.stream().map(dtoCreatorUtil::create).collect(Collectors.toList());
     }
 
     @Override
     public ProductDto findByName(String name) {
         ProductBean productBean = productRepository.findByName(name);
-        return dtoCreatorUtil.createProductDto(productBean);
+        return dtoCreatorUtil.create(productBean);
     }
 
     @Override

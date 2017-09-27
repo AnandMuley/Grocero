@@ -14,7 +14,7 @@ import java.util.List;
 @Path("grocerylists")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class GroceriesListResource {
+public class GroceryListResource {
 
     @Context
     UriInfo uriInfo;
@@ -22,7 +22,7 @@ public class GroceriesListResource {
     private GroceryListService groceryListService;
 
     @Autowired
-    public GroceriesListResource(GroceryListService groceryListService) {
+    public GroceryListResource(GroceryListService groceryListService) {
         this.groceryListService = groceryListService;
     }
 

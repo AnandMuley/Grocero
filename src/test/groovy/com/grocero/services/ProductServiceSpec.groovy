@@ -60,7 +60,7 @@ class ProductServiceSpec extends SharedSpecification {
     def "getAll - should return return the products"() {
         given: "database contains the list of products"
         1 * mockProductRepository.findAll() >> [new ProductBean(id: productId, name: productName, measuredIn: measuredIn)]
-        1 * mockDtoCreatorUtil.createProductDto({ ProductBean bean ->
+        1 * mockDtoCreatorUtil.create({ ProductBean bean ->
             assert bean.id == productId
             true
         }) >> new ProductDto(id: productId, name: productName, measuredIn: measuredIn)
@@ -92,7 +92,7 @@ class ProductServiceSpec extends SharedSpecification {
         given: "name of the product to find"
         ProductBean expected = new ProductBean(id: productId, name: productName, measuredIn: measuredIn)
         1 * mockProductRepository.findByName(productName) >> expected
-        1 * mockDtoCreatorUtil.createProductDto({ ProductBean it ->
+        1 * mockDtoCreatorUtil.create({ ProductBean it ->
             assert it.id == productId
             true
         }) >> new ProductDto(id: productId, name: productName, measuredIn: measuredIn)

@@ -14,9 +14,6 @@ app.config(['$routeProvider','$mdIconProvider',function($routeProvider,$mdIconPr
 	}).when('/masterlist',{
 		templateUrl : 'views/MasterList.html',
 		controller : 'MasterListController'
-	}).when('/vegetables',{
-		templateUrl : 'views/Vegetables.html',
-		controller : 'VegetablesController'
 	}).when('/mylists',{
 		templateUrl : 'views/MyLists.html',
 		controller : 'MyListsController'

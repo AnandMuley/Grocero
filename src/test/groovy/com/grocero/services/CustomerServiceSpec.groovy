@@ -2,6 +2,7 @@ package com.grocero.services
 
 import com.grocero.beans.CustomerBean
 import com.grocero.beans.MasterListBean
+import com.grocero.builders.MasterListBeanBuilder
 import com.grocero.dtos.CustomerDto
 import com.grocero.dtos.MasterListDto
 import com.grocero.exceptions.CustomerDoesNotExistException
@@ -88,7 +89,7 @@ class CustomerServiceSpec extends SharedSpecification {
         given: "details to be saved"
         MasterListDto masterListDto = new MasterListDto(randomId, randomId, MASTER_LIST_NAME)
         1 * mockCustomerRepository.findOne(randomId) >> new CustomerBean(id: masterListDto.customerId)
-        1 * mockMasterListRepository.findOneByCustomerId(masterListDto.customerId) >> new MasterListBean(id: randomId,customerId: masterListDto.customerId,name: "Master List")
+        1 * mockMasterListRepository.findOneByCustomerId(masterListDto.customerId) >> new MasterListBean(id: randomId, customerId: masterListDto.customerId, name: "Master List")
 
         when: "save operation is performed"
         customerService.save(masterListDto)
@@ -98,22 +99,23 @@ class CustomerServiceSpec extends SharedSpecification {
         assert ex.message == "Master list already exists"
     }
 
-    def "getMasterLists - should return the masterlists for a customerid"() {
+    def "getMasterList - should return the masterlist for a customerid"() {
         given: "customerid"
         String customerId = randomId
         MasterListDto masterListDto = new MasterListDto(randomId, customerId, MASTER_LIST_NAME)
-        MasterListBean masterListBean = new MasterListBean(id: randomId)
+        MasterListBean masterListBean = new MasterListBeanBuilder().id(randomId)
+                .customerId(customerId).name("Master List").build()
         1 * mockBeanToDtoMapper.map(masterListBean) >> masterListDto
-        1 * mockMasterListRepository.findByCustomerId(customerId) >> [masterListBean]
+        1 * mockMasterListRepository.findOneByCustomerId(customerId) >> masterListBean
 
         when: "save operation is performed"
-        Set<MasterListDto> actual = customerService.getMasterLists(customerId)
+        MasterListDto actual = customerService.getMasterList(customerId)
 
         then: "details should be saved and the id property should be populated"
-        assert actual.size() == 1
-        MasterListDto actualDto = actual[0]
-        assert actualDto.customerId == customerId
-        assert actualDto.name == MASTER_LIST_NAME
+        actual.id == masterListBean.id
+        actual.name == MASTER_LIST_NAME
+        actual.customerId == customerId
+        actual.items.size() == 0
     }
 
 }

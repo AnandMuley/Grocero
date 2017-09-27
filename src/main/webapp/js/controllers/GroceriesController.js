@@ -15,7 +15,7 @@ controllers.controller('GroceriesController',
 
 	$scope.saveList = function(){
 		$scope.list.$save(function(data,headers){
-			$scope.masterList = new GroceryList({name:self.listName,items:[]});
+			$scope.list = new GroceryList({name:self.listName,items:[]});
 			$scope.message = "GroceryList Saved successfully !!!";
 		},function(httpResponse){
 			let data = httpResponse.data;
