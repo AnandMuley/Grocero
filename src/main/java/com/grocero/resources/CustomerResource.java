@@ -27,12 +27,12 @@ public class CustomerResource {
         this.customerService = customerService;
     }
 
-    @POST
+    @PUT
     @Path("{id}/masterlist")
     public Response createMasterList(@PathParam("id") String customerId, MasterListDto masterList) {
         try {
             masterList.setCustomerId(customerId);
-            customerService.save(masterList);
+            customerService.createOrUpdate(masterList);
         } catch (CustomerServiceException e) {
             return Response.status(Response.Status.NOT_FOUND).entity(new ResponseDto(e.getMessage())).build();
         }
@@ -51,7 +51,7 @@ public class CustomerResource {
 
     @POST
     public Response create(CustomerDto customerDto) {
-        customerService.save(customerDto);
+        customerService.createOrUpdate(customerDto);
         return Response.ok(customerDto).build();
     }
 

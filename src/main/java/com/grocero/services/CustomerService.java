@@ -10,11 +10,11 @@ import java.util.Set;
 
 public interface CustomerService {
 
-    void save(CustomerDto customerDto);
+    void createOrUpdate(CustomerDto customerDto);
 
     Set<CustomerDto> getAll() throws NoDataFoundException;
 
-    void save(MasterListDto masterList) throws CustomerServiceException;
+    void createOrUpdate(MasterListDto masterList) throws CustomerServiceException;
 
     MasterListDto getMasterList(String customerId) throws NoDataFoundException;
 

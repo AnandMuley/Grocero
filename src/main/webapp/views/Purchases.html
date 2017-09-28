@@ -12,7 +12,7 @@
 			<md-card-title-text>
 				<span class="md-headline">{{selected.name}}</span>
 			</md-card-title-text>
-		</md-card-title>	
+		</md-card-title>
 		<md-card-content class="veggie-card-content" md-padding>
 			<div class="item-row" layout="row" ng-repeat="item in selected.items">
 				<div flex="70" class="prod-item-row">
@@ -21,7 +21,7 @@
 				<div flex="30">
 					<md-input-container>
 						<label>&#8377;</label>
-						<input ng-blur="calculateTotal()" flex="50" ng-model="item.cost"/>
+						<input ng-blur="calculateTotal()" flex="70" ng-model="item.cost"/>
 					</md-input-container>
 				</div>
 			</div>

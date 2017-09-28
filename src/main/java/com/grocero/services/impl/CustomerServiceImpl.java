@@ -29,7 +29,7 @@ public class CustomerServiceImpl extends GroceroService implements CustomerServi
     @Autowired
     private MasterListRepository masterListRepository;
 
-    public void save(CustomerDto customerDto) {
+    public void createOrUpdate(CustomerDto customerDto) {
         CustomerBean customerBean = customerRepository.save(dtoToBeanMapper.map(customerDto));
         customerDto.setId(customerBean.getId());
     }
@@ -42,13 +42,10 @@ public class CustomerServiceImpl extends GroceroService implements CustomerServi
         return customers.stream().map(beanToDtoMapper::map).collect(Collectors.toSet());
     }
 
-    public void save(MasterListDto masterListDto) throws CustomerServiceException {
+    public void createOrUpdate(MasterListDto masterListDto) throws CustomerServiceException {
         Optional.ofNullable(customerRepository.findOne(masterListDto.getCustomerId())).orElseThrow(CustomerDoesNotExistException::new);
         MasterListBean existingMasterList = masterListRepository.findOneByCustomerId(masterListDto.getCustomerId());
-        if (existingMasterList != null) {
-            throw new DuplicateMasterListException();
-        }
-        MasterListBean masterListBean = masterListRepository.save(dtoToBeanMapper.map(masterListDto));
+        MasterListBean masterListBean = masterListRepository.save(dtoToBeanMapper.map(masterListDto, Optional.ofNullable(existingMasterList)));
         masterListDto.setId(masterListBean.getId());
     }
 

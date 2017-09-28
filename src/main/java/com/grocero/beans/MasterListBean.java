@@ -6,7 +6,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Scope("prototype")
 @Component
@@ -16,7 +18,7 @@ public class MasterListBean {
     @Id
     private String id;
     private String name;
-    private List<String> items = new ArrayList<>();
+    private Set<String> items = new LinkedHashSet<>();
     private String customerId;
 
     public String getId() {
@@ -43,11 +45,11 @@ public class MasterListBean {
         this.customerId = customerId;
     }
 
-    public void setItems(List<String> items) {
+    public void setItems(Set<String> items) {
         this.items = items;
     }
 
-    public List<String> getItems() {
+    public Set<String> getItems() {
         return items;
     }
 

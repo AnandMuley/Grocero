@@ -4,7 +4,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Scope("prototype")
 @Component
@@ -12,7 +14,7 @@ public class MasterListDto {
 
     private String id;
     private String customerId;
-    private List<String> items = new ArrayList<>();
+    private Set<String> items = new LinkedHashSet<>();
     private String name;
 
     public MasterListDto() {
@@ -24,22 +26,6 @@ public class MasterListDto {
         this.name = name;
     }
 
-    public List<String> getItems() {
-        return items;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public String getId() {
         return id;
     }
@@ -48,6 +34,29 @@ public class MasterListDto {
         this.id = id;
     }
 
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public Set<String> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<String> items) {
+        this.items = items;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Override
     public String toString() {

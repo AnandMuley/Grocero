@@ -3,6 +3,7 @@ package com.grocero.services
 import com.grocero.beans.CustomerBean
 import com.grocero.beans.MasterListBean
 import com.grocero.builders.MasterListBeanBuilder
+import com.grocero.builders.MasterListDtoBuilder
 import com.grocero.dtos.CustomerDto
 import com.grocero.dtos.MasterListDto
 import com.grocero.exceptions.CustomerDoesNotExistException
@@ -44,8 +45,8 @@ class CustomerServiceSpec extends SharedSpecification {
             true
         }) >> customerBean
 
-        when: "save operation is performed"
-        customerService.save(customerDto)
+        when: "createOrUpdate operation is performed"
+        customerService.createOrUpdate(customerDto)
 
         then: "details should be saved and the id property should be populated"
         assert customerDto.id == randomId
@@ -57,7 +58,7 @@ class CustomerServiceSpec extends SharedSpecification {
         MasterListBean masterListBean = new MasterListBean(id: randomId)
         1 * mockMasterListRepository.findOneByCustomerId(masterListDto.customerId) >> null
         1 * mockCustomerRepository.findOne(randomId) >> new CustomerBean(randomId)
-        1 * mockDtoToBeanMapper.map(masterListDto) >> masterListBean
+        1 * mockDtoToBeanMapper.map(masterListDto, Optional.empty()) >> masterListBean
         1 * mockMasterListRepository.save({ MasterListBean it ->
             assert it.id == randomId
             assert it.customerId == null
@@ -65,38 +66,53 @@ class CustomerServiceSpec extends SharedSpecification {
             true
         }) >> masterListBean
 
-        when: "save operation is performed"
-        customerService.save(masterListDto)
+        when: "createOrUpdate operation is performed"
+        customerService.createOrUpdate(masterListDto)
 
         then: "details should be saved and the id property should be populated"
         assert masterListDto.id == randomId
     }
 
-    def "save - should throw exception and not save the master list"() {
+    def "save - should not save the master list if the customer does not exist"() {
         given: "details to be saved"
         MasterListDto masterListDto = new MasterListDto(randomId, randomId, MASTER_LIST_NAME)
         1 * mockCustomerRepository.findOne(randomId) >> null
 
-        when: "save operation is performed"
-        customerService.save(masterListDto)
+        when: "createOrUpdate operation is performed"
+        customerService.createOrUpdate(masterListDto)
 
-        then: "details should be saved and the id property should be populated"
+        then: "exception should be thrown"
         def ex = thrown(CustomerDoesNotExistException)
         assert ex.message == "Customer does not exist"
     }
 
-    def "save - should create only one master list per customer"() {
+    def "save - should update the master list if exists"() {
         given: "details to be saved"
-        MasterListDto masterListDto = new MasterListDto(randomId, randomId, MASTER_LIST_NAME)
+        MasterListDto masterListDto = new MasterListDtoBuilder()
+                .id(randomId).customerId(randomId).name(MASTER_LIST_NAME)
+                .items(["Apple", "Mango"] as LinkedHashSet).build()
+        MasterListBean masterListBeanInDB = new MasterListBeanBuilder().id(randomId).customerId(randomId)
+                .name("Master List Name from DB").items(["Apple", "Mango"] as LinkedHashSet).build()
+
         1 * mockCustomerRepository.findOne(randomId) >> new CustomerBean(id: masterListDto.customerId)
-        1 * mockMasterListRepository.findOneByCustomerId(masterListDto.customerId) >> new MasterListBean(id: randomId, customerId: masterListDto.customerId, name: "Master List")
+        1 * mockMasterListRepository.findOneByCustomerId(masterListDto.customerId) >> masterListBeanInDB
+        1 * mockDtoToBeanMapper.map(masterListDto, {Optional opt->
+            assert opt.isPresent()
+            true
+        }) >> masterListBeanInDB
 
-        when: "save operation is performed"
-        customerService.save(masterListDto)
+        when: "createOrUpdate operation is performed"
+        customerService.createOrUpdate(masterListDto)
 
-        then: "details should be saved and the id property should be populated"
-        def ex = thrown(DuplicateMasterListException)
-        assert ex.message == "Master list already exists"
+        then: "details should be updated"
+        1 * mockMasterListRepository.save({ MasterListBean bean ->
+            assert bean.customerId == masterListBeanInDB.customerId
+            assert bean.id == masterListBeanInDB.id
+            assert bean.name == "Master List Name from DB"
+            assert bean.items.size() == 2
+            true
+        }) >> masterListBeanInDB
+
     }
 
     def "getMasterList - should return the masterlist for a customerid"() {
@@ -108,7 +124,7 @@ class CustomerServiceSpec extends SharedSpecification {
         1 * mockBeanToDtoMapper.map(masterListBean) >> masterListDto
         1 * mockMasterListRepository.findOneByCustomerId(customerId) >> masterListBean
 
-        when: "save operation is performed"
+        when: "createOrUpdate operation is performed"
         MasterListDto actual = customerService.getMasterList(customerId)
 
         then: "details should be saved and the id property should be populated"
