@@ -7,7 +7,7 @@ import com.grocero.builders.MasterListDtoBuilder
 import com.grocero.dtos.CustomerDto
 import com.grocero.dtos.MasterListDto
 import com.grocero.exceptions.CustomerDoesNotExistException
-import com.grocero.exceptions.DuplicateMasterListException
+
 import com.grocero.repositories.CustomerRepository
 import com.grocero.repositories.MasterListRepository
 import com.grocero.services.impl.CustomerServiceImpl

@@ -1,12 +1,13 @@
 package com.grocero.services
 
 import com.grocero.beans.ProductBean
+import com.grocero.common.BeanToDtoMapper
 import com.grocero.dtos.ProductDto
 import com.grocero.exceptions.NoDataFoundException
 import com.grocero.repositories.ProductRepository
 import com.grocero.services.impl.ProductServiceImpl
 import com.grocero.shared.SharedSpecification
-import com.grocero.utils.DtoCreatorUtil
+
 import org.springframework.context.ApplicationContext
 import spock.lang.Shared
 
@@ -23,16 +24,16 @@ class ProductServiceSpec extends SharedSpecification {
 
     ApplicationContext mockApplicationContext
 
-    DtoCreatorUtil mockDtoCreatorUtil
+    BeanToDtoMapper mockBeanToDtoMapper
 
     def setup() {
         mockApplicationContext = Mock(ApplicationContext)
         mockProductRepository = Mock(ProductRepository)
-        mockDtoCreatorUtil = Mock(DtoCreatorUtil)
+        mockBeanToDtoMapper = Mock(BeanToDtoMapper)
         productService = new ProductServiceImpl(
                 productRepository: mockProductRepository,
                 context: mockApplicationContext,
-                dtoCreatorUtil: mockDtoCreatorUtil
+                beanToDtoMapper: mockBeanToDtoMapper
         )
     }
 
@@ -60,7 +61,7 @@ class ProductServiceSpec extends SharedSpecification {
     def "getAll - should return return the products"() {
         given: "database contains the list of products"
         1 * mockProductRepository.findAll() >> [new ProductBean(id: productId, name: productName, measuredIn: measuredIn)]
-        1 * mockDtoCreatorUtil.create({ ProductBean bean ->
+        1 * mockBeanToDtoMapper.map({ ProductBean bean ->
             assert bean.id == productId
             true
         }) >> new ProductDto(id: productId, name: productName, measuredIn: measuredIn)
@@ -92,7 +93,7 @@ class ProductServiceSpec extends SharedSpecification {
         given: "name of the product to find"
         ProductBean expected = new ProductBean(id: productId, name: productName, measuredIn: measuredIn)
         1 * mockProductRepository.findByName(productName) >> expected
-        1 * mockDtoCreatorUtil.create({ ProductBean it ->
+        1 * mockBeanToDtoMapper.map({ ProductBean it ->
             assert it.id == productId
             true
         }) >> new ProductDto(id: productId, name: productName, measuredIn: measuredIn)

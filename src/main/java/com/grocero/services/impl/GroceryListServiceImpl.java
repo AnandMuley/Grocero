@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.grocero.common.BeanToDtoMapper;
+import com.grocero.common.DtoToBeanMapper;
 import com.grocero.services.GroceryListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,8 +13,6 @@ import org.springframework.stereotype.Service;
 import com.grocero.beans.GroceryListBean;
 import com.grocero.dtos.GroceryListDto;
 import com.grocero.repositories.GroceryListRepository;
-import com.grocero.utils.BeanCreatorUtil;
-import com.grocero.utils.DtoCreatorUtil;
 
 @Service
 public class GroceryListServiceImpl implements GroceryListService {
@@ -21,25 +21,25 @@ public class GroceryListServiceImpl implements GroceryListService {
     private GroceryListRepository groceryListRepository;
 
     @Autowired
-    private DtoCreatorUtil dtoCreatorUtil;
+    private BeanToDtoMapper beanToDtoMapper;
 
     @Autowired
-    private BeanCreatorUtil beanCreatorUtil;
+    private DtoToBeanMapper dtoToBeanMapper;
 
     @Override
     public GroceryListDto findById(String listId) {
         GroceryListBean groceryListBean = groceryListRepository.findOne(listId);
         GroceryListDto groceryListDto = null;
         Optional.ofNullable(groceryListBean).ifPresent(bean ->
-                dtoCreatorUtil.create(bean)
+                beanToDtoMapper.map(bean)
         );
         return groceryListDto;
     }
 
     @Override
     public void create(GroceryListDto groceryListDto) {
-        GroceryListBean groceryListBean = beanCreatorUtil
-                .create(groceryListDto, beanCreatorUtil::create);
+        GroceryListBean groceryListBean = dtoToBeanMapper
+                .map(groceryListDto, dtoToBeanMapper::map);
         groceryListRepository.save(groceryListBean);
         groceryListDto.setId(groceryListBean.getId());
     }
@@ -50,8 +50,8 @@ public class GroceryListServiceImpl implements GroceryListService {
                 .findAll();
         List<GroceryListDto> groceryListDtos = new ArrayList<GroceryListDto>();
         for (GroceryListBean groceryListBean : groceryListBeans) {
-            GroceryListDto groceryListDto = dtoCreatorUtil
-                    .create(groceryListBean);
+            GroceryListDto groceryListDto = beanToDtoMapper
+                    .map(groceryListBean);
             groceryListDtos.add(groceryListDto);
         }
         return groceryListDtos;
@@ -64,8 +64,8 @@ public class GroceryListServiceImpl implements GroceryListService {
 
     @Override
     public void update(GroceryListDto groceryListDto) {
-        GroceryListBean groceryListBean = beanCreatorUtil
-                .update(groceryListDto);
+        GroceryListBean groceryListBean = dtoToBeanMapper
+                .map(groceryListDto);
         groceryListBean.setId(groceryListDto.getId());
         groceryListRepository.save(groceryListBean);
     }

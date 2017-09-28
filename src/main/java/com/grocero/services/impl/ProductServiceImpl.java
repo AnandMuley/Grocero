@@ -1,11 +1,11 @@
 package com.grocero.services.impl;
 
 import com.grocero.beans.ProductBean;
+import com.grocero.common.BeanToDtoMapper;
 import com.grocero.dtos.ProductDto;
 import com.grocero.exceptions.NoDataFoundException;
 import com.grocero.repositories.ProductRepository;
 import com.grocero.services.ProductService;
-import com.grocero.utils.DtoCreatorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Autowired
-    private DtoCreatorUtil dtoCreatorUtil;
+    private BeanToDtoMapper beanToDtoMapper;
 
     @Autowired
     private ApplicationContext context;
@@ -43,13 +43,13 @@ public class ProductServiceImpl implements ProductService {
         if (CollectionUtils.isEmpty(productBeans)) {
             throw new NoDataFoundException("No products found");
         }
-        return productBeans.stream().map(dtoCreatorUtil::create).collect(Collectors.toList());
+        return productBeans.stream().map(beanToDtoMapper::map).collect(Collectors.toList());
     }
 
     @Override
     public ProductDto findByName(String name) {
         ProductBean productBean = productRepository.findByName(name);
-        return dtoCreatorUtil.create(productBean);
+        return beanToDtoMapper.map(productBean);
     }
 
     @Override

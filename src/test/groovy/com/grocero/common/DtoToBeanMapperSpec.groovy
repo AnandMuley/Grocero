@@ -1,10 +1,18 @@
 package com.grocero.common
 
 import com.grocero.beans.CustomerBean
+import com.grocero.beans.GroceryListBean
 import com.grocero.beans.MasterListBean
+import com.grocero.beans.ProductBean
+import com.grocero.builders.GroceryListBeanBuilder
+import com.grocero.builders.GroceryListDtoBuilder
 import com.grocero.builders.MasterListBeanBuilder
+import com.grocero.builders.ProductBeanBuilder
+import com.grocero.builders.ProductDtoBuilder
 import com.grocero.dtos.CustomerDto
+import com.grocero.dtos.GroceryListDto
 import com.grocero.dtos.MasterListDto
+import com.grocero.dtos.ProductDto
 import com.grocero.shared.SharedSpecification
 import org.springframework.context.ApplicationContext
 import spock.lang.Subject
@@ -64,6 +72,87 @@ class DtoToBeanMapperSpec extends SharedSpecification {
         then: "details should be mapped"
         assert actual.name == customerDto.name
         assert actual.id == customerDto.id
+    }
+
+
+    def "map - should create productbean from dto"() {
+        given: "product details in the dto"
+        ProductDto expected = new ProductDtoBuilder().name("John")
+                .quantity(10).measuredIn("Kg").cost(20.50d)
+                .build()
+
+        1 * mockApplicationContext.getBean(ProductBean.Builder) >> new ProductBean.Builder()
+
+        when: "create is called"
+        ProductBean actual = dtoToBeanMapper.map(expected)
+
+        then: "all details should be mapped"
+        actual.id == expected.id
+        actual.name == expected.name
+        actual.measuredIn == expected.measuredIn
+        actual.quantity == expected.quantity
+        actual.cost == expected.cost
+    }
+
+    def "map - should create a grocery list bean from dto"() {
+        given: "dto with required details to persist"
+        ProductDto productDto = new ProductDtoBuilder().name("John")
+                .quantity(10).measuredIn("Kg").cost(20.50d)
+                .build()
+
+        GroceryListDto expected = new GroceryListDtoBuilder().name("27-Sept-2017")
+                .items([productDto]).build()
+
+        1 * mockApplicationContext.getBean(GroceryListBean, expected.name) >> new GroceryListBean(expected.name)
+        1 * mockApplicationContext.getBean(ProductBean.Builder) >> new ProductBean.Builder()
+
+        when: "create is called"
+        GroceryListBean actual = dtoToBeanMapper.map(expected,dtoToBeanMapper.&map)
+
+        then: "all details should be populated"
+        actual.name == expected.name
+        actual.id == expected.id
+        actual.items.size() == 1
+        ProductBean actualBean = actual.items[0]
+        actualBean.id == productDto.id
+        actualBean.name == productDto.name
+        actualBean.measuredIn == productDto.measuredIn
+        actualBean.quantity == productDto.quantity
+        actualBean.cost == productDto.cost
+    }
+
+    def "map - should populate the grocery list bean from the dto"() {
+        given: "dto with required details to persist"
+        ProductDto productDto = new ProductDtoBuilder().name("John")
+                .quantity(10).measuredIn("Kg").cost(20.50d)
+                .build()
+
+        GroceryListDto expected = new GroceryListDtoBuilder().name("27-Sept-2017")
+                .items([productDto]).build()
+
+        ProductBean productBean = new ProductBean(
+                name: productDto.name,
+                measuredIn: productDto.measuredIn,
+                quantity: productDto.quantity
+        )
+
+        1 * mockApplicationContext.getBean(GroceryListBean, expected.id, expected.name) >> new GroceryListBean(expected.id, expected.name)
+        1 * mockApplicationContext.getBean(ProductBean.Builder) >> new ProductBean.Builder()
+
+        when: "create is called"
+        GroceryListBean actual = dtoToBeanMapper.map(expected)
+
+        then: "all details should be populated"
+        actual.id == expected.id
+        actual.name == expected.name
+        actual.items.size() == 1
+
+        ProductBean actualBean = actual.items[0]
+        actualBean.id == productDto.id
+        actualBean.cost == productDto.cost
+        actualBean.name == productDto.name
+        actualBean.measuredIn == productDto.measuredIn
+        actualBean.quantity == productDto.quantity
     }
 
 }
