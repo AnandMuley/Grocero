@@ -2,12 +2,14 @@ package com.grocero.services
 
 import com.grocero.beans.CustomerBean
 import com.grocero.beans.MasterListBean
+import com.grocero.builders.CustomerBeanBuilder
+import com.grocero.builders.CustomerDtoBuilder
 import com.grocero.builders.MasterListBeanBuilder
 import com.grocero.builders.MasterListDtoBuilder
 import com.grocero.dtos.CustomerDto
 import com.grocero.dtos.MasterListDto
 import com.grocero.exceptions.CustomerDoesNotExistException
-
+import com.grocero.exceptions.NoDataFoundException
 import com.grocero.repositories.CustomerRepository
 import com.grocero.repositories.MasterListRepository
 import com.grocero.services.impl.CustomerServiceImpl
@@ -22,6 +24,9 @@ class CustomerServiceSpec extends SharedSpecification {
     CustomerRepository mockCustomerRepository
 
     MasterListRepository mockMasterListRepository
+
+    def customerId = "CID201"
+    def customerName = "John"
 
     def setup() {
         mockMasterListRepository = Mock(MasterListRepository)
@@ -96,7 +101,7 @@ class CustomerServiceSpec extends SharedSpecification {
 
         1 * mockCustomerRepository.findOne(randomId) >> new CustomerBean(id: masterListDto.customerId)
         1 * mockMasterListRepository.findOneByCustomerId(masterListDto.customerId) >> masterListBeanInDB
-        1 * mockDtoToBeanMapper.map(masterListDto, {Optional opt->
+        1 * mockDtoToBeanMapper.map(masterListDto, { Optional opt ->
             assert opt.isPresent()
             true
         }) >> masterListBeanInDB
@@ -132,6 +137,57 @@ class CustomerServiceSpec extends SharedSpecification {
         actual.name == MASTER_LIST_NAME
         actual.customerId == customerId
         actual.items.size() == 0
+    }
+
+    def "getMasterList - should throw exception if no data found"() {
+        given: "customerid"
+        String customerId = randomId
+        1 * mockMasterListRepository.findOneByCustomerId(customerId) >> null
+
+        when: "createOrUpdate operation is performed"
+        customerService.getMasterList(customerId)
+
+        then: "details should be saved and the id property should be populated"
+        def ex = thrown(NoDataFoundException)
+        ex.message == "No master lists found"
+    }
+
+    def "getAll - should fetch all customers"() {
+        given: "customers are registered"
+
+        List<CustomerBean> customersFromDB = [new CustomerBeanBuilder()
+                                                      .id(customerId).name(customerName)
+                                                      .build()]
+        CustomerDto customerDto = new CustomerDtoBuilder().id(customerId).name(customerName).build()
+        1 * mockCustomerRepository.findAll() >> customersFromDB
+        1 * mockBeanToDtoMapper.map({ CustomerBean bean ->
+            assert customersFromDB.find { it.id == bean.id } != null
+            true
+        }) >> customerDto
+
+        when: "getAll is called"
+        Set<CustomerDto> customers = customerService.getAll()
+
+        then: "all details are fetched"
+        customers.size() == 1
+    }
+
+    def "getAll - should throw no data found exception if none found"() {
+        given: "customers are registered"
+        CustomerDto customerDto = new CustomerDtoBuilder().id(customerId).name(customerName).build()
+        1 * mockCustomerRepository.findAll() >> customersFromDB
+
+        when: "getAll is called"
+        customerService.getAll()
+
+        then: "all details are fetched"
+        def ex = thrown(NoDataFoundException)
+        ex.message == "No customers found"
+
+        where: "possible scenarios"
+        customersFromDB | _
+        []              | _
+        null            | _
     }
 
 }

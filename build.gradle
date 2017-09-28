@@ -3,6 +3,7 @@ apply plugin: 'war'
 apply plugin: 'idea'
 apply plugin: 'groovy'
 apply plugin: 'org.akhikhl.gretty'
+apply plugin: 'jacoco'
 
 apply from: 'deployment.gradle'
 apply from: 'external-dependencies.gradle'
@@ -18,6 +19,28 @@ jar {
 
 war{
 	zip64 = true
+}
+
+jacoco {
+	toolVersion = "0.7.6.201602180812"
+	reportsDir = file("$buildDir/customJacocoReportDir")
+}
+
+jacocoTestReport {
+	reports {
+		xml.enabled false
+		csv.enabled false
+		html.destination "${buildDir}/jacocoHtml"
+	}
+	afterEvaluate {
+		classDirectories = files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: [
+					'**/beans',
+					'**/dtos',
+					'**/exceptions'
+			])
+		})
+	}
 }
 
 buildscript {
