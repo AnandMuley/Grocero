@@ -1,17 +1,22 @@
 package com.grocero.services
 
+import com.grocero.beans.CustomerBean
 import com.grocero.beans.GroceryListBean
+import com.grocero.beans.ProductBean
 import com.grocero.builders.GroceryListBeanBuilder
 import com.grocero.builders.GroceryListDtoBuilder
 import com.grocero.builders.ProductDtoBuilder
 import com.grocero.common.BeanToDtoMapper
 import com.grocero.common.DtoToBeanMapper
 import com.grocero.dtos.GroceryListDto
+import com.grocero.dtos.ProductDto
 import com.grocero.exceptions.NoDataFoundException
 import com.grocero.repositories.GroceryListRepository
 import com.grocero.services.impl.GroceryListServiceImpl
 import com.grocero.shared.SharedSpecification
 import spock.lang.Subject
+
+import java.util.function.Function
 
 class GroceryListServiceSpec extends SharedSpecification {
 
@@ -114,6 +119,44 @@ class GroceryListServiceSpec extends SharedSpecification {
         groceryListBeans | _
         null             | _
         []               | _
+    }
+
+    def "delete - should delete a customer record"() {
+        given: "listId of the list to be deleted"
+        def listId = "LID201"
+
+        when: "delete operation is performed"
+        groceryListService.delete(listId)
+
+        then: "list is deleted successfully"
+        1 * mockGroceryListRepository.delete(listId)
+    }
+
+    def "create - should save the list in the DB"() {
+        given: "details to be saved"
+        def listName = "General List"
+        GroceryListDto dto = new GroceryListDtoBuilder().name(listName).build()
+        GroceryListBean bean = new GroceryListBeanBuilder().name(listName).build()
+
+        1 * mockDtoToBeanMapper.map(dto,{Function fn ->
+            // TODO need to investigate how to validate argument which is a lambda function
+            assert fn instanceof Function<ProductDto,CustomerBean>
+            true
+        }) >> bean
+        1 * mockGroceryListRepository.save({GroceryListBean it->
+            assert it.id == null
+            assert it.name == listName
+            assert it.items == null
+            it.id = randomId
+            true
+        })
+
+
+        when: "create is invoked"
+        groceryListService.create(dto)
+
+        then: "details are persisted"
+        dto.id == randomId
     }
 
 }

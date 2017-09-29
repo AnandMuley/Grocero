@@ -30,4 +30,8 @@ class SharedSpecification extends Specification {
         0 * _
     }
 
+    def generateRandomId(){
+        UUID.randomUUID().toString()
+    }
+
 }
