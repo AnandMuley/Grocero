@@ -41,7 +41,7 @@ public class CustomerResource {
 
     @GET
     @Path("{id}/masterlist")
-    public Response getMasterList(@PathParam("id") String customerId, MasterListDto masterList) {
+    public Response getMasterList(@PathParam("id") String customerId) {
         try {
             return Response.ok(customerService.getMasterList(customerId)).build();
         } catch (NoDataFoundException e) {

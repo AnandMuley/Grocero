@@ -32,7 +32,7 @@ public class ProductResource {
 
     @GET
     public Response getAll() {
-        Response response = null;
+        Response response;
         try {
             List<ProductDto> productDtos = productService.getAll();
             response = Response.ok(productDtos).build();
