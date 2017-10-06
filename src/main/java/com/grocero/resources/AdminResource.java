@@ -1,5 +1,6 @@
 package com.grocero.resources;
 
+import com.grocero.common.UserRoles;
 import com.grocero.dtos.CustomerDto;
 import org.springframework.stereotype.Component;
 
@@ -19,10 +20,10 @@ import java.util.UUID;
 @Path("admin")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@RolesAllowed(UserRoles.ADMIN)
 public class AdminResource {
 
     @GET
-    @RolesAllowed({"dummy"})
     public Response getAll(@Context SecurityContext securityContext) {
         Principal principal = securityContext.getUserPrincipal();
         return Response.ok(new CustomerDto(UUID.randomUUID().toString(), principal.getName())).build();

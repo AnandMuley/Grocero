@@ -1,6 +1,7 @@
 package com.grocero.resources;
 
 
+import com.grocero.common.UserRoles;
 import com.grocero.dtos.CustomerDto;
 import com.grocero.dtos.MasterListDto;
 import com.grocero.dtos.ResponseDto;
@@ -10,6 +11,8 @@ import com.grocero.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -18,6 +21,7 @@ import javax.ws.rs.core.Response;
 @Path("customers")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@PermitAll
 public class CustomerResource {
 
     private CustomerService customerService;
@@ -29,6 +33,7 @@ public class CustomerResource {
 
     @PUT
     @Path("{id}/masterlist")
+    @RolesAllowed(UserRoles.USER)
     public Response createMasterList(@PathParam("id") String customerId, MasterListDto masterList) {
         try {
             masterList.setCustomerId(customerId);
@@ -41,6 +46,7 @@ public class CustomerResource {
 
     @GET
     @Path("{id}/masterlist")
+    @RolesAllowed(UserRoles.USER)
     public Response getMasterList(@PathParam("id") String customerId) {
         try {
             return Response.ok(customerService.getMasterList(customerId)).build();
@@ -56,6 +62,7 @@ public class CustomerResource {
     }
 
     @GET
+    @RolesAllowed(UserRoles.ADMIN)
     public Response getAll() {
         Response response;
         try {

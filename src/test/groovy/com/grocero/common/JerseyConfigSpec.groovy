@@ -16,9 +16,8 @@ class JerseyConfigSpec extends SharedSpecification {
 
     def "should create config object with required configurations"() {
         expect: "the required configurations are set"
-        jerseyConfig.classes.size() == 2
+        jerseyConfig.classes.size() == 1
         jerseyConfig.classes.contains(JacksonFeature) == true
-        jerseyConfig.classes.contains(RolesAllowedDynamicFeature) == true
     }
 
 }

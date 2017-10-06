@@ -1,11 +1,14 @@
 package com.grocero.resources;
 
+import com.grocero.common.UserRoles;
 import com.grocero.dtos.GroceryListDto;
 import com.grocero.exceptions.NoDataFoundException;
 import com.grocero.services.GroceryListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
@@ -16,6 +19,7 @@ import java.util.Optional;
 @Path("grocerylists")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@PermitAll
 public class GroceryListResource {
 
     @Context
@@ -29,6 +33,7 @@ public class GroceryListResource {
     }
 
     @POST
+    @RolesAllowed({UserRoles.USER})
     public Response create(GroceryListDto groceryListDto) {
         groceryListService.create(groceryListDto);
         UriBuilder builder = uriInfo.getAbsolutePathBuilder();
@@ -38,6 +43,7 @@ public class GroceryListResource {
 
     @PUT
     @Path("{listId}")
+    @RolesAllowed({UserRoles.USER})
     public Response update(@PathParam("listId") String listId,
                            GroceryListDto groceryListDto) {
         groceryListDto.setId(listId);
@@ -46,6 +52,7 @@ public class GroceryListResource {
     }
 
     @GET
+    @RolesAllowed({UserRoles.ADMIN,UserRoles.USER})
     public Response fetchAll() {
         Response response;
         try {
@@ -58,12 +65,14 @@ public class GroceryListResource {
 
     @GET
     @Path("{listId}")
+    @RolesAllowed({UserRoles.ADMIN,UserRoles.USER})
     public Response getById(@PathParam("listId") String listId) {
         return groceryListService.findById(listId).map(Response::ok).orElse(Response.status(Response.Status.NOT_FOUND)).build();
     }
 
     @DELETE
     @Path("{listId}")
+    @RolesAllowed({UserRoles.ADMIN,UserRoles.USER})
     public Response deleteList(@PathParam("listId") String listId) {
         groceryListService.delete(listId);
         return Response.ok().build();

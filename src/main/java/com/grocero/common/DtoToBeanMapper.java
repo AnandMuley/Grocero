@@ -35,7 +35,12 @@ public class DtoToBeanMapper {
     }
 
     public CustomerBean map(CustomerDto customerDto) {
-        return context.getBean(CustomerBean.class, customerDto.getName());
+        CustomerBean customerBean = context.getBean(CustomerBean.class);
+        customerBean.setName(customerDto.getName());
+        customerBean.setPassword(customerDto.getPassword());
+        customerBean.setRole(customerDto.getRole());
+        customerBean.setUsername(customerDto.getUsername());
+        return customerBean;
     }
 
     public GroceryListBean map(GroceryListDto groceryListDto, Function<ProductDto, ProductBean> function) {

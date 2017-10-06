@@ -64,14 +64,18 @@ class DtoToBeanMapperSpec extends SharedSpecification {
     def "map - should map details from customer dto to bean"() {
         given: "dto to map"
         CustomerDto customerDto = new CustomerDto(name: JOHN)
-        1 * mockApplicationContext.getBean(CustomerBean, ['John']) >> new CustomerBean(JOHN)
+        1 * mockApplicationContext.getBean(CustomerBean) >> new CustomerBean()
 
         when: "mapping function is called"
         CustomerBean actual = dtoToBeanMapper.map(customerDto)
 
         then: "details should be mapped"
-        assert actual.name == customerDto.name
-        assert actual.id == customerDto.id
+        actual.name == customerDto.name
+        actual.id == customerDto.id
+        actual.password == customerDto.password
+        actual.role == customerDto.role
+        actual.username == customerDto.username
+
     }
 
 

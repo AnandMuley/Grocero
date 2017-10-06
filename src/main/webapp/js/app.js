@@ -5,7 +5,10 @@ var services = angular.module('guiServices',['ngResource']);
 app.config(['$routeProvider','$mdIconProvider',function($routeProvider,$mdIconProvider){
 
 	$routeProvider.when('/',{
-		redirectTo:'/mylists'
+		redirectTo:'/login'
+	}).when('/login',{
+	  templateUrl:'views/Login.html',
+	  controller : 'LoginController'
 	}).when('/home',{
 		redirectTo : '/mylists'
 	}).when('/products',{
