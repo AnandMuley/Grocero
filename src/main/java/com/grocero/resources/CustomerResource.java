@@ -16,6 +16,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Optional;
 
 @Component
 @Path("customers")
@@ -29,6 +30,19 @@ public class CustomerResource {
     @Autowired
     public CustomerResource(CustomerService customerService) {
         this.customerService = customerService;
+    }
+
+    @POST
+    @Path("authenticate")
+    public Response authenticate(CustomerDto customerDto) {
+        return customerService.findByUsernameAndPassword(customerDto.getUsername(), customerDto.getPassword())
+                .map(bean ->
+                        Response.ok(
+                                new ResponseDto(
+                                        bean.getAuthToken()
+                                )
+                        )
+                ).orElse(Response.status(Response.Status.NOT_FOUND).entity(new ResponseDto("Record not found"))).build();
     }
 
     @PUT

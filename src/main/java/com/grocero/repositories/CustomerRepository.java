@@ -9,4 +9,6 @@ public interface CustomerRepository extends MongoRepository<CustomerBean, String
 
     CustomerBean findOneByUsernameAndPassword(String username, String password);
 
+    CustomerBean findOneByUsernameAndAuthToken(String username, String authToken);
+
 }

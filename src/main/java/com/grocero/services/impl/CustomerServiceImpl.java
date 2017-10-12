@@ -1,7 +1,10 @@
 package com.grocero.services.impl;
 
+import com.grocero.beans.AbstractAuthenticationBean;
 import com.grocero.beans.CustomerBean;
 import com.grocero.beans.MasterListBean;
+import com.grocero.common.DateUtil;
+import com.grocero.dtos.AuthenticationDto;
 import com.grocero.dtos.CustomerDto;
 import com.grocero.dtos.MasterListDto;
 import com.grocero.exceptions.CustomerDoesNotExistException;
@@ -9,18 +12,18 @@ import com.grocero.exceptions.CustomerServiceException;
 import com.grocero.exceptions.NoDataFoundException;
 import com.grocero.repositories.CustomerRepository;
 import com.grocero.repositories.MasterListRepository;
+import com.grocero.services.AuthenticationService;
 import com.grocero.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class CustomerServiceImpl extends GroceroService implements CustomerService {
+public class CustomerServiceImpl extends GroceroService implements CustomerService, AuthenticationService {
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -55,5 +58,22 @@ public class CustomerServiceImpl extends GroceroService implements CustomerServi
             throw new NoDataFoundException("No master lists found");
         }
         return beanToDtoMapper.map(masterList);
+    }
+
+    @Override
+    public Optional<CustomerDto> findByUsernameAndPassword(String username, String password) {
+        CustomerBean customerBean = customerRepository.findOneByUsernameAndPassword(username, password);
+        return Optional.ofNullable(customerBean).map(bean -> {
+            bean.setAuthToken(UUID.randomUUID().toString());
+            bean.setAuthTokenValidTill(DateUtil.getTokenValidity());
+            return customerRepository.save(bean);
+        }).map(beanToDtoMapper::map);
+    }
+
+    @Override
+    public Optional<AuthenticationDto> authenticate(String username, String authToken) {
+        return Optional.ofNullable(customerRepository.findOneByUsernameAndAuthToken(username, authToken))
+                .filter(bean -> bean.getAuthTokenValidTill().isAfter(LocalDateTime.now()))
+                .map((AbstractAuthenticationBean bean) -> beanToDtoMapper.map(bean));
     }
 }

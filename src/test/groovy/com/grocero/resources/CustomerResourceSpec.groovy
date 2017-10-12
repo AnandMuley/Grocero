@@ -1,7 +1,10 @@
 package com.grocero.resources
 
+import com.grocero.builders.CustomerDtoBuilder
 import com.grocero.builders.MasterListDtoBuilder
+import com.grocero.dtos.CustomerDto
 import com.grocero.dtos.MasterListDto
+import com.grocero.dtos.ResponseDto
 import com.grocero.exceptions.NoDataFoundException
 import com.grocero.services.CustomerService
 import com.grocero.shared.SharedSpecification
@@ -16,9 +19,43 @@ class CustomerResourceSpec extends SharedSpecification {
 
     CustomerService mockCustomerService
 
+    def username = "Aron"
+    def password = "Johnson"
+
     def setup() {
         mockCustomerService = Mock(CustomerService)
         customerResource = new CustomerResource(mockCustomerService)
+    }
+
+    def "authenticate - should return the auth token if authentication is successful"() {
+        given: "username and password"
+        def authToken = UUID.randomUUID().toString()
+        CustomerDto customerDto = new CustomerDtoBuilder().username(username).password(password).build()
+        1 * mockCustomerService.findByUsernameAndPassword(username,password) >> Optional.of(new CustomerDtoBuilder().authToken(authToken).build())
+
+        when: "authenticate method is called"
+        Response actualResponse = customerResource.authenticate(customerDto)
+
+        then: "auth token is received in response"
+        ResponseDto actual = (ResponseDto) actualResponse.getEntity()
+        actual.message == authToken
+
+    }
+
+    def "authenticate - should return not found error"() {
+        given: "username and password"
+
+        CustomerDto customerDto = new CustomerDtoBuilder().username(username).password(password).build()
+        1 * mockCustomerService.findByUsernameAndPassword(username, password) >> Optional.empty()
+
+        when: "authenticate method is called"
+        Response actualResponse = customerResource.authenticate(customerDto)
+
+        then: "auth token is received in response"
+        ResponseDto actual = (ResponseDto) actualResponse.getEntity()
+        actualResponse.status == 404
+        actual.message == "Record not found"
+
     }
 
     def "createMasterList - should create a masterlist"() {
@@ -82,7 +119,7 @@ class CustomerResourceSpec extends SharedSpecification {
         MasterListDto expected = new MasterListDtoBuilder().id(randomId)
                 .name(listName).items([productName] as LinkedHashSet).build()
 
-        1 * mockCustomerService.getMasterList(customerId) >> {throw new NoDataFoundException("No master list found")}
+        1 * mockCustomerService.getMasterList(customerId) >> { throw new NoDataFoundException("No master list found") }
 
         when: "getMasterList is invoked"
         Response response = customerResource.getMasterList(customerId)

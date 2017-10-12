@@ -6,6 +6,8 @@ import com.grocero.builders.CustomerBeanBuilder
 import com.grocero.builders.CustomerDtoBuilder
 import com.grocero.builders.MasterListBeanBuilder
 import com.grocero.builders.MasterListDtoBuilder
+import com.grocero.common.UserRoles
+import com.grocero.dtos.AuthenticationDto
 import com.grocero.dtos.CustomerDto
 import com.grocero.dtos.MasterListDto
 import com.grocero.exceptions.CustomerDoesNotExistException
@@ -16,10 +18,12 @@ import com.grocero.services.impl.CustomerServiceImpl
 import com.grocero.shared.SharedSpecification
 import spock.lang.Subject
 
+import java.time.LocalDateTime
+
 class CustomerServiceSpec extends SharedSpecification {
 
     @Subject
-    CustomerService customerService
+    CustomerServiceImpl customerService
 
     CustomerRepository mockCustomerRepository
 
@@ -27,6 +31,8 @@ class CustomerServiceSpec extends SharedSpecification {
 
     def customerId = "CID201"
     def customerName = "John"
+    def username = "Aron"
+    def password = "Password123"
 
     def setup() {
         mockMasterListRepository = Mock(MasterListRepository)
@@ -37,6 +43,95 @@ class CustomerServiceSpec extends SharedSpecification {
                 masterListRepository: mockMasterListRepository,
                 beanToDtoMapper: mockBeanToDtoMapper
         )
+    }
+
+    def "authenticate - should return empty optional if session is not valid"() {
+        given: "username and authToken"
+        def authToken = UUID.randomUUID().toString()
+        LocalDateTime validTill = LocalDateTime.now().plusMinutes(-1)
+        CustomerBean customerBean = new CustomerBeanBuilder().authTokenValidTill(validTill).build()
+
+        1 * mockCustomerRepository.findOneByUsernameAndAuthToken(username, authToken) >> customerBean
+
+        when: "authenticate is called"
+        Optional<AuthenticationDto> authenticationDtoOpt = customerService.authenticate(username, authToken)
+
+        then: "auth details are sent in response"
+        authenticationDtoOpt.isPresent() == false
+
+    }
+
+    def "authenticate - should authenticate if the user session is valid"() {
+        given: "username and authToken"
+        def authToken = UUID.randomUUID().toString()
+        LocalDateTime validTill = LocalDateTime.now().plusMinutes(2)
+        CustomerBean customerBean = new CustomerBeanBuilder().authTokenValidTill(validTill).build()
+
+        1 * mockCustomerRepository.findOneByUsernameAndAuthToken(username, authToken) >> customerBean
+        1 * mockBeanToDtoMapper.map({ CustomerBean bean ->
+            bean.authToken == customerBean.authToken
+            bean.username == customerBean.username
+            bean.id == customerBean.id
+            bean.name == customerBean.name
+            bean.password == customerBean.password
+            bean.role == customerBean.role
+            true
+        }) >> new CustomerDtoBuilder().username(username).authToken(authToken).role(UserRoles.ADMIN).build()
+
+        when: "authenticate is called"
+        Optional<AuthenticationDto> authenticationDtoOpt = customerService.authenticate(username, authToken)
+
+        then: "auth details are sent in response"
+        AuthenticationDto actual = authenticationDtoOpt.get()
+        actual.username == username
+        actual.authToken == authToken
+        actual.role == UserRoles.ADMIN
+
+    }
+
+    def "findByUsernameAndPassword - return empty optional if the customer not found"() {
+        given: "username and password of the customer"
+        1 * mockCustomerRepository.findOneByUsernameAndPassword(username, password) >> null
+
+        when: "findByUsernameAndPassword is called"
+        Optional<CustomerDto> actualOpt = customerService.findByUsernameAndPassword(username, password)
+
+        then: "customer is returned"
+        actualOpt.isPresent() == false
+    }
+
+    def "findByUsernameAndPassword - should find a customer by username and password"() {
+        given: "username and password of the customer"
+        CustomerBean expected = new CustomerBeanBuilder().build()
+
+        1 * mockCustomerRepository.findOneByUsernameAndPassword(username, password) >> expected
+        1 * mockCustomerRepository.save({ CustomerBean toBeSaved ->
+            assert toBeSaved.authToken != null
+            assert toBeSaved.authTokenValidTill != null
+            true
+        }) >> expected
+        CustomerDto expectedCustDto = new CustomerDtoBuilder().build()
+        1 * mockBeanToDtoMapper.map({ CustomerBean bean ->
+            assert bean.id == expected.id
+            assert bean.name == expected.name
+            assert bean.password == expected.password
+            assert bean.role == expected.role
+            assert bean.username == expected.username
+            assert bean.authToken != null
+            true
+        }) >> expectedCustDto
+
+        when: "findByUsernameAndPassword is called"
+        Optional<CustomerDto> actualOpt = customerService.findByUsernameAndPassword(username, password)
+
+        then: "customer is returned"
+        CustomerDto actual = actualOpt.get()
+        actual.id == expectedCustDto.id
+        actual.username == expectedCustDto.username
+        actual.role == expectedCustDto.role
+        actual.authToken == expectedCustDto.authToken
+        actual.password == expectedCustDto.password
+
     }
 
     def "save - should save the customer in the database"() {

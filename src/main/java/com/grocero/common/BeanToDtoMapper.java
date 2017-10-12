@@ -1,13 +1,7 @@
 package com.grocero.common;
 
-import com.grocero.beans.CustomerBean;
-import com.grocero.beans.GroceryListBean;
-import com.grocero.beans.MasterListBean;
-import com.grocero.beans.ProductBean;
-import com.grocero.dtos.CustomerDto;
-import com.grocero.dtos.GroceryListDto;
-import com.grocero.dtos.MasterListDto;
-import com.grocero.dtos.ProductDto;
+import com.grocero.beans.*;
+import com.grocero.dtos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -20,8 +14,19 @@ public class BeanToDtoMapper {
     @Autowired
     private ApplicationContext context;
 
+    public AuthenticationDto map(AbstractAuthenticationBean authenticationBean) {
+        AuthenticationDto authenticationDto = context.getBean("authenticationDto", AuthenticationDto.class);
+        authenticationDto.setAuthToken(authenticationBean.getAuthToken());
+        authenticationDto.setUsername(authenticationBean.getUsername());
+        authenticationDto.setRole(authenticationBean.getRole());
+        return authenticationDto;
+    }
+
     public CustomerDto map(CustomerBean customerBean) {
-        return context.getBean(CustomerDto.class, customerBean.getId(), customerBean.getName());
+        CustomerDto customerDto = context.getBean(CustomerDto.class, customerBean.getId(), customerBean.getName());
+        customerDto.setAuthToken(customerBean.getAuthToken());
+        customerDto.setUsername(customerBean.getUsername());
+        return customerDto;
     }
 
     public MasterListDto map(MasterListBean masterListBean) {

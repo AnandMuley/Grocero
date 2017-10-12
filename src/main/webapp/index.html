@@ -38,7 +38,7 @@
 
 </head>
 <body ng-controller="TabsController">
-	<div class="header">
+	<div ng-if="authenticated" class="header">
 		<div class="site-title">Grocero</div>
 		<md-content class="md-padding navbar">
 			<md-tabs md-dynamic-height md-border-bottom>
