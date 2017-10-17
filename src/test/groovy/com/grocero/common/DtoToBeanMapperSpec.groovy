@@ -73,7 +73,7 @@ class DtoToBeanMapperSpec extends SharedSpecification {
         actual.name == customerDto.name
         actual.id == customerDto.id
         actual.password == customerDto.password
-        actual.role == customerDto.role
+        actual.role == UserRoles.USER
         actual.username == customerDto.username
 
     }

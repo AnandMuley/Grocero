@@ -145,3 +145,11 @@ body {
 	font-weight: 500;
 	color: #F44336;
 }
+
+.page-title{
+	font-family: 'Roboto', sans-serif;
+	font-size: 20px;
+	margin-top: 20px;
+	margin-left: 5px;
+	font-weight: 300;
+}

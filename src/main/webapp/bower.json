@@ -21,5 +21,9 @@
     "angular-resource": "^1.5.5",
     "bootstrap": "^3.3.6",
     "angular-material": "^1.0.9"
+  },
+  "devDependencies": {
+    "angular-cookies": "^1.6.6",
+    "angular-base64": "^2.0.5"
   }
 }

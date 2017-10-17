@@ -38,7 +38,7 @@ public class DtoToBeanMapper {
         CustomerBean customerBean = context.getBean(CustomerBean.class);
         customerBean.setName(customerDto.getName());
         customerBean.setPassword(customerDto.getPassword());
-        customerBean.setRole(customerDto.getRole());
+        customerBean.setRole(UserRoles.USER);
         customerBean.setUsername(customerDto.getUsername());
         return customerBean;
     }
