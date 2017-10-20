@@ -15,6 +15,11 @@ app.controller('LoginController',
           authenticationService.save($scope.user);
           $location.path('home');
           $rootScope.authenticated = true;
+      },function(response){
+        if(response.status == 404){
+            $scope.message = 'Authentication failed !';
+        }
+        $scope.user = {};
       });
   }
 

@@ -1,5 +1,5 @@
-<div layout="row" flex-offset="35">
-  <md-card layout="column" flex="50">
+<div layout="row" layout-align="center">
+  <md-card layout="column" flex="30">
     <!-- <img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out"> -->
     <md-card-title>
       <md-card-title-text>
@@ -19,5 +19,7 @@
     <md-card-actions layout="row" layout-align="end center">
       <md-button ng-click="login()" class="md-button md-primary">LOGIN</md-button>
     </md-card-actions>
+    <div layout="row" layout-margin="10" layout-align="center" ng-if="message" class="error-msg">{{message}}</div>
   </md-card>
+
 </div>

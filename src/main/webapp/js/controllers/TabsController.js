@@ -1,12 +1,32 @@
-controllers.controller('TabsController',['$scope','$location',function($scope,$location){
+controllers.controller('TabsController',['$scope','$location','$cookies','$rootScope',
+				function($scope,$location,$cookies,$rootScope){
+
+
+	function checkCookie(){
+		var authData = $cookies.getObject('auth');
+		if(authData != undefined){
+			$rootScope.authenticated = true;
+		}
+	}
+
+	checkCookie();
+
+	$scope.logout = function(){
+		$cookies.remove('auth');
+		$rootScope.authenticated = false;
+		$location.path('login');
+	}
+
 	$scope.tabs = [
 	               {
 	            	   path:"home",
 	            	   name:"home"
-	               },{
-	            	   path:"products",
-	            	   name:"products"
-	               },{
+	               },
+								//  {
+	            	//    path:"products",
+	            	//    name:"products"
+	              //  },
+								 {
 	            	   path:"groceries",
 	            	   name:"groceries"
 	               },{

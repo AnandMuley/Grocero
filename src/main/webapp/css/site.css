@@ -15,6 +15,14 @@
 	--color-deeppurple:#673AB7;
 }
 
+.error-msg{
+	color:red;
+}
+
+.success-msg{
+	color: green;
+}
+
 .header{
 	margin-top: -20px;
 	padding-top: 30px;

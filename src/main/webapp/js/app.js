@@ -40,8 +40,9 @@ function($routeProvider,$mdIconProvider,$httpProvider){
 					function($q,$cookies,$base64){
 
 		function getTimeout(){
+			let noOfMinutes = 15;
 	    var curr = new Date();
-	    return new Date(curr.getTime()+1*60000);
+	    return new Date(curr.getTime()+(noOfMinutes*60000));
 	  }
 
 		function handleAuthenticationResponse(response){
@@ -49,12 +50,17 @@ function($routeProvider,$mdIconProvider,$httpProvider){
 				var user = response.config.data;
 				user.password = undefined;
 				user.token = response.data.message;
-		    $cookies.putObject('auth',user,{expires:getTimeout()});
+		    // $cookies.putObject('auth',user,{expires:getTimeout()});
+				console.log("Interceptor Authentication...");
 			}
 		}
 
+		function isNotUserRegistrationCall(config){
+			return !(config.url.endsWith('customers') && config.method == "POST");
+		}
+
 		function populateAuthenticationHeaders(config) {
-			if(config.url.endsWith('authenticate') == false){
+			if(config.url.endsWith('authenticate') == false && isNotUserRegistrationCall(config)){
 				var authData = $cookies.getObject('auth');
 				var encoded = $base64.encode(authData.username+':'+authData.token);
 				config.headers.Authorization = 'Basic '+encoded;
@@ -68,12 +74,27 @@ function($routeProvider,$mdIconProvider,$httpProvider){
 				}
 	      return config;
 	    },
+			'requestError':function(rejection){
+				console.log("REQUEST ERROR  : "+JSON.stringify(rejection));
+				if (rejection.status === 403) {
+					 window.location.href = '';
+				 }
+		 		return $q.reject(rejection);
+			},
 	    'response' : function(response){
 				if(response.config.url.startsWith('rest') == true){
 					handleAuthenticationResponse(response);
 				}
 	      return response;
-	    }
+	    },
+			'responseError' : function(rejection){
+				if (rejection.status === 403) {
+					 window.location.href = '';
+				}else if(rejection.message == "Cannot read property 'username' of undefined"){
+					window.location.href = '';
+				}
+					return $q.reject(rejection);
+			}
 	  }
 	}]);
 

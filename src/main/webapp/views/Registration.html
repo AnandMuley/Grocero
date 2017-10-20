@@ -7,6 +7,10 @@
   </md-card-title>
   <md-card-content>
     <md-input-container class="md-default md-block">
+      <label>Name</label>
+      <input maxlength="30" ng-model="user.name"/>
+    </md-input-container>
+    <md-input-container class="md-default md-block">
       <label>Username</label>
       <input maxlength="30" ng-model="user.username"/>
     </md-input-container>
@@ -18,4 +22,5 @@
   <md-card-actions layout="row" layout-align="center">
     <md-button ng-click="register()">REGISTER</md-button>
   </md-card-actions>
+  <div layout="row" layout-margin="10" layout-align="center" ng-if="message" class="success-msg">{{message}}</div>
 </md-card>

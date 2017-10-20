@@ -1,8 +1,9 @@
 app.factory('AuthenticationService',['$cookies',function($cookies){
 
   function getTimeout(){
+    let noOfMinutes = 15;
     var curr = new Date();
-    return new Date(curr.getTime()+1*60000);
+    return new Date(curr.getTime()+noOfMinutes*60000);
   }
 
   function save(user){
