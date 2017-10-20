@@ -19,8 +19,9 @@
       <input type="password" maxlength="20" ng-model="user.password"/>
     </md-input-container>
   </md-card-content>
-  <md-card-actions layout="row" layout-align="center">
+  <md-card-actions ng-controller="RedirectionController" layout="row" layout-align="center">
     <md-button ng-click="register()">REGISTER</md-button>
+    <md-button ng-click="renderPage('login')" md-no-ink class="md-primary">Login</md-button>
   </md-card-actions>
   <div layout="row" layout-margin="10" layout-align="center" ng-if="message" class="success-msg">{{message}}</div>
 </md-card>

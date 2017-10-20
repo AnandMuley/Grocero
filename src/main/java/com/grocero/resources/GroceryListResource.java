@@ -12,8 +12,6 @@ import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
-import java.util.List;
-import java.util.Optional;
 
 @Component
 @Path("grocerylists")
@@ -52,7 +50,7 @@ public class GroceryListResource {
     }
 
     @GET
-    @RolesAllowed({UserRoles.ADMIN,UserRoles.USER})
+    @RolesAllowed({UserRoles.ADMIN, UserRoles.USER})
     public Response fetchAll() {
         Response response;
         try {
@@ -65,14 +63,14 @@ public class GroceryListResource {
 
     @GET
     @Path("{listId}")
-    @RolesAllowed({UserRoles.ADMIN,UserRoles.USER})
+    @RolesAllowed({UserRoles.ADMIN, UserRoles.USER})
     public Response getById(@PathParam("listId") String listId) {
         return groceryListService.findById(listId).map(Response::ok).orElse(Response.status(Response.Status.NOT_FOUND)).build();
     }
 
     @DELETE
     @Path("{listId}")
-    @RolesAllowed({UserRoles.ADMIN,UserRoles.USER})
+    @RolesAllowed({UserRoles.ADMIN, UserRoles.USER})
     public Response deleteList(@PathParam("listId") String listId) {
         groceryListService.delete(listId);
         return Response.ok().build();

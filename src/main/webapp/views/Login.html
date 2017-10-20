@@ -4,6 +4,7 @@
     <md-card-title>
       <md-card-title-text>
         <span class="md-headline site-title">Grocero</span>
+        <span class="md-headline page-title">Login</span>
       </md-card-title-text>
     </md-card-title>
     <md-card-content>
@@ -16,8 +17,9 @@
         <input type="password" maxlength="300" ng-model="user.password"/>
       </md-input-container>
     </md-card-content>
-    <md-card-actions layout="row" layout-align="end center">
-      <md-button ng-click="login()" class="md-button md-primary">LOGIN</md-button>
+    <md-card-actions ng-controller="RedirectionController" layout="row" layout-align="end center">
+      <md-button ng-click="login()">LOGIN</md-button>
+      <md-button ng-click="renderPage('registration')" md-no-ink class="md-primary">Register</md-button>
     </md-card-actions>
     <div layout="row" layout-margin="10" layout-align="center" ng-if="message" class="error-msg">{{message}}</div>
   </md-card>
