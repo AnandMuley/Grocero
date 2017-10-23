@@ -45,6 +45,7 @@ public class DtoToBeanMapper {
 
     public GroceryListBean map(GroceryListDto groceryListDto, Function<ProductDto, ProductBean> function) {
         GroceryListBean groceryListBean = context.getBean(GroceryListBean.class, groceryListDto.getName());
+        groceryListBean.setCustomerId(groceryListDto.getCustomerId());
         groceryListBean.getItems().addAll(groceryListDto.getItems().stream().map(function::apply).collect(Collectors.toList()));
         return groceryListBean;
     }

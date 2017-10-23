@@ -12,7 +12,7 @@ public interface GroceryListService {
 
     void create(GroceryListDto groceryListDto);
 
-    List<GroceryListDto> fetchAll() throws NoDataFoundException;
+    List<GroceryListDto> fetchAll(String customerId) throws NoDataFoundException;
 
     void delete(String listId);
 

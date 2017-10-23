@@ -9,13 +9,16 @@ import com.grocero.exceptions.CustomerServiceException;
 import com.grocero.exceptions.NoDataFoundException;
 import com.grocero.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 @Component
 @Path("customers")
@@ -27,8 +30,19 @@ public class CustomerResource {
     private CustomerService customerService;
 
     @Autowired
+    private ApplicationContext context;
+
+    @Context
+    private UriInfo uriInfo;
+
+    @Autowired
     public CustomerResource(CustomerService customerService) {
         this.customerService = customerService;
+    }
+
+    @Path("{id}/grocerylists")
+    public GroceryListResource getGroceryListResource(@PathParam("id") String customerId) {
+        return context.getBean(GroceryListResource.class, customerId, uriInfo);
     }
 
     @POST

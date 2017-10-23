@@ -43,8 +43,8 @@ public class GroceryListServiceImpl implements GroceryListService {
     }
 
     @Override
-    public List<GroceryListDto> fetchAll() throws NoDataFoundException {
-        return OptionalList.ofNullable(groceryListRepository.findAll()).orElseThrow(NoDataFoundException::new).stream().map(beanToDtoMapper::map).collect(Collectors.toList());
+    public List<GroceryListDto> fetchAll(String customerId) throws NoDataFoundException {
+        return OptionalList.ofNullable(groceryListRepository.findByCustomerId(customerId)).orElseThrow(NoDataFoundException::new).stream().map(beanToDtoMapper::map).collect(Collectors.toList());
     }
 
     @Override

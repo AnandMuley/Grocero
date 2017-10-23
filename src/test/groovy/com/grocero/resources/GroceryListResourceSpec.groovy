@@ -22,13 +22,14 @@ class GroceryListResourceSpec extends SharedSpecification {
 
     UriBuilder mockUriBuilder
     URI uri = new URI()
+    def customerId = "CID2020"
 
     def setup() {
         mockUriBuilder = Mock(UriBuilder)
         mockUriInfo = Mock(UriInfo)
         mockGroceryListService = Mock(GroceryListService)
-        groceryListResource = new GroceryListResource(mockGroceryListService)
-        groceryListResource.uriInfo = mockUriInfo
+        groceryListResource = new GroceryListResource(customerId,mockUriInfo)
+        groceryListResource.groceryListService = mockGroceryListService
     }
 
     def "create - should create a list"() {
@@ -75,7 +76,7 @@ class GroceryListResourceSpec extends SharedSpecification {
         given: "lists are fetched"
         def listId = randomId
         def listName = "Sample List"
-        1 * mockGroceryListService.fetchAll() >> [new GroceryListDtoBuilder().id(listId).name(listName).build()]
+        1 * mockGroceryListService.fetchAll(customerId) >> [new GroceryListDtoBuilder().id(listId).name(listName).build()]
 
         when: "fetchAll is invoked"
         Response actualResponse = groceryListResource.fetchAll()
@@ -94,7 +95,7 @@ class GroceryListResourceSpec extends SharedSpecification {
     def "fetchAll - should return error response if no data found"() {
         given: "lists are fetched"
         def expectedEx = new NoDataFoundException("No lists found")
-        1 * mockGroceryListService.fetchAll() >> { throw expectedEx }
+        1 * mockGroceryListService.fetchAll(customerId) >> { throw expectedEx }
 
         when: "fetchAll is invoked"
         Response actualResponse = groceryListResource.fetchAll()

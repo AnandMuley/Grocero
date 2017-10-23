@@ -103,8 +103,9 @@ class DtoToBeanMapperSpec extends SharedSpecification {
         ProductDto productDto = new ProductDtoBuilder().name("John")
                 .quantity(10).measuredIn("Kg").cost(20.50d)
                 .build()
+        String customerId = "CID2020"
 
-        GroceryListDto expected = new GroceryListDtoBuilder().name("27-Sept-2017")
+        GroceryListDto expected = new GroceryListDtoBuilder().name("27-Sept-2017").customerId(customerId)
                 .items([productDto]).build()
 
         1 * mockApplicationContext.getBean(GroceryListBean, expected.name) >> new GroceryListBean(expected.name)
@@ -116,6 +117,7 @@ class DtoToBeanMapperSpec extends SharedSpecification {
         then: "all details should be populated"
         actual.name == expected.name
         actual.id == expected.id
+        actual.customerId == expected.customerId
         actual.items.size() == 1
         ProductBean actualBean = actual.items[0]
         actualBean.id == productDto.id

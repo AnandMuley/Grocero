@@ -13,6 +13,7 @@ public class GroceryListDto {
 
     private String id;
     private String name;
+    private String customerId;
     private List<ProductDto> items = new ArrayList<>();
 
     public GroceryListDto() {
@@ -42,10 +43,22 @@ public class GroceryListDto {
         return items;
     }
 
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
     @Override
     public String toString() {
-        return "GroceryListDto [id=" + id + ", name=" + name + ", items="
-                + items + "]";
+        return "GroceryListDto{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", customerId='" + customerId + '\'' +
+                ", items=" + items +
+                '}';
     }
 
 }

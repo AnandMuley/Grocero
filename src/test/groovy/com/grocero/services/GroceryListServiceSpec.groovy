@@ -93,12 +93,13 @@ class GroceryListServiceSpec extends SharedSpecification {
 
     def "fetchAll - should fetch all customers"() {
         given: "all grocery lists are saved"
+        def customerId = "CID2020"
         List<GroceryListBean> groceryListBeans = [new GroceryListBeanBuilder().build()]
-        1 * mockGroceryListRepository.findAll() >> groceryListBeans
+        1 * mockGroceryListRepository.findByCustomerId(customerId) >> groceryListBeans
         1 * mockBeanToDtoMapper.map(groceryListBeans[0]) >> new GroceryListDtoBuilder().build()
 
         when: "fetchAll is called"
-        List<GroceryListDto> groceryListDtoList = groceryListService.fetchAll()
+        List<GroceryListDto> groceryListDtoList = groceryListService.fetchAll(customerId)
 
         then: "all details are sent"
         groceryListDtoList.size() == 1
@@ -106,10 +107,11 @@ class GroceryListServiceSpec extends SharedSpecification {
 
     def "fetchAll - should throw an exception if no grocery list found"() {
         given: "no grocery lists in db"
-        1 * mockGroceryListRepository.findAll() >> groceryListBeans
+        def customerId = "CID2020"
+        1 * mockGroceryListRepository.findByCustomerId(customerId) >> groceryListBeans
 
         when: "fetchAll is called"
-        groceryListService.fetchAll()
+        groceryListService.fetchAll(customerId)
 
         then: "all details are sent"
         def ex = thrown(NoDataFoundException)

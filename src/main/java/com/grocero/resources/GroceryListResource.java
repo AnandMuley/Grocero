@@ -5,34 +5,43 @@ import com.grocero.dtos.GroceryListDto;
 import com.grocero.exceptions.NoDataFoundException;
 import com.grocero.services.GroceryListService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
-import javax.ws.rs.core.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 
 @Component
-@Path("grocerylists")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @PermitAll
+@Scope("prototype")
 public class GroceryListResource {
 
-    @Context
-    UriInfo uriInfo;
-
+    private UriInfo uriInfo;
     private GroceryListService groceryListService;
+    private String customerId;
+
+    public GroceryListResource(String customerId, UriInfo uriInfo) {
+        this.uriInfo = uriInfo;
+        this.customerId = customerId;
+    }
 
     @Autowired
-    public GroceryListResource(GroceryListService groceryListService) {
+    public void setGroceryListService(GroceryListService groceryListService) {
         this.groceryListService = groceryListService;
     }
 
     @POST
     @RolesAllowed({UserRoles.USER})
     public Response create(GroceryListDto groceryListDto) {
+        groceryListDto.setCustomerId(customerId);
         groceryListService.create(groceryListDto);
         UriBuilder builder = uriInfo.getAbsolutePathBuilder();
         URI uri = builder.path(groceryListDto.getId()).build();
@@ -54,7 +63,7 @@ public class GroceryListResource {
     public Response fetchAll() {
         Response response;
         try {
-            response = Response.ok(groceryListService.fetchAll()).build();
+            response = Response.ok(groceryListService.fetchAll(customerId)).build();
         } catch (NoDataFoundException e) {
             response = Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }

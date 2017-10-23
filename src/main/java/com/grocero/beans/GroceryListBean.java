@@ -16,6 +16,7 @@ public class GroceryListBean {
     @Id
     private String id;
     private String name;
+    private String customerId;
     private List<ProductBean> items = new ArrayList<>();
 
     public GroceryListBean() {
@@ -56,11 +57,20 @@ public class GroceryListBean {
         this.items = items;
     }
 
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
     @Override
     public String toString() {
         return "GroceryListBean{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", customerId='" + customerId + '\'' +
                 ", items=" + items +
                 '}';
     }
