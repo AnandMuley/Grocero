@@ -45,4 +45,8 @@ app.controller('LoginController',
 
   }
 
+  $scope.loadRegistrationView = function() {
+    $location.path('registration');
+  }
+
 }]);
